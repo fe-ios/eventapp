@@ -16,6 +16,12 @@
 
 @implementation BOCenterViewController
 
+@synthesize toolBar = _toolBar;
+@synthesize toolBarExplore = _toolBarExplore;
+@synthesize toolBarEvents = _toolBarEvents;
+@synthesize toolBarQuickAdd = _toolBarQuickAdd;
+
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -42,7 +48,7 @@
 	self.tableView.tableFooterView = footerView;
 
 	
-	self.toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 416, 320, 44)];
+	self.toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 460-44*2, 320, 44)];
 	//Wood Background
 	UIImageView *woodBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"WKWorkspaceBackground_wood.jpg"]];
 	[woodBackground setFrame:CGRectMake(0, -64, 320, 480)];
@@ -75,7 +81,13 @@
 	UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"WKNavigationSidebarButton"] style:UIBarButtonItemStylePlain target:self.viewDeckController action:@selector(toggleLeftView)];
 	self.navigationItem.leftBarButtonItem = leftBarButton;
 	
-	[self.navigationController.view addSubview:self.toolBar];
+	[self.view addSubview:self.toolBar];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    self.toolBar.frame = CGRectMake(0, 480-44, 320, 44);
+    [self.navigationController.view addSubview:self.toolBar];
 }
 
 -(void)eventQuickAdd

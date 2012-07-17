@@ -111,8 +111,6 @@
     [self.view addSubview:registerBtn];
     _registerBtn = registerBtn;
     [registerBtn release];
-    
-    self.navController = [[[UINavigationController alloc] init] autorelease];
 }
 
 - (void)viewDidUnload

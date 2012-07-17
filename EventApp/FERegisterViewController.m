@@ -6,6 +6,7 @@
 //  Copyright (c) 2012年 snda. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import <QuartzCore/QuartzCore.h>
 #import "FERegisterViewController.h"
 #import "FELoginTableViewCell.h"
@@ -175,7 +176,7 @@
     _progress.dimBackground = YES;
     _progress.labelText = @"注册中...";
     
-    NSURL *registerURL = [NSURL URLWithString:@"http://10.0.2.1:8888/event/user/register"];
+    NSURL *registerURL = [NSURL URLWithString:@"http://10.0.2.1:8888/eventserver/user/register"];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:registerURL];
     [request setRequestMethod:@"POST"];
     [request addRequestHeader:@"Content-Type" value:@"application/json; charset=utf-8"];
@@ -200,8 +201,9 @@
     if([status isEqualToString:@"error"]){
         [self showFailedAction];
     }else {
-        int userid = [[result objectForKey:@"user"] objectForKey:@"userid"];
-        //todo
+        //int userid = [[result objectForKey:@"user"] objectForKey:@"userid"];
+        AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+        [appDelegate startMainView];
     }
 }
 

@@ -7,15 +7,19 @@
 //
 
 #import "AppDelegate.h"
+#import <QuartzCore/QuartzCore.h>
 #import "FEStartViewController.h"
 #import "IIViewDeckController.h"
 #import "BOCenterViewController.h"
 #import "BOMenuViewController.h"
 #import "BOEventsViewController.h"
+#import "WrapController.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
+@synthesize wrapController = _wrapController;
+@synthesize navigationController = _navigationController;
 
 - (void)dealloc
 {
@@ -26,23 +30,29 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-
-//    FEStartViewController *startController = [[[FEStartViewController alloc] init] autorelease];
-//    self.window.rootViewController = startController;
-
-//BO Start
-	self.viewController = [[BOCenterViewController alloc] initWithNibName:@"BOCenterViewController" bundle:nil];
-	BOEventsViewController *eventsViewController = [[BOEventsViewController alloc] initWithNibName:@"BOEventsViewController" bundle:nil];
-	BOMenuViewController *menuViewController = [[BOMenuViewController alloc] initWithNibName:@"BOMenuViewController" bundle:nil];
-	self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.viewController];
-	IIViewDeckController *deckController = [[IIViewDeckController alloc] initWithCenterViewController:self.navigationController leftViewController: menuViewController rightViewController:eventsViewController];
-	self.window.rootViewController = deckController;
-	[self customApperance];
-//BO End
+    
+    self.navigationController = [[[UINavigationController alloc] init] autorelease];
+    FEStartViewController *startController = [[[FEStartViewController alloc] init] autorelease];
+    startController.navController = self.navigationController;
+    self.wrapController = [[[WrapController alloc] initWithViewController:startController] autorelease];
+    self.window.rootViewController = self.wrapController;
 
     self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (void)startMainView
+{
+    [self customApperance];
+    
+    BOCenterViewController *centerController = [[BOCenterViewController alloc] initWithNibName:@"BOCenterViewController" bundle:nil];
+    BOEventsViewController *eventsViewController = [[BOEventsViewController alloc] initWithNibName:@"BOEventsViewController" bundle:nil];
+    BOMenuViewController *menuViewController = [[BOMenuViewController alloc] initWithNibName:@"BOMenuViewController" bundle:nil];
+    IIViewDeckController *deckController = [[IIViewDeckController alloc] initWithCenterViewController:centerController leftViewController: menuViewController rightViewController:eventsViewController];
+    deckController.navigationControllerBehavior = IIViewDeckNavigationControllerIntegrated;
+    
+    [self.navigationController pushViewController:deckController animated:YES];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

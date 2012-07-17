@@ -13,6 +13,7 @@
 #import "MBProgressHUD.h"
 #import "JSONKit.h"
 #import "FEActionSheet.h"
+#import "AppDelegate.h"
 
 
 @interface FELoginViewController ()
@@ -23,6 +24,7 @@
 @end
 
 @implementation FELoginViewController
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -168,7 +170,7 @@
     _progress.dimBackground = YES;
     _progress.labelText = @"登录中...";
     
-    NSURL *loginURL = [NSURL URLWithString:@"http://10.0.2.1:8888/event/user/login"];
+    NSURL *loginURL = [NSURL URLWithString:@"http://10.0.2.1:8888/eventserver/user/login"];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:loginURL];
     [request setRequestMethod:@"POST"];
     [request addRequestHeader:@"Content-Type" value:@"application/json; charset=utf-8"];
@@ -193,8 +195,10 @@
     if([status isEqualToString:@"error"]){
         [self showFailedAction];
     }else {
-        int userid = [[result objectForKey:@"user"] objectForKey:@"userid"];
-        //todo
+        //int userid = [[result objectForKey:@"user"] objectForKey:@"userid"];
+        AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+        [appDelegate startMainView];
+        
     }
 }
 

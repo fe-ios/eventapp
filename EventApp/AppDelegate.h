@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WrapController.h"
 
 @class BOCenterViewController;
 
@@ -14,8 +15,9 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-//BO
+@property (strong, nonatomic) WrapController *wrapController;
 @property (strong, nonatomic) UINavigationController *navigationController;
-@property (strong, nonatomic) BOCenterViewController *viewController;
+
+- (void)startMainView;
 
 @end

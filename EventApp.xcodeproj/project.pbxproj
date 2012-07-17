@@ -517,15 +517,15 @@
 		C783E09C15A1518F000B9418 /* EventApp */ = {
 			isa = PBXGroup;
 			children = (
-				8152229E15B534A50089895F /* viewdeck */,
-				8152229415B534530089895F /* quick_add */,
 				C783E0A515A1518F000B9418 /* AppDelegate.h */,
 				C783E0A615A1518F000B9418 /* AppDelegate.m */,
 				C7DCA4EA15AEB8010019DCFB /* images */,
 				C7DF13DD15A2E11000B73A6B /* Libraries */,
 				C7DF13B215A2DB9E00B73A6B /* login */,
+				8152229415B534530089895F /* quick_add */,
 				C7DCA4E315AEB74F0019DCFB /* start_view */,
 				C783E09D15A1518F000B9418 /* Supporting Files */,
+				8152229E15B534A50089895F /* viewdeck */,
 			);
 			path = EventApp;
 			sourceTree = "<group>";
