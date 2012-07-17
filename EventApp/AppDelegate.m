@@ -8,6 +8,10 @@
 
 #import "AppDelegate.h"
 #import "FEStartViewController.h"
+#import "IIViewDeckController.h"
+#import "BOCenterViewController.h"
+#import "BOMenuViewController.h"
+#import "BOEventsViewController.h"
 
 @implementation AppDelegate
 
@@ -22,11 +26,20 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    
-    FEStartViewController *startController = [[[FEStartViewController alloc] init] autorelease];
-    self.window.rootViewController = startController;
-    
-    
+
+//    FEStartViewController *startController = [[[FEStartViewController alloc] init] autorelease];
+//    self.window.rootViewController = startController;
+
+//BO Start
+	self.viewController = [[BOCenterViewController alloc] initWithNibName:@"BOCenterViewController" bundle:nil];
+	BOEventsViewController *eventsViewController = [[BOEventsViewController alloc] initWithNibName:@"BOEventsViewController" bundle:nil];
+	BOMenuViewController *menuViewController = [[BOMenuViewController alloc] initWithNibName:@"BOMenuViewController" bundle:nil];
+	self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.viewController];
+	IIViewDeckController *deckController = [[IIViewDeckController alloc] initWithCenterViewController:self.navigationController leftViewController: menuViewController rightViewController:eventsViewController];
+	self.window.rootViewController = deckController;
+	[self customApperance];
+//BO End
+
     self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
     return YES;
@@ -57,6 +70,26 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void) customApperance
+{
+	//Custom navigation
+	UIImage *customNavigationBarBackground = [[UIImage imageNamed:@"WKNavigationBarBackground"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+	[[UINavigationBar appearance] setBackgroundImage:customNavigationBarBackground forBarMetrics:UIBarMetricsDefault];
+
+	//UIBarButtonItem BackButton
+	UIImage *buttonBack = [[UIImage imageNamed:@"WKBarButtonItemBack"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 18, 15, 16)];
+	UIImage *buttonBackSelected = [[UIImage imageNamed:@"WKBarButtonItemBackSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 18, 15, 16)];
+	[[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBack forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+	[[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBackSelected forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+	
+	//UIBarButtonItem Button
+	UIImage *navButton = [[UIImage imageNamed:@"WKButtonDarkGrey30px"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 5, 15, 5)];
+	UIImage *navButtonSelected = [[UIImage imageNamed:@"WKButtonDarkGrey30pxSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 5, 15, 5)];
+	
+	[[UIBarButtonItem appearance] setBackgroundImage:navButton forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+	[[UIBarButtonItem appearance] setBackgroundImage:navButtonSelected forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
 }
 
 @end

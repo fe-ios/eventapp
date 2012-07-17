@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class BOCenterViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+
+//BO
+@property (strong, nonatomic) UINavigationController *navigationController;
+@property (strong, nonatomic) BOCenterViewController *viewController;
 
 @end
