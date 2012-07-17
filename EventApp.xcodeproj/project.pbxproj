@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		811387A315B514900033D455 /* DAKeyboardControlScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8113879915B514900033D455 /* DAKeyboardControlScrollView.m */; };
+		811387A415B514900033D455 /* DAKeyboardControlTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8113879B15B514900033D455 /* DAKeyboardControlTableView.m */; };
+		811387A515B514900033D455 /* DAKeyboardControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8113879D15B514900033D455 /* DAKeyboardControlView.m */; };
+		811387A615B514900033D455 /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = 811387A015B514900033D455 /* IIViewDeckController.m */; };
+		811387A715B514900033D455 /* WrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 811387A215B514900033D455 /* WrapController.m */; };
 		C783E09715A1518F000B9418 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C783E09615A1518F000B9418 /* UIKit.framework */; };
 		C783E09915A1518F000B9418 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C783E09815A1518F000B9418 /* Foundation.framework */; };
 		C783E09B15A1518F000B9418 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C783E09A15A1518F000B9418 /* CoreGraphics.framework */; };
@@ -89,6 +94,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8113879815B514900033D455 /* DAKeyboardControlScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAKeyboardControlScrollView.h; sourceTree = "<group>"; };
+		8113879915B514900033D455 /* DAKeyboardControlScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAKeyboardControlScrollView.m; sourceTree = "<group>"; };
+		8113879A15B514900033D455 /* DAKeyboardControlTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAKeyboardControlTableView.h; sourceTree = "<group>"; };
+		8113879B15B514900033D455 /* DAKeyboardControlTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAKeyboardControlTableView.m; sourceTree = "<group>"; };
+		8113879C15B514900033D455 /* DAKeyboardControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAKeyboardControlView.h; sourceTree = "<group>"; };
+		8113879D15B514900033D455 /* DAKeyboardControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAKeyboardControlView.m; sourceTree = "<group>"; };
+		8113879F15B514900033D455 /* IIViewDeckController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IIViewDeckController.h; sourceTree = "<group>"; };
+		811387A015B514900033D455 /* IIViewDeckController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IIViewDeckController.m; sourceTree = "<group>"; };
+		811387A115B514900033D455 /* WrapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrapController.h; sourceTree = "<group>"; };
+		811387A215B514900033D455 /* WrapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WrapController.m; sourceTree = "<group>"; };
 		C783E09215A1518F000B9418 /* EventApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EventApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C783E09615A1518F000B9418 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C783E09815A1518F000B9418 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -220,6 +235,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8113879715B514900033D455 /* DAKeyboardControl */ = {
+			isa = PBXGroup;
+			children = (
+				8113879815B514900033D455 /* DAKeyboardControlScrollView.h */,
+				8113879915B514900033D455 /* DAKeyboardControlScrollView.m */,
+				8113879A15B514900033D455 /* DAKeyboardControlTableView.h */,
+				8113879B15B514900033D455 /* DAKeyboardControlTableView.m */,
+				8113879C15B514900033D455 /* DAKeyboardControlView.h */,
+				8113879D15B514900033D455 /* DAKeyboardControlView.m */,
+			);
+			path = DAKeyboardControl;
+			sourceTree = "<group>";
+		};
+		8113879E15B514900033D455 /* ViewDeck */ = {
+			isa = PBXGroup;
+			children = (
+				8113879F15B514900033D455 /* IIViewDeckController.h */,
+				811387A015B514900033D455 /* IIViewDeckController.m */,
+				811387A115B514900033D455 /* WrapController.h */,
+				811387A215B514900033D455 /* WrapController.m */,
+			);
+			path = ViewDeck;
+			sourceTree = "<group>";
+		};
 		C783E08715A1518F000B9418 = {
 			isa = PBXGroup;
 			children = (
@@ -422,6 +461,8 @@
 		C7DF13DD15A2E11000B73A6B /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				8113879715B514900033D455 /* DAKeyboardControl */,
+				8113879E15B514900033D455 /* ViewDeck */,
 				C7DE4DA415B506EB00D9CA77 /* NSDateHelper */,
 				C7DE4D9B15B5063200D9CA77 /* ActionSheet */,
 				C7DF9BE915B3F1B8009A35F1 /* MBProgressHUD */,
@@ -573,6 +614,11 @@
 				C7DE9D3315B00A5400859A32 /* FELoginTableViewCell.m in Sources */,
 				C7DE9D3615B01B9700859A32 /* FERegisterViewController.m in Sources */,
 				C7DF9BFD15B417FE009A35F1 /* FEActionSheet.m in Sources */,
+				811387A315B514900033D455 /* DAKeyboardControlScrollView.m in Sources */,
+				811387A415B514900033D455 /* DAKeyboardControlTableView.m in Sources */,
+				811387A515B514900033D455 /* DAKeyboardControlView.m in Sources */,
+				811387A615B514900033D455 /* IIViewDeckController.m in Sources */,
+				811387A715B514900033D455 /* WrapController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
