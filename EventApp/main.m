@@ -3,16 +3,16 @@
 //  EventApp
 //
 //  Created by zhenglin li on 12-7-2.
-//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012年 snda. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-#import "FEAppDelegate.h"
+#import "AppDelegate.h"
 
 int main(int argc, char *argv[])
 {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([FEAppDelegate class]));
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
 }

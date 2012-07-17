@@ -1,33 +1,33 @@
 //
-//  FEAppDelegate.m
+//  AppDelegate.m
 //  EventApp
 //
 //  Created by zhenglin li on 12-7-2.
-//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012年 snda. All rights reserved.
 //
 
-#import "FEAppDelegate.h"
+#import "AppDelegate.h"
+#import "FEStartViewController.h"
 
-#import "FEViewController.h"
-
-@implementation FEAppDelegate
+@implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize viewController = _viewController;
 
 - (void)dealloc
 {
     [_window release];
-    [_viewController release];
     [super dealloc];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    // Override point for customization after application launch.
-    self.viewController = [[[FEViewController alloc] initWithNibName:@"FEViewController" bundle:nil] autorelease];
-    self.window.rootViewController = self.viewController;
+    
+    FEStartViewController *startController = [[[FEStartViewController alloc] init] autorelease];
+    self.window.rootViewController = startController;
+    
+    
+    self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
     return YES;
 }
