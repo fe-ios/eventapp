@@ -12,7 +12,6 @@
 
 @interface FEStartViewController : UIViewController <UIScrollViewDelegate>
 
-@property(nonatomic, retain) UINavigationController *navController;
 @property(nonatomic, retain) FELoginViewController *loginController;
 @property(nonatomic, retain) FERegisterViewController *registerController;
 

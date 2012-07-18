@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "WrapController.h"
+#import "FEStartViewController.h"
+#import "IIViewDeckController.h"
 
 @class BOCenterViewController;
 
@@ -15,8 +17,8 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) WrapController *wrapController;
 @property (strong, nonatomic) UINavigationController *navigationController;
+@property (strong, nonatomic) IIViewDeckController *viewDeckController;
 
 - (void)startMainView;
 

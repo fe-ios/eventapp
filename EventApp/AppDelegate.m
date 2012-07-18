@@ -18,8 +18,8 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize wrapController = _wrapController;
 @synthesize navigationController = _navigationController;
+@synthesize viewDeckController = _viewDeckController;
 
 - (void)dealloc
 {
@@ -33,10 +33,8 @@
     
     self.navigationController = [[[UINavigationController alloc] init] autorelease];
     FEStartViewController *startController = [[[FEStartViewController alloc] init] autorelease];
-    startController.navController = self.navigationController;
-    self.wrapController = [[[WrapController alloc] initWithViewController:startController] autorelease];
-    self.window.rootViewController = self.wrapController;
-
+    self.window.rootViewController = startController;
+    
     self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
     return YES;
@@ -46,13 +44,15 @@
 {
     [self customApperance];
     
-    BOCenterViewController *centerController = [[BOCenterViewController alloc] initWithNibName:@"BOCenterViewController" bundle:nil];
-    BOEventsViewController *eventsViewController = [[BOEventsViewController alloc] initWithNibName:@"BOEventsViewController" bundle:nil];
-    BOMenuViewController *menuViewController = [[BOMenuViewController alloc] initWithNibName:@"BOMenuViewController" bundle:nil];
-    IIViewDeckController *deckController = [[IIViewDeckController alloc] initWithCenterViewController:centerController leftViewController: menuViewController rightViewController:eventsViewController];
+    BOCenterViewController *centerController = [[[BOCenterViewController alloc] initWithNibName:@"BOCenterViewController" bundle:nil] autorelease];
+    BOEventsViewController *eventsViewController = [[[BOEventsViewController alloc] initWithNibName:@"BOEventsViewController" bundle:nil] autorelease];
+    BOMenuViewController *menuViewController = [[[BOMenuViewController alloc] initWithNibName:@"BOMenuViewController" bundle:nil] autorelease];
+    IIViewDeckController *deckController = [[[IIViewDeckController alloc] initWithCenterViewController:self.navigationController leftViewController: menuViewController rightViewController:eventsViewController] autorelease];
     deckController.navigationControllerBehavior = IIViewDeckNavigationControllerIntegrated;
     
-    [self.navigationController pushViewController:deckController animated:YES];
+    self.viewDeckController = deckController;
+    self.window.rootViewController = self.viewDeckController;
+    [self.navigationController pushViewController:centerController animated:YES];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

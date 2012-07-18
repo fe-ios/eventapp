@@ -77,6 +77,7 @@
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
 	[self dismissModalViewControllerAnimated:YES];
+    NSLog(@"cancel: %@", self.view.window.subviews);
 }
 
 - (IBAction)eventSave:(UIBarButtonItem *)sender {

@@ -9,6 +9,7 @@
 #import "FEStartViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "FELoginViewController.h"
+#import "AppDelegate.h"
 
 @interface FEStartViewController ()
 {
@@ -23,7 +24,6 @@
 
 @implementation FEStartViewController
 
-@synthesize navController = _navController;
 @synthesize loginController = _loginController;
 @synthesize registerController = _registerController;
 
@@ -38,7 +38,6 @@
 
 - (void)dealloc
 {
-    [_navController release];
     [_loginController release];
     [_registerController release];
     [super dealloc];
@@ -118,11 +117,6 @@
     [super viewDidUnload];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    self.navigationController.navigationBarHidden = YES;
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
@@ -141,16 +135,18 @@
 
 - (void) goLogin: (UIButton *)sender
 {
+    AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
+    
     if(!self.loginController){
         FELoginViewController *loginViewController = [[[FELoginViewController alloc] init] autorelease];
         self.loginController = loginViewController;
-        [self.view.window addSubview:self.navController.view];
+        [self.view.window addSubview:appDelegate.navigationController.view];
     }else {
         [self.view.window exchangeSubviewAtIndex:0 withSubviewAtIndex:1];
     }
     
-    if(![self.navController.viewControllers containsObject:self.loginController]){
-        [self.navController pushViewController:self.loginController animated:NO];
+    if(![appDelegate.navigationController.viewControllers containsObject:self.loginController]){
+        [appDelegate.navigationController pushViewController:self.loginController animated:NO];
     }
     
     [[self.view.window.subviews objectAtIndex:0] setHidden:YES];
@@ -165,16 +161,18 @@
 
 - (void) goRegistration: (UIButton *)sender
 {
+    AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
+    
     if(!self.registerController){
         FERegisterViewController *regViewController = [[[FERegisterViewController alloc] init] autorelease];
         self.registerController = regViewController;
-        [self.view.window addSubview:self.navController.view];
+        [self.view.window addSubview:appDelegate.navigationController.view];
     }else {
         [self.view.window exchangeSubviewAtIndex:0 withSubviewAtIndex:1];
     }
     
-    if(![self.navController.viewControllers containsObject:self.registerController]){
-        [self.navController pushViewController:self.registerController animated:NO];
+    if(![appDelegate.navigationController.viewControllers containsObject:self.registerController]){
+        [appDelegate.navigationController pushViewController:self.registerController animated:NO];
     }
     
     [[self.view.window.subviews objectAtIndex:0] setHidden:YES];
@@ -189,7 +187,7 @@
 
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
 {
-    
+    //nothing
 }
 
 @end

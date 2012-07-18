@@ -86,20 +86,19 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    self.toolBar.frame = CGRectMake(0, 480-44, 320, 44);
+    self.toolBar.frame = CGRectMake(0, 460-44, 320, 44);
     [self.navigationController.view addSubview:self.toolBar];
 }
 
 -(void)eventQuickAdd
 {
-	BOEventQuickAddViewController *quickAddViewController = [[BOEventQuickAddViewController alloc] initWithNibName:@"BOEventQuickAddViewController" bundle:nil];
-	[self.navigationController presentModalViewController:quickAddViewController animated:YES];
+    BOEventQuickAddViewController *quickAddViewController = [[BOEventQuickAddViewController alloc] initWithNibName:@"BOEventQuickAddViewController" bundle:nil];
+	[self presentModalViewController:quickAddViewController animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
