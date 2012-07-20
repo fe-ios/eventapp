@@ -13,7 +13,9 @@
 #import "BOCenterViewController.h"
 #import "BOMenuViewController.h"
 #import "BOEventsViewController.h"
-#import "WrapController.h"
+#import "FEEentListController.h"
+#import "ASIHTTPRequest.h"
+#import "ASIDownloadCache.h"
 
 @implementation AppDelegate
 
@@ -24,6 +26,8 @@
 - (void)dealloc
 {
     [_window release];
+    [_navigationController release];
+    [_viewDeckController release];
     [super dealloc];
 }
 
@@ -32,8 +36,13 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     
     self.navigationController = [[[UINavigationController alloc] init] autorelease];
-    FEStartViewController *startController = [[[FEStartViewController alloc] init] autorelease];
-    self.window.rootViewController = startController;
+//    FEStartViewController *startController = [[[FEStartViewController alloc] init] autorelease];
+//    self.window.rootViewController = startController;
+    
+    [self startMainView];
+    
+    [ASIHTTPRequest setDefaultCache:[ASIDownloadCache sharedCache]];
+    [[ASIDownloadCache sharedCache] setDefaultCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];    
     
     self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
@@ -44,7 +53,9 @@
 {
     [self customApperance];
     
-    BOCenterViewController *centerController = [[[BOCenterViewController alloc] initWithNibName:@"BOCenterViewController" bundle:nil] autorelease];
+    FEEentListController *centerController = [[[FEEentListController alloc] init] autorelease];
+    
+    //BOCenterViewController *centerController = [[[BOCenterViewController alloc] initWithNibName:@"BOCenterViewController" bundle:nil] autorelease];
     BOEventsViewController *eventsViewController = [[[BOEventsViewController alloc] initWithNibName:@"BOEventsViewController" bundle:nil] autorelease];
     BOMenuViewController *menuViewController = [[[BOMenuViewController alloc] initWithNibName:@"BOMenuViewController" bundle:nil] autorelease];
     IIViewDeckController *deckController = [[[IIViewDeckController alloc] initWithCenterViewController:self.navigationController leftViewController: menuViewController rightViewController:eventsViewController] autorelease];
