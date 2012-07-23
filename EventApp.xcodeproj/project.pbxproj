@@ -504,15 +504,17 @@
 		8152229E15B534A50089895F /* viewdeck */ = {
 			isa = PBXGroup;
 			children = (
-				8152229F15B534BB0089895F /* BOMenuViewController.h */,
-				815222A015B534BB0089895F /* BOMenuViewController.m */,
-				815222A115B534BB0089895F /* BOMenuViewController.xib */,
-				815222A215B534BB0089895F /* BOEventsViewController.h */,
-				815222A315B534BB0089895F /* BOEventsViewController.m */,
-				815222A415B534BB0089895F /* BOEventsViewController.xib */,
 				815222A515B534BB0089895F /* BOCenterViewController.h */,
 				815222A615B534BB0089895F /* BOCenterViewController.m */,
 				815222A715B534BB0089895F /* BOCenterViewController.xib */,
+				815222A215B534BB0089895F /* BOEventsViewController.h */,
+				815222A315B534BB0089895F /* BOEventsViewController.m */,
+				815222A415B534BB0089895F /* BOEventsViewController.xib */,
+				C7DECB3F15BD20FC00E1DCC7 /* BOMenuTableViewCell.h */,
+				C7DECB4015BD20FC00E1DCC7 /* BOMenuTableViewCell.m */,
+				8152229F15B534BB0089895F /* BOMenuViewController.h */,
+				815222A015B534BB0089895F /* BOMenuViewController.m */,
+				815222A115B534BB0089895F /* BOMenuViewController.xib */,
 			);
 			name = viewdeck;
 			sourceTree = "<group>";
@@ -552,9 +554,6 @@
 		C783E09C15A1518F000B9418 /* EventApp */ = {
 			isa = PBXGroup;
 			children = (
-				C7DECB3F15BD20FC00E1DCC7 /* BOMenuTableViewCell.h */,
-				C7DECB4015BD20FC00E1DCC7 /* BOMenuTableViewCell.m */,
-				C7D39E8415B907D2009EE420 /* resources */,
 				C783E0A515A1518F000B9418 /* AppDelegate.h */,
 				C783E0A615A1518F000B9418 /* AppDelegate.m */,
 				C7E86C6A15B7FE03001960C2 /* event_list */,
@@ -562,6 +561,7 @@
 				C7DF13DD15A2E11000B73A6B /* Libraries */,
 				C7DF13B215A2DB9E00B73A6B /* login */,
 				8152229415B534530089895F /* quick_add */,
+				C7D39E8415B907D2009EE420 /* resources */,
 				C7DCA4E315AEB74F0019DCFB /* start_view */,
 				C783E09D15A1518F000B9418 /* Supporting Files */,
 				8152229E15B534A50089895F /* viewdeck */,
