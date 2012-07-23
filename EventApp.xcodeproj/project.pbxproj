@@ -504,8 +504,6 @@
 		8152229E15B534A50089895F /* viewdeck */ = {
 			isa = PBXGroup;
 			children = (
-				C7DECB3F15BD20FC00E1DCC7 /* BOMenuTableViewCell.h */,
-				C7DECB4015BD20FC00E1DCC7 /* BOMenuTableViewCell.m */,
 				8152229F15B534BB0089895F /* BOMenuViewController.h */,
 				815222A015B534BB0089895F /* BOMenuViewController.m */,
 				815222A115B534BB0089895F /* BOMenuViewController.xib */,
@@ -554,6 +552,8 @@
 		C783E09C15A1518F000B9418 /* EventApp */ = {
 			isa = PBXGroup;
 			children = (
+				C7DECB3F15BD20FC00E1DCC7 /* BOMenuTableViewCell.h */,
+				C7DECB4015BD20FC00E1DCC7 /* BOMenuTableViewCell.m */,
 				C7D39E8415B907D2009EE420 /* resources */,
 				C783E0A515A1518F000B9418 /* AppDelegate.h */,
 				C783E0A615A1518F000B9418 /* AppDelegate.m */,
