@@ -160,6 +160,8 @@
 		C7DE9D2615AFFF3500859A32 /* FELoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DE9D2515AFFF3500859A32 /* FELoginViewController.m */; };
 		C7DE9D3315B00A5400859A32 /* FELoginTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DE9D3215B00A5400859A32 /* FELoginTableViewCell.m */; };
 		C7DE9D3615B01B9700859A32 /* FERegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DE9D3515B01B9700859A32 /* FERegisterViewController.m */; };
+		C7DECB3E15BD1F9D00E1DCC7 /* EventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7DECB3D15BD1F9D00E1DCC7 /* EventTableViewCell.xib */; };
+		C7DECB4115BD211300E1DCC7 /* BOMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DECB4015BD20FC00E1DCC7 /* BOMenuTableViewCell.m */; };
 		C7DF13D715A2DF7D00B73A6B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7DF13D615A2DF7D00B73A6B /* CFNetwork.framework */; };
 		C7DF13D915A2DF8200B73A6B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7DF13D815A2DF8200B73A6B /* SystemConfiguration.framework */; };
 		C7DF13DE15A2E38C00B73A6B /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DF13CD15A2DF3400B73A6B /* ASIHTTPRequest.m */; };
@@ -190,7 +192,6 @@
 		C7E86C6315B7FBD9001960C2 /* eventCellBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E86C5F15B7FBD9001960C2 /* eventCellBackground@2x.png */; };
 		C7E86C6415B7FBD9001960C2 /* pictureGridPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E86C6015B7FBD9001960C2 /* pictureGridPlaceholder.png */; };
 		C7E86C6515B7FBD9001960C2 /* pictureGridPlaceholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E86C6115B7FBD9001960C2 /* pictureGridPlaceholder@2x.png */; };
-		C7E86C6915B7FC33001960C2 /* EventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7E86C6815B7FC33001960C2 /* EventTableViewCell.xib */; };
 		C7E86C6D15B7FE41001960C2 /* FEEventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E86C6C15B7FE41001960C2 /* FEEventTableViewCell.m */; };
 		C7E86C7015B7FE7A001960C2 /* FEEentListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E86C6F15B7FE7A001960C2 /* FEEentListController.m */; };
 		C7E86C7315B80AD6001960C2 /* appBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E86C7115B80AD6001960C2 /* appBackground.png */; };
@@ -377,6 +378,9 @@
 		C7DE9D3215B00A5400859A32 /* FELoginTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FELoginTableViewCell.m; sourceTree = "<group>"; };
 		C7DE9D3415B01B9700859A32 /* FERegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FERegisterViewController.h; sourceTree = "<group>"; };
 		C7DE9D3515B01B9700859A32 /* FERegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FERegisterViewController.m; sourceTree = "<group>"; };
+		C7DECB3D15BD1F9D00E1DCC7 /* EventTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventTableViewCell.xib; sourceTree = "<group>"; };
+		C7DECB3F15BD20FC00E1DCC7 /* BOMenuTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BOMenuTableViewCell.h; sourceTree = "<group>"; };
+		C7DECB4015BD20FC00E1DCC7 /* BOMenuTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BOMenuTableViewCell.m; sourceTree = "<group>"; };
 		C7DF13C115A2DF3400B73A6B /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ASIAuthenticationDialog.h; path = ASIHttpRequest/ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		C7DF13C215A2DF3400B73A6B /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ASIAuthenticationDialog.m; path = ASIHttpRequest/ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		C7DF13C315A2DF3400B73A6B /* ASICacheDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ASICacheDelegate.h; path = ASIHttpRequest/ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -428,7 +432,6 @@
 		C7E86C5F15B7FBD9001960C2 /* eventCellBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "eventCellBackground@2x.png"; path = "images/eventCellBackground@2x.png"; sourceTree = "<group>"; };
 		C7E86C6015B7FBD9001960C2 /* pictureGridPlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pictureGridPlaceholder.png; path = images/pictureGridPlaceholder.png; sourceTree = "<group>"; };
 		C7E86C6115B7FBD9001960C2 /* pictureGridPlaceholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pictureGridPlaceholder@2x.png"; path = "images/pictureGridPlaceholder@2x.png"; sourceTree = "<group>"; };
-		C7E86C6815B7FC33001960C2 /* EventTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventTableViewCell.xib; path = ../EventTableViewCell.xib; sourceTree = "<group>"; };
 		C7E86C6B15B7FE41001960C2 /* FEEventTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEEventTableViewCell.h; sourceTree = "<group>"; };
 		C7E86C6C15B7FE41001960C2 /* FEEventTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEEventTableViewCell.m; sourceTree = "<group>"; };
 		C7E86C6E15B7FE7A001960C2 /* FEEentListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEEentListController.h; sourceTree = "<group>"; };
@@ -501,6 +504,8 @@
 		8152229E15B534A50089895F /* viewdeck */ = {
 			isa = PBXGroup;
 			children = (
+				C7DECB3F15BD20FC00E1DCC7 /* BOMenuTableViewCell.h */,
+				C7DECB4015BD20FC00E1DCC7 /* BOMenuTableViewCell.m */,
 				8152229F15B534BB0089895F /* BOMenuViewController.h */,
 				815222A015B534BB0089895F /* BOMenuViewController.m */,
 				815222A115B534BB0089895F /* BOMenuViewController.xib */,
@@ -845,7 +850,7 @@
 		C7E86C6A15B7FE03001960C2 /* event_list */ = {
 			isa = PBXGroup;
 			children = (
-				C7E86C6815B7FC33001960C2 /* EventTableViewCell.xib */,
+				C7DECB3D15BD1F9D00E1DCC7 /* EventTableViewCell.xib */,
 				C7D39E8E15B951F0009EE420 /* UIAsyncImageView.h */,
 				C7D39E8F15B951F0009EE420 /* UIAsyncImageView.m */,
 				C7E86C6E15B7FE7A001960C2 /* FEEentListController.h */,
@@ -1055,13 +1060,13 @@
 				C7E86C6315B7FBD9001960C2 /* eventCellBackground@2x.png in Resources */,
 				C7E86C6415B7FBD9001960C2 /* pictureGridPlaceholder.png in Resources */,
 				C7E86C6515B7FBD9001960C2 /* pictureGridPlaceholder@2x.png in Resources */,
-				C7E86C6915B7FC33001960C2 /* EventTableViewCell.xib in Resources */,
 				C7E86C7315B80AD6001960C2 /* appBackground.png in Resources */,
 				C7E86C7415B80AD6001960C2 /* appBackground@2x.png in Resources */,
 				C7E86C7915B80F52001960C2 /* peopleCount.png in Resources */,
 				C7E86C7A15B80F52001960C2 /* peopleCount@2x.png in Resources */,
 				C7E86C7B15B80F52001960C2 /* photoCount.png in Resources */,
 				C7E86C7C15B80F52001960C2 /* photoCount@2x.png in Resources */,
+				C7DECB3E15BD1F9D00E1DCC7 /* EventTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1072,6 +1077,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7DECB4115BD211300E1DCC7 /* BOMenuTableViewCell.m in Sources */,
 				C7DF9BEA15B3F2D5009A35F1 /* MBProgressHUD.m in Sources */,
 				C7DF13E915A2E44100B73A6B /* JSONKit.m in Sources */,
 				C7DF13E215A2E42D00B73A6B /* ASIDataCompressor.m in Sources */,

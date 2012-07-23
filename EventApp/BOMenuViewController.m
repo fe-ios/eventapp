@@ -1,23 +1,25 @@
 //
 //  BOMenuViewController.m
-//  Events
+//  EventApp
 //
-//  Created by Yin Zhengbo on 7/12/12.
-//  Copyright (c) 2012 SNDA. All rights reserved.
+//  Created by Yin Zhengbo on 7/19/12.
+//  Copyright (c) 2012 snda. All rights reserved.
 //
 
 #import "BOMenuViewController.h"
-#import "IIViewDeckController.h"
+#import "BOMenuTableViewCell.h"
 
 @interface BOMenuViewController ()
 
 @end
 
 @implementation BOMenuViewController
+@synthesize menuTableView;
+@synthesize navigationBar;
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
@@ -26,13 +28,25 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];	
+    [super viewDidLoad];
+	self.menuTableView.delegate = self;
+	self.menuTableView.dataSource = self;
+	[self.menuTableView setBackgroundColor:[UIColor clearColor]];
+	
+	//account cell
+	UIImage *accountCellBg = [UIImage imageNamed:@"menuAccountCell"];
+	UIButton *accountCellButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+	[accountCellButton setBackgroundImage:accountCellBg forState:UIControlStateNormal];
+	[self.navigationBar addSubview:accountCellButton];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)viewDidUnload
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+	[self setMenuTableView:nil];
+	[self setNavigationBar:nil];
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -40,83 +54,122 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)dealloc {
+	[menuTableView release];
+	[navigationBar release];
+	[super dealloc];
+}
+
 #pragma mark - Table view data source
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section;
+{
+	if (section==0) {
+	  return 0;
+	}
+	return 25;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+	UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
+	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
+	[backgroundImage setImage:[UIImage imageNamed:@"menuSectionHeader"]];
+	[sectionView addSubview:backgroundImage];
+	
+	UILabel *sectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 200, 14)];
+	sectionLabel.textColor = [UIColor colorWithRed:53.0/255.0 green:42.0/255.0 blue:62.0/255.0 alpha:1.0];
+	sectionLabel.font = [UIFont boldSystemFontOfSize:12.0f];
+	sectionLabel.shadowColor = [UIColor colorWithRed:112.0/255.0 green:95.0/255.0 blue:126.0/255.0 alpha:1.0];
+	[sectionLabel setShadowOffset:CGSizeMake(0, 1)];
+	sectionLabel.backgroundColor = [UIColor clearColor];
+	if (section == 0) {
+		sectionView.frame = CGRectMake(0, 0, 0, 0);
+	} else if (section == 1) {
+		sectionLabel.text = @"EVERYBODY";
+	} else if(section == 2){
+		sectionLabel.text = @"ME & MY FRIENDS";
+	} else if(section == 3){
+		sectionLabel.text = @"ABOUT";
+	}
+	[sectionView addSubview:sectionLabel];
+	return sectionView;
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
-    return 1;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    return 2;
+	switch (section) {
+	  case 0:
+		return 1;
+		break;
+	  case 1:
+		return 3;
+		break;
+	  case 2:
+		return 3;
+		break;
+	  case 3:
+		return 1;
+		break;
+	  default:
+		break;
+	}
+	return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (!cell) {
-	  cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    BOMenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	if (!cell) {
+		cell = [[BOMenuTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 	}
-	cell.textLabel.text = @"Demo";
-	// Configure the cell...
-    
+	if (indexPath.section == 0 && indexPath.row == 0) {
+		[cell.menuLabel setText:@"新事件"];
+		[cell.menuIcon setImage:[UIImage imageNamed:@"menuIconPlus"]];
+		[cell.menuIcon setFrame:CGRectMake(10, 11, 22, 22)];
+	}
+	if (indexPath.section == 1 && indexPath.row == 0) {
+		[cell.menuLabel setText:@"热门"];
+  		[cell.menuIcon setImage:[UIImage imageNamed:@"menuIconPopular"]];
+	}
+	if (indexPath.section == 1 && indexPath.row == 1) {
+		[cell.menuLabel setText:@"附近"];
+  		[cell.menuIcon setImage:[UIImage imageNamed:@"menuIconNearby"]];
+	}
+	if (indexPath.section == 1 && indexPath.row == 2) {
+		[cell.menuLabel setText:@"最新"];
+  		[cell.menuIcon setImage:[UIImage imageNamed:@"menuIconRecent"]];
+	}
+	if (indexPath.section == 2 && indexPath.row == 0) {
+		[cell.menuLabel setText:@"关注的"];
+  		[cell.menuIcon setImage:[UIImage imageNamed:@"menuIconLiked"]];
+	}
+	if (indexPath.section == 2 && indexPath.row == 1) {
+		[cell.menuLabel setText:@"我的事件"];
+  		[cell.menuIcon setImage:[UIImage imageNamed:@"menuIconPersonal"]];
+	}
+	if (indexPath.section == 2 && indexPath.row == 2) {
+		[cell.menuLabel setText:@"朋友的事件"];
+  		[cell.menuIcon setImage:[UIImage imageNamed:@"menuIconFriends"]];
+	}
+	if (indexPath.section == 3 && indexPath.row == 0) {
+		[cell.menuLabel setText:@"关于我们"];
+  		[cell.menuIcon setImage:[UIImage imageNamed:@"menuIconAbout"]];
+	}
     return cell;
+	
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+	NSLog(@"%d",indexPath.row);
 }
 
 @end
