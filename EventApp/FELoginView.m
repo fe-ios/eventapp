@@ -30,6 +30,7 @@
     [loginButton release];
     [goRegisterButton release];
     [super dealloc];
+    
 }
 
 @end

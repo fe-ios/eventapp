@@ -23,4 +23,7 @@
 
 - (void)startMainView;
 
+
++ (AppDelegate *)sharedDelegate;
+
 @end

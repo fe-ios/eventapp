@@ -14,6 +14,8 @@
 #import "JSONKit.h"
 #import "FEActionSheet.h"
 #import "AppDelegate.h"
+#import "MD5+Helper.h"
+#import "FEServerAPI.h"
 
 
 @interface FELoginViewController ()
@@ -73,6 +75,7 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    _progress = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -175,12 +178,11 @@
     _progress.dimBackground = YES;
     _progress.labelText = @"登录中...";
     
-    NSURL *loginURL = [NSURL URLWithString:@"http://10.0.2.1:8888/eventserver/user/login"];
-    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:loginURL];
+    NSString *loginURL = [NSString stringWithFormat:@"%@%@", API_BASE, API_LOGIN];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:loginURL]];
     [request setRequestMethod:@"POST"];
-    [request addRequestHeader:@"Content-Type" value:@"application/json; charset=utf-8"];
     [request setPostValue:[self getTableCellTextAtRow:0] forKey:@"username"];
-    [request setPostValue:[self getTableCellTextAtRow:1] forKey:@"password"];
+    [request setPostValue:[[self getTableCellTextAtRow:1] md5] forKey:@"password"];
     request.delegate = self;
     [request startAsynchronous];
     [request release];
@@ -199,8 +201,16 @@
 
     if([status isEqualToString:@"error"]){
         [self showFailedAction];
-    }else {
-        //int userid = [[result objectForKey:@"user"] objectForKey:@"userid"];
+    }else if([status isEqualToString:@"success"]){
+        //save user info
+        int userid = [[[result objectForKey:@"user"] objectForKey:@"userid"] intValue];
+        NSString *username = [[result objectForKey:@"user"] objectForKey:@"username"];
+        NSString *password = [[result objectForKey:@"user"] objectForKey:@"password"];
+        [[NSUserDefaults standardUserDefaults] setInteger:userid forKey:@"userid"];
+        [[NSUserDefaults standardUserDefaults] setValue:username forKey:@"username"];
+        [[NSUserDefaults standardUserDefaults] setValue:password forKey:@"password"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
         AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
         [appDelegate startMainView];
         

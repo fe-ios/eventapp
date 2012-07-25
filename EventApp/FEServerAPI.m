@@ -9,7 +9,4 @@
 #import "FEServerAPI.h"
 
 
-@implementation FEServerAPI
-
-@end
 

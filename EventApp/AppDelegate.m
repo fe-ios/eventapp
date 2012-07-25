@@ -15,7 +15,12 @@
 #import "BOEventsViewController.h"
 #import "FEEentListController.h"
 #import "ASIHTTPRequest.h"
+#import "ASIFormDataRequest.h"
 #import "ASIDownloadCache.h"
+#import "FEUploadController.h"
+#import "FEServerAPI.h"
+#import "JSONKit.h"
+
 
 @implementation AppDelegate
 
@@ -36,10 +41,16 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     
     self.navigationController = [[[UINavigationController alloc] init] autorelease];
-//    FEStartViewController *startController = [[[FEStartViewController alloc] init] autorelease];
-//    self.window.rootViewController = startController;
     
-    [self startMainView];
+    if(![self checkAutoLogin]){
+        FEStartViewController *startController = [[[FEStartViewController alloc] init] autorelease];
+        self.window.rootViewController = startController;
+    }
+    
+    //[self startMainView];
+    //UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"event_demo"]];
+    //[self.window addSubview:img];
+    //self.window.rootViewController = [[[FEUploadController alloc] init] autorelease];
     
     [ASIHTTPRequest setDefaultCache:[ASIDownloadCache sharedCache]];
     [[ASIDownloadCache sharedCache] setDefaultCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];    
@@ -60,10 +71,56 @@
     BOMenuViewController *menuViewController = [[[BOMenuViewController alloc] initWithNibName:@"BOMenuViewController" bundle:nil] autorelease];
     IIViewDeckController *deckController = [[[IIViewDeckController alloc] initWithCenterViewController:self.navigationController leftViewController: menuViewController rightViewController:eventsViewController] autorelease];
     deckController.navigationControllerBehavior = IIViewDeckNavigationControllerIntegrated;
+    deckController.leftLedge = 60;
     
     self.viewDeckController = deckController;
     self.window.rootViewController = self.viewDeckController;
     [self.navigationController pushViewController:centerController animated:YES];
+}
+
+- (BOOL)checkAutoLogin
+{
+    int userid = [[NSUserDefaults standardUserDefaults] integerForKey:@"userid"];
+    NSString *username = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
+    NSString *password = [[NSUserDefaults standardUserDefaults] stringForKey:@"password"];
+    NSLog(@"check: %d, %@, %@", userid, username, password);
+    if(username != nil && password != nil){
+        [self login:username withPassword:password];
+        return YES;
+    }
+    return NO;
+}
+
+- (void)login:(NSString *)username withPassword:(NSString *)password
+{
+    NSString *loginURL = [NSString stringWithFormat:@"%@%@", API_BASE, API_LOGIN];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:loginURL]];
+    [request setRequestMethod:@"POST"];
+    [request setPostValue:username forKey:@"username"];
+    [request setPostValue:password forKey:@"password"];
+    request.delegate = self;
+    [request startAsynchronous];
+    [request release];
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    NSLog(@"%d, %@", request.responseStatusCode, request.responseString);
+    
+    NSDictionary *result = [request.responseString objectFromJSONString];
+    NSString *status = [result objectForKey:@"status"];
+    
+    if([status isEqualToString:@"success"]){
+        [self startMainView];
+    }
+}
+
+- (void)logout
+{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userid"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"username"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
+    //todo
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -111,6 +168,11 @@
 	
 	[[UIBarButtonItem appearance] setBackgroundImage:navButton forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 	[[UIBarButtonItem appearance] setBackgroundImage:navButtonSelected forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+}
+
++ (AppDelegate *)sharedDelegate
+{
+    return (AppDelegate *) [[UIApplication sharedApplication] delegate];
 }
 
 @end

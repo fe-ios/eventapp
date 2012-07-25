@@ -10,6 +10,12 @@
 #import "FEEventTableViewCell.h"
 #import "AppDelegate.h"
 #import "UIAsyncImageView.h"
+#import "FECreateEventController.h"
+#import "FEServerAPI.h"
+#import "ASIHTTPRequest.h"
+#import "JSONKit.h"
+#import "FEEvent.h"
+#import "MBProgressHUD.h"
 
 
 @interface FEEentListController ()
@@ -26,18 +32,18 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        self.eventData = [[NSMutableArray alloc] initWithObjects:
-                          @"http://ww4.sinaimg.cn/mw205/89b2cba9jw1dtfy4uzsokj.jpg", 
-                          @"http://ww4.sinaimg.cn/mw205/a325727fjw1dtfy6ajt9cj.jpg", 
-                          @"http://ww1.sinaimg.cn/mw205/a325727fjw1dtfxvvy7svj.jpg",
-                          @"http://ww2.sinaimg.cn/mw205/89b2cba9jw1dtes823b8zj.jpg",
-                          @"http://ww2.sinaimg.cn/mw205/87ede685jw1dtfylqslh1j.jpg", 
-                          @"http://ww1.sinaimg.cn/mw205/7b94d863jw1dteshud99aj.jpg",
-                          @"http://ww3.sinaimg.cn/mw205/83c51a57jw1dtdpf0vlldj.jpg",
-                          @"http://ww1.sinaimg.cn/mw205/82e54aaejw1dtdom0x7u6j.jpg",
-                          @"http://ww4.sinaimg.cn/mw205/5c703123jw1dtdnh3hob5j.jpg",
-                          @"http://ww3.sinaimg.cn/mw205/6830bbefgw1dtbr36tjqfj.jpg",
-                          nil];
+//        self.eventData = [[NSMutableArray alloc] initWithObjects:
+//                          @"http://ww4.sinaimg.cn/mw205/89b2cba9jw1dtfy4uzsokj.jpg", 
+//                          @"http://ww4.sinaimg.cn/mw205/a325727fjw1dtfy6ajt9cj.jpg", 
+//                          @"http://ww1.sinaimg.cn/mw205/a325727fjw1dtfxvvy7svj.jpg",
+//                          @"http://ww2.sinaimg.cn/mw205/89b2cba9jw1dtes823b8zj.jpg",
+//                          @"http://ww2.sinaimg.cn/mw205/87ede685jw1dtfylqslh1j.jpg", 
+//                          @"http://ww1.sinaimg.cn/mw205/7b94d863jw1dteshud99aj.jpg",
+//                          @"http://ww3.sinaimg.cn/mw205/83c51a57jw1dtdpf0vlldj.jpg",
+//                          @"http://ww1.sinaimg.cn/mw205/82e54aaejw1dtdom0x7u6j.jpg",
+//                          @"http://ww4.sinaimg.cn/mw205/5c703123jw1dtdnh3hob5j.jpg",
+//                          @"http://ww3.sinaimg.cn/mw205/6830bbefgw1dtbr36tjqfj.jpg",
+//                          nil];
     }
     return self;
 }
@@ -57,6 +63,16 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.downloadQueue = [[[NSOperationQueue alloc] init] autorelease];
+    
+    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"WKNavigationSidebarButton"] style:UIBarButtonItemStylePlain target:self.viewDeckController action:@selector(toggleLeftView)];
+	self.navigationItem.leftBarButtonItem = leftBarButton;
+    
+    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuIconPlus"] style:UIBarButtonItemStylePlain target:self action:@selector(createEvent)];
+	self.navigationItem.rightBarButtonItem = rightBarButton;
+    
+    
+    
+    [self loadEvent];
 }
 
 - (void)viewDidUnload
@@ -78,7 +94,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return self.eventData.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -104,9 +120,10 @@
         cell.pictureCountLabel.font = font;
     }
     
-    NSString *url = [self.eventData objectAtIndex:indexPath.row];
-    cell.eventNameLabel.text = @"事件标题";
-    [cell.eventImage1 loadImageAsync:url withQueue:self.downloadQueue];
+    FEEvent *event = [self.eventData objectAtIndex:indexPath.row];
+    
+    cell.eventNameLabel.text = event.name;
+    //[cell.eventImage1 loadImageAsync:url withQueue:self.downloadQueue];
     
     return cell;
 }
@@ -133,6 +150,43 @@
     if(!decelerate){
         self.downloadQueue.maxConcurrentOperationCount = 5;
     }
+}
+
+- (void)loadEvent
+{
+    MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:[AppDelegate sharedDelegate].window animated:YES];
+    progress.mode = MBProgressHUDModeIndeterminate;
+    progress.dimBackground = YES;
+    
+    NSString *loadURL = [NSString stringWithFormat:@"%@%@", API_BASE, API_EVENT_PUBLIC];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:loadURL]];
+    request.delegate = self;
+    request.didFinishSelector = @selector(loadEventFinished:);
+    request.didFailSelector = @selector(loadEventFailed:);
+    [request startSynchronous];
+}
+
+- (void)loadEventFinished:(ASIHTTPRequest *)request
+{
+    [MBProgressHUD hideHUDForView:[AppDelegate sharedDelegate].window animated:YES];
+    
+    NSDictionary *result = [request.responseString objectFromJSONString];
+    self.eventData = [FEEvent translateJSONEvents:[result objectForKey:@"event"]];
+    [self.tableView reloadData];
+}
+
+- (void)loadEventFailed:(ASIHTTPRequest *)request
+{
+    NSLog(@"loadEventFailed: %@", request.url);
+}
+
+- (void)createEvent
+{
+    FECreateEventController *createEventController = [[FECreateEventController alloc] init];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:createEventController];
+    [self.navigationController presentModalViewController:navController animated:YES];
+    [createEventController release];
+    [navController release];
 }
 
 @end

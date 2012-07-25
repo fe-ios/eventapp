@@ -1,30 +1,27 @@
 //
-//  FERegisterViewController.m
+//  FECreateEventController.m
 //  EventApp
 //
-//  Created by zhenglin li on 12-7-13.
+//  Created by zhenglin li on 12-7-24.
 //  Copyright (c) 2012年 snda. All rights reserved.
 //
 
-#import "AppDelegate.h"
-#import <QuartzCore/QuartzCore.h>
-#import "FERegisterViewController.h"
+#import "FECreateEventController.h"
 #import "FELoginTableViewCell.h"
-#import "ASIFormDataRequest.h"
-#import "MBProgressHUD.h"
-#import "JSONKit.h"
 #import "FEActionSheet.h"
-#import "MD5+Helper.h"
+#import "NSDate+Helper.h"
 #import "FEServerAPI.h"
+#import "ASIFormDataRequest.h"
+#import "JSONKit.h"
 
-@interface FERegisterViewController ()
+@interface FECreateEventController ()
 {
-    MBProgressHUD* _progress;
+    FEActionSheet* _dateSheet;
 }
 
 @end
 
-@implementation FERegisterViewController
+@implementation FECreateEventController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -35,11 +32,17 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [_dateSheet release];
+    [super dealloc];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    self.title = @"注册";
+    self.title = @"新活动";
     self.navigationController.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"MainBackground_wood.jpg"]];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavigationBarBackground"] forBarMetrics:UIBarMetricsDefault];
     
@@ -61,11 +64,11 @@
     //right button
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     rightButton.frame = CGRectMake(0, 0, 55, 31);
-    [rightButton setTitle:@"注册" forState:UIControlStateNormal];
+    [rightButton setTitle:@"创建" forState:UIControlStateNormal];
     rightButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
     [rightButton setBackgroundImage:[[UIImage imageNamed:@"ButtonBlue30px"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
     [rightButton setBackgroundImage:[[UIImage imageNamed:@"ButtonBlue30pxSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
-    [rightButton addTarget:self action:@selector(registerAction) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton addTarget:self action:@selector(createAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:rightButton] autorelease];
 }
 
@@ -93,7 +96,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int maxRow = 2;
+    int maxRow = 1;
     return indexPath.row == 0 || indexPath.row == maxRow ? 47 : 44;
 }
 
@@ -112,7 +115,7 @@
     
     switch (indexPath.row) {
         case 0:
-            cell.fieldLabel.text = @"用户名";
+            cell.fieldLabel.text = @"名称";
             cell.fieldInput.placeholder = @"必填";
             cell.fieldInput.delegate = self;
             cell.fieldInput.returnKeyType = UIReturnKeyNext;
@@ -120,20 +123,20 @@
             break;
             
         case 1:
-            cell.fieldLabel.text = @"密码";
+            cell.fieldLabel.text = @"时间";
             cell.fieldInput.placeholder = @"必填";
             cell.fieldInput.delegate = self;
             cell.fieldInput.returnKeyType = UIReturnKeyNext;
-            cell.fieldInput.secureTextEntry = YES;
             cell.fieldInput.tag = 1;
+            //[cell.fieldInput addTarget:self action:@selector(getDateAction) forControlEvents:UIControlEventEditingDidBegin];
+            cell.fieldInput.inputView = [self getDateAction];
             break;
             
         case 2:
-            cell.fieldLabel.text = @"重复密码";
+            cell.fieldLabel.text = @"地点";
             cell.fieldInput.placeholder = @"必填";
             cell.fieldInput.delegate = self;
             cell.fieldInput.returnKeyType = UIReturnKeyGo;
-            cell.fieldInput.secureTextEntry = YES;
             cell.fieldInput.tag = 2;
             break;
             
@@ -148,41 +151,101 @@
 {
     if(textField.tag < 2){
         UIResponder *nextResponder = [self.tableView viewWithTag:(textField.tag+1)];
-        [nextResponder becomeFirstResponder];
+        if(((UITextField *)nextResponder).tag == 1){
+            [nextResponder becomeFirstResponder];
+        }else {
+            [nextResponder becomeFirstResponder];
+        }
     }else {
         [textField resignFirstResponder];
-        [self registerAction];
     }
     return NO;
 }
 
-- (void)backAction
+- (FEActionSheet *)getDateAction
 {
-    [self.navigationController popViewControllerAnimated:NO];
-    
-    [self.view.window exchangeSubviewAtIndex:0 withSubviewAtIndex:1];
-    [[self.view.window.subviews objectAtIndex:0] setHidden:YES];
-    [[self.view.window.subviews objectAtIndex:1] setHidden:NO];
-    
-    CATransition *transition = [CATransition animation];
-    transition.delegate = self;
-    transition.type = kCATransitionPush;
-    transition.subtype = kCATransitionFromLeft;
-    [self.view.window.layer addAnimation:transition forKey:@"pushAnimaition"];
+    if(_dateSheet == nil){
+        FEActionSheet *action = [[[FEActionSheet alloc] init] autorelease];
+        [action setActionSheetStyle:UIActionSheetStyleDefault];
+        action.backgroundImage = [[UIImage imageNamed:@"ToolbarBackground"] resizableImageWithCapInsets:UIEdgeInsetsMake(30, 10, 37-30-1, 10)];
+        action.frame = CGRectMake(0, 480-216-44, 320, 216+44);
+        _dateSheet = [action retain];
+        
+        UIDatePicker *datePicker = [[[UIDatePicker alloc] init] autorelease];
+        datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+        CGRect pickerRect = datePicker.bounds;
+        pickerRect.origin.y = -44;
+        datePicker.bounds = pickerRect;
+        datePicker.tag = 1;
+        [action addSubview:datePicker];
+        
+        UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        cancelBtn.frame = CGRectMake(190, 8, 55, 31);
+        [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+        cancelBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
+        [cancelBtn setBackgroundImage:[[UIImage imageNamed:@"ButtonDarkGrey30px"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
+        [cancelBtn setBackgroundImage:[[UIImage imageNamed:@"ButtonDarkGrey30pxSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
+        [cancelBtn addTarget:self action:@selector(cancelDateAction) forControlEvents:UIControlEventTouchUpInside];
+        [action addSubview:cancelBtn];
+        
+        UIButton *confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        confirmBtn.frame = CGRectMake(190+55+10, 8, 55, 31);
+        [confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
+        confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
+        [confirmBtn setBackgroundImage:[[UIImage imageNamed:@"ButtonDarkGrey30px"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
+        [confirmBtn setBackgroundImage:[[UIImage imageNamed:@"ButtonDarkGrey30pxSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
+        [confirmBtn addTarget:self action:@selector(confirmDateAction) forControlEvents:UIControlEventTouchUpInside];
+        [action addSubview:confirmBtn];
+    }
+    return _dateSheet;
 }
 
-- (void)registerAction
+- (void)confirmDateAction
 {
-    _progress = [MBProgressHUD showHUDAddedTo:self.view.window animated:YES];
-    _progress.mode = MBProgressHUDModeIndeterminate;
-    _progress.dimBackground = YES;
-    _progress.labelText = @"注册中...";
+    if(_dateSheet != nil){
+        UIDatePicker *datePicker = (UIDatePicker *)[_dateSheet viewWithTag:1];
+        UITextField *textField = (UITextField *)[self.tableView viewWithTag:1];
+        textField.text = [datePicker.date stringWithFormat:@"YY-MM-dd HH:mm"];
+        [(UITextField *)[self.tableView viewWithTag:2] becomeFirstResponder];
+    }
+}
+
+- (void)cancelDateAction
+{
+    if(_dateSheet != nil){
+        //[_dateSheet dismissWithClickedButtonIndex:0 animated:YES];
+        [(UITextField *)[self.tableView viewWithTag:1] resignFirstResponder];
+    }
+}
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //nothing
+}
+
+- (void)backAction
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)createAction
+{
+    int user_id = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userid"] intValue];
+    NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:@"password"];
+    NSString *eventName = [self getTableCellTextAtRow:0];
+    NSDate *startDate = [NSDate dateFromString:[self getTableCellTextAtRow:1] withFormat:@"YY-MM-dd HH:mm"];
+    NSString *venue = [self getTableCellTextAtRow:2];
     
-    NSString *registerURL = [NSString stringWithFormat:@"%@%@", API_BASE, API_REGISTER];
-    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:registerURL]];
+    NSString *eventURL = [NSString stringWithFormat:@"%@%@", API_BASE, API_EVENT_CREATE];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:eventURL]];
     [request setRequestMethod:@"POST"];
-    [request setPostValue:[self getTableCellTextAtRow:0] forKey:@"username"];
-    [request setPostValue:[[self getTableCellTextAtRow:1] md5] forKey:@"password"];
+    [request setPostValue:[NSNumber numberWithInt:user_id] forKey:@"user_id"];
+    [request setPostValue:password forKey:@"password"];
+    [request setPostValue:eventName forKey:@"event_name"];
+    [request setPostValue:[startDate stringWithFormat:@"YY-MM-dd HH:mm"] forKey:@"start_date"];
+    [request setPostValue:venue forKey:@"venue"];
     request.delegate = self;
     [request startAsynchronous];
     [request release];
@@ -191,56 +254,14 @@
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
     NSLog(@"%d, %@", request.responseStatusCode, request.responseString);
-    if(_progress){
-        [_progress removeFromSuperview];
-        _progress = nil;
-    }
     
     NSDictionary *result = [request.responseString objectFromJSONString];
     NSString *status = [result objectForKey:@"status"];
     
-    if([status isEqualToString:@"error"]){
-        [self showFailedAction];
-    }else if([status isEqualToString:@"success"]){
-        //save user info
-        int userid = [[[result objectForKey:@"user"] objectForKey:@"userid"] intValue];
-        NSString *username = [[result objectForKey:@"user"] objectForKey:@"username"];
-        NSString *password = [[result objectForKey:@"user"] objectForKey:@"password"];
-        [[NSUserDefaults standardUserDefaults] setInteger:userid forKey:@"userid"];
-        [[NSUserDefaults standardUserDefaults] setValue:username forKey:@"username"];
-        [[NSUserDefaults standardUserDefaults] setValue:password forKey:@"password"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-        [appDelegate startMainView];
+    if([status isEqualToString:@"success"]){
+        [self dismissModalViewControllerAnimated:YES];
     }
-}
 
-- (void)requestFailed:(ASIHTTPRequest *)request
-{
-    NSLog(@"%@ failed.", request.url);
-    if(_progress){
-        [_progress removeFromSuperview];
-        _progress = nil;
-    }
-    [self showFailedAction];
-}
-
-- (void) showFailedAction
-{
-    FEActionSheet *action = [[FEActionSheet alloc] init];
-    action.title = @"注册失败，请重试。";
-    int buttonIndex = [action addButtonWithTitle:@"取消"];
-    [action setActionSheetStyle:UIActionSheetStyleDefault];
-    action.backgroundImage = [[UIImage imageNamed:@"ToolbarBackground"] resizableImageWithCapInsets:UIEdgeInsetsMake(30, 10, 37-30-1, 10)];
-    [action showInView:self.view.window];
-    
-    UIButton *button = [action buttonAtIndex:buttonIndex];
-    [button setBackgroundImage:[UIImage imageNamed:@"ActionSheetButtonBackgroundCancel"] forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage imageNamed:@"ActionSheetButtonBackgroundCancelSelected"] forState:UIControlStateHighlighted];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [button setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
-    button.titleLabel.shadowOffset = CGSizeMake(0, 1);
 }
 
 -(NSString *) getTableCellTextAtRow: (int)row
