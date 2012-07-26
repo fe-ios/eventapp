@@ -31,6 +31,9 @@
 		C7D39E9015B951F0009EE420 /* UIAsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D39E8F15B951F0009EE420 /* UIAsyncImageView.m */; };
 		C7D6DF9D15BF912300D29E27 /* MD5+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D6DF9C15BF912300D29E27 /* MD5+Helper.m */; };
 		C7D6DFB115BFDB3600D29E27 /* FEEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D6DFB015BFDB3600D29E27 /* FEEvent.m */; };
+		C7D6DFBC15BFFF2400D29E27 /* pullArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = C7D6DFBA15BFFF2400D29E27 /* pullArrow.png */; };
+		C7D6DFBD15BFFF2400D29E27 /* pullArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7D6DFBB15BFFF2400D29E27 /* pullArrow@2x.png */; };
+		C7DC64E515C10E9A00801E91 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DC64E415C10E6600801E91 /* EGORefreshTableHeaderView.m */; };
 		C7DCA4E815AEB7930019DCFB /* FEStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DCA4E615AEB7930019DCFB /* FEStartViewController.m */; };
 		C7DCA4E915AEB7930019DCFB /* FEStartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7DCA4E715AEB7930019DCFB /* FEStartViewController.xib */; };
 		C7DCA4F015AEBA180019DCFB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7DCA4EF15AEBA180019DCFB /* QuartzCore.framework */; };
@@ -292,6 +295,10 @@
 		C7D6DF9C15BF912300D29E27 /* MD5+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MD5+Helper.m"; sourceTree = "<group>"; };
 		C7D6DFAF15BFDB3600D29E27 /* FEEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEEvent.h; sourceTree = "<group>"; };
 		C7D6DFB015BFDB3600D29E27 /* FEEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEEvent.m; sourceTree = "<group>"; };
+		C7D6DFBA15BFFF2400D29E27 /* pullArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pullArrow.png; path = EventApp/images/pullArrow.png; sourceTree = "<group>"; };
+		C7D6DFBB15BFFF2400D29E27 /* pullArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pullArrow@2x.png"; path = "EventApp/images/pullArrow@2x.png"; sourceTree = "<group>"; };
+		C7DC64E315C10E6600801E91 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EGORefreshTableHeaderView.h; path = RefreshTableHeaderView/EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
+		C7DC64E415C10E6600801E91 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EGORefreshTableHeaderView.m; path = RefreshTableHeaderView/EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		C7DCA4E515AEB7930019DCFB /* FEStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEStartViewController.h; sourceTree = "<group>"; };
 		C7DCA4E615AEB7930019DCFB /* FEStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEStartViewController.m; sourceTree = "<group>"; };
 		C7DCA4E715AEB7930019DCFB /* FEStartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FEStartViewController.xib; sourceTree = "<group>"; };
@@ -705,6 +712,15 @@
 			name = data;
 			sourceTree = "<group>";
 		};
+		C7D6DFC415C0018100D29E27 /* RefreshTableHeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				C7DC64E315C10E6600801E91 /* EGORefreshTableHeaderView.h */,
+				C7DC64E415C10E6600801E91 /* EGORefreshTableHeaderView.m */,
+			);
+			name = RefreshTableHeaderView;
+			sourceTree = "<group>";
+		};
 		C7DCA4E315AEB74F0019DCFB /* start_view */ = {
 			isa = PBXGroup;
 			children = (
@@ -814,6 +830,8 @@
 				C7DECB9D15BD273E00E1DCC7 /* photoCount@2x.png */,
 				C7DECB9E15BD273E00E1DCC7 /* pictureGridPlaceholder.png */,
 				C7DECB9F15BD273E00E1DCC7 /* pictureGridPlaceholder@2x.png */,
+				C7D6DFBA15BFFF2400D29E27 /* pullArrow.png */,
+				C7D6DFBB15BFFF2400D29E27 /* pullArrow@2x.png */,
 				C7DECBA015BD273E00E1DCC7 /* RoundedTableViewCellLightBottom.png */,
 				C7DECBA115BD273E00E1DCC7 /* RoundedTableViewCellLightBottom@2x.png */,
 				C7DECBA215BD273E00E1DCC7 /* RoundedTableViewCellLightMiddle.png */,
@@ -984,14 +1002,15 @@
 		C7DF13DD15A2E11000B73A6B /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				C7D6DF9A15BF90E500D29E27 /* MD5 */,
-				8113879715B514900033D455 /* DAKeyboardControl */,
-				8113879E15B514900033D455 /* ViewDeck */,
-				C7DE4DA415B506EB00D9CA77 /* NSDateHelper */,
 				C7DE4D9B15B5063200D9CA77 /* ActionSheet */,
-				C7DF9BE915B3F1B8009A35F1 /* MBProgressHUD */,
 				C7DF13D515A2DF3C00B73A6B /* ASIHttpRequest */,
+				8113879715B514900033D455 /* DAKeyboardControl */,
 				C7DF13DC15A2E10200B73A6B /* JSONKit */,
+				C7DF9BE915B3F1B8009A35F1 /* MBProgressHUD */,
+				C7D6DF9A15BF90E500D29E27 /* MD5 */,
+				C7DE4DA415B506EB00D9CA77 /* NSDateHelper */,
+				C7D6DFC415C0018100D29E27 /* RefreshTableHeaderView */,
+				8113879E15B514900033D455 /* ViewDeck */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1270,6 +1289,8 @@
 				C7DECCBC15BD273E00E1DCC7 /* WKWorkspaceTableViewCellBackgroundSelected@2x.png in Resources */,
 				C7DECCBD15BD273E00E1DCC7 /* WKWorkspaceTableViewHeaderFooter.jpg in Resources */,
 				C7DECCBE15BD273E00E1DCC7 /* WKWorkspaceTableViewHeaderFooter@2x.jpg in Resources */,
+				C7D6DFBC15BFFF2400D29E27 /* pullArrow.png in Resources */,
+				C7D6DFBD15BFFF2400D29E27 /* pullArrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1280,6 +1301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7DC64E515C10E9A00801E91 /* EGORefreshTableHeaderView.m in Sources */,
 				C7E25A0215BE8FBF00496F94 /* NSDate+Helper.m in Sources */,
 				C7DECCBF15BD27BC00E1DCC7 /* FELoginView.m in Sources */,
 				C7DECB4115BD211300E1DCC7 /* BOMenuTableViewCell.m in Sources */,

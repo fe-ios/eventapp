@@ -19,6 +19,11 @@
 
 
 @interface FEEentListController ()
+{
+    EGORefreshTableHeaderView* _updateHeaderView;
+    BOOL _updating;
+    NSDate* _lastUpdateDate;
+}
 
 @end
 
@@ -70,7 +75,20 @@
     UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuIconPlus"] style:UIBarButtonItemStylePlain target:self action:@selector(createEvent)];
 	self.navigationItem.rightBarButtonItem = rightBarButton;
     
+    if(_updateHeaderView == nil)
+    {
+        EGORefreshTableHeaderView *headerView = [[EGORefreshTableHeaderView alloc] init];
+        headerView.frame = CGRectMake(10, -40, 320-20, 40);
+		headerView.delegate = self;
+		[self.tableView addSubview:headerView];
+		_updateHeaderView = headerView;
+		[headerView release];
+	}
+	
+    _lastUpdateDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastUpdateDate"];
+    NSLog(@"lastdate: %@", _lastUpdateDate);
     
+	[_updateHeaderView refreshLastUpdatedDate];
     
     [self loadEvent];
 }
@@ -150,13 +168,21 @@
     if(!decelerate){
         self.downloadQueue.maxConcurrentOperationCount = 5;
     }
+    [_updateHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{	
+	[_updateHeaderView egoRefreshScrollViewDidScroll:scrollView];
 }
 
 - (void)loadEvent
 {
-    MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:[AppDelegate sharedDelegate].window animated:YES];
-    progress.mode = MBProgressHUDModeIndeterminate;
-    progress.dimBackground = YES;
+    _updating = YES;
+    
+//    MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:[AppDelegate sharedDelegate].window animated:YES];
+//    progress.mode = MBProgressHUDModeIndeterminate;
+//    progress.dimBackground = YES;
     
     NSString *loadURL = [NSString stringWithFormat:@"%@%@", API_BASE, API_EVENT_PUBLIC];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:loadURL]];
@@ -168,7 +194,14 @@
 
 - (void)loadEventFinished:(ASIHTTPRequest *)request
 {
-    [MBProgressHUD hideHUDForView:[AppDelegate sharedDelegate].window animated:YES];
+    _updating = NO;
+    [_lastUpdateDate release];
+    _lastUpdateDate = [[NSDate date] retain];
+    [[NSUserDefaults standardUserDefaults] setObject:_lastUpdateDate forKey:@"lastUpdateDate"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [_updateHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+    
+    //[MBProgressHUD hideHUDForView:[AppDelegate sharedDelegate].window animated:YES];
     
     NSDictionary *result = [request.responseString objectFromJSONString];
     self.eventData = [FEEvent translateJSONEvents:[result objectForKey:@"event"]];
@@ -188,5 +221,23 @@
     [createEventController release];
     [navController release];
 }
+
+#pragma mark - EGORefreshTableHeaderDelegate Methods
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
+{
+	[self loadEvent];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
+{
+	return _updating;
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view
+{
+	return _lastUpdateDate;
+}
+
 
 @end
