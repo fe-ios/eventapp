@@ -35,6 +35,7 @@ typedef enum
 @property(nonatomic, assign) id<EGORefreshTableHeaderDelegate> delegate;
 
 - (void)refreshLastUpdatedDate;
+- (void)setState:(EGOPullRefreshState)aState;
 - (void)egoRefreshScrollViewDidScroll:(UIScrollView *)scrollView;
 - (void)egoRefreshScrollViewDidEndDragging:(UIScrollView *)scrollView;
 - (void)egoRefreshScrollViewDataSourceDidFinishedLoading:(UIScrollView *)scrollView;

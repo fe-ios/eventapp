@@ -21,7 +21,10 @@
 @interface FEEentListController ()
 {
     EGORefreshTableHeaderView* _updateHeaderView;
+    EGORefreshTableFooterView* _updateFooterView;
+    
     BOOL _updating;
+    BOOL _loadingMore;
     NSDate* _lastUpdateDate;
 }
 
@@ -36,7 +39,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        self.eventData = [NSMutableArray arrayWithObjects:nil];
 //        self.eventData = [[NSMutableArray alloc] initWithObjects:
 //                          @"http://ww4.sinaimg.cn/mw205/89b2cba9jw1dtfy4uzsokj.jpg", 
 //                          @"http://ww4.sinaimg.cn/mw205/a325727fjw1dtfy6ajt9cj.jpg", 
@@ -78,18 +81,27 @@
     if(_updateHeaderView == nil)
     {
         EGORefreshTableHeaderView *headerView = [[EGORefreshTableHeaderView alloc] init];
-        headerView.frame = CGRectMake(10, -40, 320-20, 40);
+        headerView.frame = CGRectMake(10, -50, 320-20, 50);
 		headerView.delegate = self;
 		[self.tableView addSubview:headerView];
 		_updateHeaderView = headerView;
 		[headerView release];
 	}
+    
+    if(_updateFooterView == nil)
+    {
+        EGORefreshTableFooterView *footerView = [[EGORefreshTableFooterView alloc] init];
+		footerView.delegate = self;
+		[self.tableView addSubview:footerView];
+		_updateFooterView = footerView;
+		[footerView release];
+	}
 	
     _lastUpdateDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastUpdateDate"];
-    NSLog(@"lastdate: %@", _lastUpdateDate);
-    
 	[_updateHeaderView refreshLastUpdatedDate];
     
+    [_updateHeaderView setState:EGOOPullRefreshLoading];
+    [self.tableView setContentInset:UIEdgeInsetsMake(_updateHeaderView.frame.size.height, 0, 0, 0)];
     [self loadEvent];
 }
 
@@ -169,11 +181,13 @@
         self.downloadQueue.maxConcurrentOperationCount = 5;
     }
     [_updateHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    [_updateFooterView egoRefreshScrollViewDidEndDragging:scrollView];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {	
 	[_updateHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    [_updateFooterView egoRefreshScrollViewDidScroll:scrollView];
 }
 
 - (void)loadEvent
@@ -184,9 +198,16 @@
 //    progress.mode = MBProgressHUDModeIndeterminate;
 //    progress.dimBackground = YES;
     
+    FEEvent *firstEvent = self.eventData.count > 0 ? (FEEvent *) [self.eventData objectAtIndex:0] : nil;
     NSString *loadURL = [NSString stringWithFormat:@"%@%@", API_BASE, API_EVENT_PUBLIC];
+    if(_loadingMore || firstEvent == nil){
+        loadURL = [loadURL stringByAppendingFormat:@"?start=%d&count=10", self.eventData.count];
+    }else {
+        loadURL = [loadURL stringByAppendingFormat:@"?start=%d", firstEvent.event_id];
+    }
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:loadURL]];
     request.delegate = self;
+    request.cachePolicy = ASIDoNotWriteToCacheCachePolicy;
     request.didFinishSelector = @selector(loadEventFinished:);
     request.didFailSelector = @selector(loadEventFailed:);
     [request startSynchronous];
@@ -199,18 +220,35 @@
     _lastUpdateDate = [[NSDate date] retain];
     [[NSUserDefaults standardUserDefaults] setObject:_lastUpdateDate forKey:@"lastUpdateDate"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    [_updateHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
     
     //[MBProgressHUD hideHUDForView:[AppDelegate sharedDelegate].window animated:YES];
     
     NSDictionary *result = [request.responseString objectFromJSONString];
-    self.eventData = [FEEvent translateJSONEvents:[result objectForKey:@"event"]];
+    NSMutableArray *events = [FEEvent translateJSONEvents:[result objectForKey:@"event"]];
+    BOOL hasData = events.count > 0;
+    if(_loadingMore){
+        if(hasData){
+            [self.eventData addObjectsFromArray:events];
+        }
+        _loadingMore = NO;
+        [_updateFooterView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView scrollFooterBack:!hasData];
+    }else {
+        if(hasData){
+            [self.eventData insertObjects:events atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, events.count)]];
+        }
+        [_updateHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+    }
+    
     [self.tableView reloadData];
+    
+    _updateFooterView.frame = CGRectMake(10, self.tableView.contentSize.height, 320-20, 40);
 }
 
 - (void)loadEventFailed:(ASIHTTPRequest *)request
 {
     NSLog(@"loadEventFailed: %@", request.url);
+    [_updateHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+    [_updateFooterView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView scrollFooterBack:YES];
 }
 
 - (void)createEvent
@@ -226,7 +264,7 @@
 
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
 {
-	[self loadEvent];
+    [self loadEvent];
 }
 
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
@@ -239,5 +277,17 @@
 	return _lastUpdateDate;
 }
 
+#pragma mark - EGORefreshTableFooterDelegate Methods
+
+- (void)egoRefreshTableFooterDidTriggerRefresh:(EGORefreshTableHeaderView*)view
+{
+    _loadingMore = YES;
+    [self loadEvent];
+}
+
+- (BOOL)egoRefreshTableFooterDataSourceIsLoading:(EGORefreshTableHeaderView*)view
+{
+	return _loadingMore;
+}
 
 @end

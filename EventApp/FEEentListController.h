@@ -10,8 +10,9 @@
 #import <Foundation/Foundation.h>
 #import "ASIHTTPRequest.h"
 #import "EGORefreshTableHeaderView.h"
+#import "EGORefreshTableFooterView.h"
 
-@interface FEEentListController : UITableViewController <ASIHTTPRequestDelegate, EGORefreshTableHeaderDelegate>
+@interface FEEentListController : UITableViewController <ASIHTTPRequestDelegate, EGORefreshTableHeaderDelegate, EGORefreshTableFooterDelegate>
 
 
 @property(nonatomic, retain) NSOperationQueue *downloadQueue;

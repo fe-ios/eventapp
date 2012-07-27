@@ -31,7 +31,7 @@
 		self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		//self.backgroundColor = [UIColor blackColor];
 
-		UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30.0f, RefreshViewHight - 22.0f, self.frame.size.width-30.0f, 20.0f)];
+		UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30.0f, RefreshViewHight - 17.0f, self.frame.size.width-30.0f, 20.0f)];
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		label.font = [UIFont systemFontOfSize:12.0f];
 		label.textColor = TEXT_COLOR;
@@ -43,7 +43,7 @@
 		_lastUpdatedLabel=label;
 		[label release];
 		
-		label = [[UILabel alloc] initWithFrame:CGRectMake(30.0f, 0.0f, self.frame.size.width-30.0f, 20.0f)];
+		label = [[UILabel alloc] initWithFrame:CGRectMake(30.0f, 5.0f, self.frame.size.width-30.0f, 20.0f)];
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		label.font = [UIFont boldSystemFontOfSize:13.0f];
 		label.textColor = TEXT_COLOR;
@@ -56,7 +56,7 @@
 		[label release];
 		
 		CALayer *layer = [CALayer layer];
-		layer.frame = CGRectMake(5.0f, (RefreshViewHight - 37.0f)*0.5, 21.0f, 37.0f);
+		layer.frame = CGRectMake(5.0f, 5.0f, 21.0f, 37.0f);
 		layer.contentsGravity = kCAGravityResizeAspect;
 		layer.contents = (id)[UIImage imageNamed:@"pullArrow.png"].CGImage;
 		
@@ -68,9 +68,10 @@
 		
 		[[self layer] addSublayer:layer];
 		_arrowImage = layer;
+        _arrowImage.transform = CATransform3DMakeRotation((M_PI / 180.0) * 180.0f, 0.0f, 0.0f, 1.0f);
 		
 		UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-		view.frame = CGRectMake(5.0f, (RefreshViewHight - 20.0f)*0.5, 20.0f, 20.0f);
+		view.frame = CGRectMake(5.0f, 15.0f, 20.0f, 20.0f);
 		[self addSubview:view];
 		_activityView = view;
 		[view release];
@@ -111,7 +112,7 @@
 			_statusLabel.text = NSLocalizedString(@"松开即可更新...", @"松开即可更新...");
 			[CATransaction begin];
 			[CATransaction setAnimationDuration:FLIP_ANIMATION_DURATION];
-			_arrowImage.transform = CATransform3DMakeRotation((M_PI / 180.0) * 180.0f, 0.0f, 0.0f, 1.0f);
+			_arrowImage.transform = CATransform3DIdentity;
 			[CATransaction commit];
 			break;
             
@@ -119,7 +120,7 @@
 			if (_state == EGOOPullRefreshPulling) {
 				[CATransaction begin];
 				[CATransaction setAnimationDuration:FLIP_ANIMATION_DURATION];
-				_arrowImage.transform = CATransform3DIdentity;
+                _arrowImage.transform = CATransform3DMakeRotation((M_PI / 180.0) * 180.0f, 0.0f, 0.0f, 1.0f);
 				[CATransaction commit];
 			}
 			
@@ -128,7 +129,7 @@
 			[CATransaction begin];
 			[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions]; 
 			_arrowImage.hidden = NO;
-			_arrowImage.transform = CATransform3DIdentity;
+			_arrowImage.transform = CATransform3DMakeRotation((M_PI / 180.0) * 180.0f, 0.0f, 0.0f, 1.0f);
 			[CATransaction commit];
 			
 			[self refreshLastUpdatedDate];
