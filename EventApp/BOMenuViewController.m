@@ -35,7 +35,10 @@
 	[self.menuTableView setBackgroundColor:[UIColor clearColor]];
 	
 	//account cell
-	UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 64)];
+	UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 88)];
+	UIImageView *logo = [[UIImageView alloc] initWithFrame:CGRectMake(49, 20, 102, 56)];
+	logo.image = [UIImage imageNamed:@"tmp_logo"];
+	[tableHeaderView addSubview:logo];
 	self.menuTableView.tableHeaderView = tableHeaderView;
 }
 
