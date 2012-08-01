@@ -1,1 +1,2 @@
-*.pbxproj binary
+*.xcodexproj -crlf -diff -merge
+*.pbxproj -crlf -diff -merge
