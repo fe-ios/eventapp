@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-static NSString *const API_BASE = @"http://localhost/eventserver";
+static NSString *const API_BASE = @"http://10.0.2.1:8888/eventserver";
 static NSString *const API_LOGIN = @"/user/login";
 static NSString *const API_LOGOUT = @"/user/logout";
 static NSString *const API_REGISTER = @"/user/register";
