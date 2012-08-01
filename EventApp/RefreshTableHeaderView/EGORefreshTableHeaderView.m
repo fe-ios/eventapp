@@ -8,7 +8,7 @@
 #import "EGORefreshTableHeaderView.h"
 
 #define RefreshViewHight 40.0f
-#define TEXT_COLOR [UIColor whiteColor]
+#define TEXT_COLOR [UIColor blackColor]
 #define FLIP_ANIMATION_DURATION 0.18f
 
 
@@ -35,7 +35,7 @@
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		label.font = [UIFont systemFontOfSize:12.0f];
 		label.textColor = TEXT_COLOR;
-		label.shadowColor = [UIColor blackColor];
+		label.shadowColor = [UIColor whiteColor];
 		label.shadowOffset = CGSizeMake(1.0f, 1.0f);
 		label.backgroundColor = [UIColor clearColor];
 		label.textAlignment = UITextAlignmentCenter;
@@ -47,7 +47,7 @@
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		label.font = [UIFont boldSystemFontOfSize:13.0f];
 		label.textColor = TEXT_COLOR;
-		label.shadowColor = [UIColor blackColor];
+		label.shadowColor = [UIColor whiteColor];
 		label.shadowOffset = CGSizeMake(1.0f, 1.0f);
 		label.backgroundColor = [UIColor clearColor];
 		label.textAlignment = UITextAlignmentCenter;
@@ -58,7 +58,7 @@
 		CALayer *layer = [CALayer layer];
 		layer.frame = CGRectMake(5.0f, 5.0f, 21.0f, 37.0f);
 		layer.contentsGravity = kCAGravityResizeAspect;
-		layer.contents = (id)[UIImage imageNamed:@"pullArrow.png"].CGImage;
+		layer.contents = (id)[UIImage imageNamed:@"pullArrowDark.png"].CGImage;
 		
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
 		if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
@@ -70,7 +70,7 @@
 		_arrowImage = layer;
         _arrowImage.transform = CATransform3DMakeRotation((M_PI / 180.0) * 180.0f, 0.0f, 0.0f, 1.0f);
 		
-		UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+		UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 		view.frame = CGRectMake(5.0f, 15.0f, 20.0f, 20.0f);
 		[self addSubview:view];
 		_activityView = view;

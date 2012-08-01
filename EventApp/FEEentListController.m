@@ -22,6 +22,7 @@
 {
     EGORefreshTableHeaderView* _updateHeaderView;
     EGORefreshTableFooterView* _updateFooterView;
+    UIImageView* _footerView;
     
     BOOL _updating;
     BOOL _loadingMore;
@@ -67,7 +68,8 @@
 {
     [super viewDidLoad];
     
-    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"appBackground"]];
+    self.title = NSLocalizedString(@"所有活动", @"所有活动");
+    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dotGreyBackground"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.downloadQueue = [[[NSOperationQueue alloc] init] autorelease];
@@ -92,16 +94,24 @@
     {
         EGORefreshTableFooterView *footerView = [[EGORefreshTableFooterView alloc] init];
 		footerView.delegate = self;
+        footerView.hidden = YES;
 		[self.tableView addSubview:footerView];
 		_updateFooterView = footerView;
 		[footerView release];
 	}
+    
+    if(_footerView == nil){
+        _footerView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"eventTableFooter"]] autorelease];
+        _footerView.hidden = YES;
+        [self.tableView addSubview:_footerView];
+    }
 	
     _lastUpdateDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastUpdateDate"];
 	[_updateHeaderView refreshLastUpdatedDate];
     
     [_updateHeaderView setState:EGOOPullRefreshLoading];
     [self.tableView setContentInset:UIEdgeInsetsMake(_updateHeaderView.frame.size.height, 0, 0, 0)];
+    
     [self loadEvent];
 }
 
@@ -129,7 +139,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 189;
+    return 80;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -139,21 +149,31 @@
     if(cell == nil){
         NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:@"EventTableViewCell" owner:nil options:nil];
         cell = (FEEventTableViewCell *)[nibs objectAtIndex:0];
-        cell.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"eventCellBackground"]] autorelease];
+        cell.backgroundView = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"eventTabelCellBackground"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 120, 50, 120)]] autorelease];
         UIImage *placeholder = [UIImage imageNamed:@"pictureGridPlaceholder"];
         cell.eventImage1.image = placeholder;
-        cell.eventImage2.image = placeholder;
-        cell.eventImage3.image = placeholder;
-        cell.eventImage4.image = placeholder;
+//        cell.eventImage2.image = placeholder;
+//        cell.eventImage3.image = placeholder;
+//        cell.eventImage4.image = placeholder;
         UIFont *font = [UIFont fontWithName:@"CuprumFFU" size:13.0f];
         cell.peopleCountLabel.font = font;
         cell.pictureCountLabel.font = font;
+        
+        //[cell.eventImage1 setRoundBorder];
+        //[[cell.subviews objectAtIndex:1] setHidden:YES];
     }
     
     FEEvent *event = [self.eventData objectAtIndex:indexPath.row];
     
     cell.eventNameLabel.text = event.name;
-    //[cell.eventImage1 loadImageAsync:url withQueue:self.downloadQueue];
+    if(event.logoURL.length == 0){
+        cell.eventImage1.image = [UIImage imageNamed:@"pictureGridPlaceholder"];
+    }else if (![event.logoURL isEqualToString:cell.eventImage1.imagePath]) {
+        cell.eventImage1.image = [UIImage imageNamed:@"pictureGridPlaceholder"];
+        [cell.eventImage1 loadImageAsync:event.logoURL withQueue:self.downloadQueue];
+    }else {
+        NSLog(@"logo exist: %@", event.name);
+    }
     
     return cell;
 }
@@ -210,7 +230,7 @@
     request.cachePolicy = ASIDoNotWriteToCacheCachePolicy;
     request.didFinishSelector = @selector(loadEventFinished:);
     request.didFailSelector = @selector(loadEventFailed:);
-    [request startSynchronous];
+    [request startAsynchronous];
 }
 
 - (void)loadEventFinished:(ASIHTTPRequest *)request
@@ -228,20 +248,46 @@
     BOOL hasData = events.count > 0;
     if(_loadingMore){
         if(hasData){
-            [self.eventData addObjectsFromArray:events];
+            [self tableView:self.tableView insertDataAndRefresh:events startIndex:self.eventData.count];
+//            [self.eventData addObjectsFromArray:events];
+//            [self.tableView beginUpdates];
+//            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:10 inSection:0], [NSIndexPath indexPathForRow:11 inSection:0], [NSIndexPath indexPathForRow:12 inSection:0], [NSIndexPath indexPathForRow:13 inSection:0], [NSIndexPath indexPathForRow:14 inSection:0], nil] withRowAnimation:UITableViewRowAnimationNone];
+//            [self.tableView endUpdates];
         }
+        
         _loadingMore = NO;
         [_updateFooterView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView scrollFooterBack:!hasData];
     }else {
         if(hasData){
-            [self.eventData insertObjects:events atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, events.count)]];
+            [self tableView:self.tableView insertDataAndRefresh:events startIndex:0];
+//            [self.eventData insertObjects:events atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, events.count)]];
+//            [self.tableView reloadData];
         }
         [_updateHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
     }
     
-    [self.tableView reloadData];
+    float contentHeight = 80*self.eventData.count;
+    _updateFooterView.hidden = contentHeight < 300;
+    _updateFooterView.frame = CGRectMake(10, contentHeight, self.tableView.frame.size.width-20, 40);
+    _footerView.hidden = self.eventData.count == 0;
+    _footerView.frame = CGRectMake(0, contentHeight, self.tableView.frame.size.width, 4);
+}
+
+- (void)tableView:(UITableView *)tableView insertDataAndRefresh:(NSArray *)newData startIndex:(int)startIndex
+{
+    [self.eventData insertObjects:newData atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(startIndex, newData.count)]];
     
-    _updateFooterView.frame = CGRectMake(10, self.tableView.contentSize.height, 320-20, 40);
+    [UIView setAnimationsEnabled:NO];
+    [tableView beginUpdates];
+    NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
+    for(int i = 0; i < newData.count; i++){
+        [indexPaths addObject:[NSIndexPath indexPathForRow:startIndex+i inSection:0]];
+    }
+    [tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+    [indexPaths release];
+    
+    [tableView endUpdates];
+    [UIView setAnimationsEnabled:YES];
 }
 
 - (void)loadEventFailed:(ASIHTTPRequest *)request

@@ -12,6 +12,10 @@
 
 @interface UIImageView (Async) <ASIHTTPRequestDelegate>
 
+@property(nonatomic, copy, readonly) NSString *imagePath;
+
 - (void)loadImageAsync:(NSString *)imageURL withQueue:(NSOperationQueue *)queue;
+
+- (void)setRoundBorder;
 
 @end

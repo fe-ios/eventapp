@@ -7,21 +7,26 @@
 //
 
 #import "UIAsyncImageView.h"
+#import <QuartzCore/QuartzCore.h>
+
 
 @implementation UIImageView (Async)
 
 
+NSString* _imagePath;
+
 - (void)loadImageAsync:(NSString *)imageURL withQueue:(NSOperationQueue *)queue
 {
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imageURL]];
+    [_imagePath release];
+    _imagePath = [imageURL copy];
+    
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:_imagePath]];
     request.delegate = self;
     request.cacheStoragePolicy = ASICachePermanentlyCacheStoragePolicy;
     request.didStartSelector = @selector(didStartDownload:);
     request.didFinishSelector = @selector(didFinishDownload:);
     request.didFailSelector = @selector(didFailDownload:);
     [queue addOperation:request];
-    
-    self.image = [UIImage imageNamed:@"pictureGridPlaceholder"];
 }
 
 - (void)didStartDownload:(ASIHTTPRequest *)request
@@ -31,28 +36,36 @@
 
 - (void)didFinishDownload:(ASIHTTPRequest *)request
 {
-    NSLog(@"download finish: %@", request.url);
+    //NSLog(@"download finish: %@", request.url);
     if(request.responseStatusCode == 200 || request.responseStatusCode == 304){
         if(request.didUseCachedResponse){
-            NSLog(@"download from cache");
+            //NSLog(@"download from cache");
         }
         self.image = [UIImage imageWithData:request.responseData];
-        [self setNeedsLayout];
+        //[self setNeedsLayout];
     }
 }
 
 - (void)didFailDownload:(ASIHTTPRequest *)request
 {
-    NSLog(@"download fail: %@", request.url);
+    //NSLog(@"download fail: %@", request.url);
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (void)setRoundBorder
 {
-    // Drawing code
+    self.layer.cornerRadius = 6.0;
+    self.layer.masksToBounds = YES;
+    self.layer.borderColor = [UIColor colorWithRed:174.0/255 green:174.0/255 blue:174.0/255 alpha:1.0].CGColor;
+    self.layer.borderWidth = 1.0;
+    self.layer.shadowColor = [UIColor whiteColor].CGColor;
+    self.layer.shadowOffset = CGSizeMake(5.0, 5.0);
+    self.layer.shadowRadius = 3.0;
+    self.layer.shadowOpacity = 1.0;
 }
-*/
+
+- (NSString *)imagePath
+{
+    return _imagePath;
+}
 
 @end

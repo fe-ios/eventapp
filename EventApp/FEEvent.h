@@ -18,6 +18,7 @@
 @property(nonatomic, retain) NSDate *end_date;
 @property(nonatomic, retain) NSString *venue;
 @property(nonatomic, retain) NSString *detail;
+@property(nonatomic, retain) NSString *logoURL;
 
 - (id)initWithJSONObject:(NSDictionary *)object;
 

@@ -48,7 +48,7 @@
     }
     
     //[self startMainView];
-    //UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"event_demo"]];
+    //UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"leather"]];
     //[self.window addSubview:img];
     //self.window.rootViewController = [[[FEUploadController alloc] init] autorelease];
     
@@ -153,21 +153,21 @@
 - (void) customApperance
 {
 	//Custom navigation
-	UIImage *customNavigationBarBackground = [[UIImage imageNamed:@"WKNavigationBarBackground"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+	UIImage *customNavigationBarBackground = [[UIImage imageNamed:@"navBackground"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
 	[[UINavigationBar appearance] setBackgroundImage:customNavigationBarBackground forBarMetrics:UIBarMetricsDefault];
 
 	//UIBarButtonItem BackButton
-	UIImage *buttonBack = [[UIImage imageNamed:@"WKBarButtonItemBack"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 18, 15, 16)];
+	UIImage *buttonBack = [[UIImage imageNamed:@"navigationBarSquareButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 18, 15, 16)];
 	UIImage *buttonBackSelected = [[UIImage imageNamed:@"WKBarButtonItemBackSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 18, 15, 16)];
 	[[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBack forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 	[[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBackSelected forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
 	
 	//UIBarButtonItem Button
-	UIImage *navButton = [[UIImage imageNamed:@"WKButtonDarkGrey30px"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 5, 15, 5)];
-	UIImage *navButtonSelected = [[UIImage imageNamed:@"WKButtonDarkGrey30pxSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 5, 15, 5)];
+	UIImage *navButton = [[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 5, 15, 5)];
+	//UIImage *navButtonSelected = [[UIImage imageNamed:@"WKButtonDarkGrey30pxSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 5, 15, 5)];
 	
 	[[UIBarButtonItem appearance] setBackgroundImage:navButton forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-	[[UIBarButtonItem appearance] setBackgroundImage:navButtonSelected forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+	//[[UIBarButtonItem appearance] setBackgroundImage:navButtonSelected forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
 }
 
 + (AppDelegate *)sharedDelegate

@@ -38,6 +38,20 @@
 		C7DCA4E815AEB7930019DCFB /* FEStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DCA4E615AEB7930019DCFB /* FEStartViewController.m */; };
 		C7DCA4E915AEB7930019DCFB /* FEStartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7DCA4E715AEB7930019DCFB /* FEStartViewController.xib */; };
 		C7DCA4F015AEBA180019DCFB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7DCA4EF15AEBA180019DCFB /* QuartzCore.framework */; };
+		C7DCE8BD15C6395D004536FA /* leather@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DCE8BC15C6395D004536FA /* leather@2x.png */; };
+		C7DCE8BF15C68FF9004536FA /* navBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DCE8BE15C68FF9004536FA /* navBackground@2x.png */; };
+		C7DCE8C115C6942C004536FA /* navButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DCE8C015C6942C004536FA /* navButton@2x.png */; };
+		C7DCE8C315C69AF7004536FA /* dotGreyBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DCE8C215C69AF7004536FA /* dotGreyBackground@2x.png */; };
+		C7DD168615C28A610067E2D6 /* navigationBarBackgroundRetro.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DD168415C28A610067E2D6 /* navigationBarBackgroundRetro.png */; };
+		C7DD168715C28A610067E2D6 /* navigationBarBackgroundRetro@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DD168515C28A610067E2D6 /* navigationBarBackgroundRetro@2x.png */; };
+		C7DD168B15C28BA30067E2D6 /* mainBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DD168915C28BA30067E2D6 /* mainBackground.png */; };
+		C7DD168C15C28BA30067E2D6 /* mainBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DD168A15C28BA30067E2D6 /* mainBackground@2x.png */; };
+		C7DD168F15C28C110067E2D6 /* navigationBarSquareButton.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DD168D15C28C110067E2D6 /* navigationBarSquareButton.png */; };
+		C7DD169015C28C110067E2D6 /* navigationBarSquareButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DD168E15C28C110067E2D6 /* navigationBarSquareButton@2x.png */; };
+		C7DD169315C28E8E0067E2D6 /* pullArrowDark.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DD169115C28E8E0067E2D6 /* pullArrowDark.png */; };
+		C7DD169415C28E8E0067E2D6 /* pullArrowDark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DD169215C28E8E0067E2D6 /* pullArrowDark@2x.png */; };
+		C7DD169B15C2A8650067E2D6 /* contentBg.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DD169915C2A8650067E2D6 /* contentBg.png */; };
+		C7DD169C15C2A8650067E2D6 /* contentBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DD169A15C2A8650067E2D6 /* contentBg@2x.png */; };
 		C7DE4D9D15B5068900D9CA77 /* FELoginTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7DE4D9C15B5068900D9CA77 /* FELoginTableViewCell.xib */; };
 		C7DE9D2615AFFF3500859A32 /* FELoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DE9D2515AFFF3500859A32 /* FELoginViewController.m */; };
 		C7DE9D3315B00A5400859A32 /* FELoginTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DE9D3215B00A5400859A32 /* FELoginTableViewCell.m */; };
@@ -244,6 +258,8 @@
 		C7DF13ED15A2E4AA00B73A6B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7DF13EC15A2E4AA00B73A6B /* MobileCoreServices.framework */; };
 		C7DF9BEA15B3F2D5009A35F1 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DF9BE715B3F1AF009A35F1 /* MBProgressHUD.m */; };
 		C7DF9BFD15B417FE009A35F1 /* FEActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DF9BFC15B417FE009A35F1 /* FEActionSheet.m */; };
+		C7E1118415C78F3200C464F6 /* eventTabelCellBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E1118315C78F3100C464F6 /* eventTabelCellBackground@2x.png */; };
+		C7E1118815C7AAF000C464F6 /* eventTableFooter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E1118715C7AAF000C464F6 /* eventTableFooter@2x.png */; };
 		C7E259FD15BE805300496F94 /* FECreateEventController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E259FC15BE805300496F94 /* FECreateEventController.m */; };
 		C7E25A0215BE8FBF00496F94 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DE4DA315B506E600D9CA77 /* NSDate+Helper.m */; };
 		C7E6608415A41A4F000FC01A /* FERegisterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7E6608315A41A4F000FC01A /* FERegisterView.xib */; };
@@ -279,7 +295,7 @@
 		815222A515B534BB0089895F /* BOCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOCenterViewController.h; sourceTree = "<group>"; };
 		815222A615B534BB0089895F /* BOCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOCenterViewController.m; sourceTree = "<group>"; };
 		815222A715B534BB0089895F /* BOCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BOCenterViewController.xib; sourceTree = "<group>"; };
-		C783E09215A1518F000B9418 /* EventApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EventApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C783E09215A1518F000B9418 /* 活动达人.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "活动达人.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C783E09615A1518F000B9418 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C783E09815A1518F000B9418 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C783E09A15A1518F000B9418 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -306,6 +322,20 @@
 		C7DCA4E615AEB7930019DCFB /* FEStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEStartViewController.m; sourceTree = "<group>"; };
 		C7DCA4E715AEB7930019DCFB /* FEStartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FEStartViewController.xib; sourceTree = "<group>"; };
 		C7DCA4EF15AEBA180019DCFB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C7DCE8BC15C6395D004536FA /* leather@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leather@2x.png"; sourceTree = "<group>"; };
+		C7DCE8BE15C68FF9004536FA /* navBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navBackground@2x.png"; path = "EventApp/images2/navBackground@2x.png"; sourceTree = "<group>"; };
+		C7DCE8C015C6942C004536FA /* navButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navButton@2x.png"; path = "EventApp/images2/navButton@2x.png"; sourceTree = "<group>"; };
+		C7DCE8C215C69AF7004536FA /* dotGreyBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dotGreyBackground@2x.png"; path = "EventApp/images2/dotGreyBackground@2x.png"; sourceTree = "<group>"; };
+		C7DD168415C28A610067E2D6 /* navigationBarBackgroundRetro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = navigationBarBackgroundRetro.png; path = EventApp/images/navigationBarBackgroundRetro.png; sourceTree = "<group>"; };
+		C7DD168515C28A610067E2D6 /* navigationBarBackgroundRetro@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navigationBarBackgroundRetro@2x.png"; path = "EventApp/images/navigationBarBackgroundRetro@2x.png"; sourceTree = "<group>"; };
+		C7DD168915C28BA30067E2D6 /* mainBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mainBackground.png; path = EventApp/images/mainBackground.png; sourceTree = "<group>"; };
+		C7DD168A15C28BA30067E2D6 /* mainBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mainBackground@2x.png"; path = "EventApp/images/mainBackground@2x.png"; sourceTree = "<group>"; };
+		C7DD168D15C28C110067E2D6 /* navigationBarSquareButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = navigationBarSquareButton.png; path = EventApp/images/navigationBarSquareButton.png; sourceTree = "<group>"; };
+		C7DD168E15C28C110067E2D6 /* navigationBarSquareButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navigationBarSquareButton@2x.png"; path = "EventApp/images/navigationBarSquareButton@2x.png"; sourceTree = "<group>"; };
+		C7DD169115C28E8E0067E2D6 /* pullArrowDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pullArrowDark.png; path = EventApp/images/pullArrowDark.png; sourceTree = "<group>"; };
+		C7DD169215C28E8E0067E2D6 /* pullArrowDark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pullArrowDark@2x.png"; path = "EventApp/images/pullArrowDark@2x.png"; sourceTree = "<group>"; };
+		C7DD169915C2A8650067E2D6 /* contentBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = contentBg.png; path = EventApp/images/contentBg.png; sourceTree = "<group>"; };
+		C7DD169A15C2A8650067E2D6 /* contentBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "contentBg@2x.png"; path = "EventApp/images/contentBg@2x.png"; sourceTree = "<group>"; };
 		C7DE4D9C15B5068900D9CA77 /* FELoginTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FELoginTableViewCell.xib; sourceTree = "<group>"; };
 		C7DE4DA215B506E600D9CA77 /* NSDate+Helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
 		C7DE4DA315B506E600D9CA77 /* NSDate+Helper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
@@ -534,6 +564,8 @@
 		C7DF9BE715B3F1AF009A35F1 /* MBProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		C7DF9BFB15B417FE009A35F1 /* FEActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEActionSheet.h; sourceTree = "<group>"; };
 		C7DF9BFC15B417FE009A35F1 /* FEActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEActionSheet.m; sourceTree = "<group>"; };
+		C7E1118315C78F3100C464F6 /* eventTabelCellBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "eventTabelCellBackground@2x.png"; path = "EventApp/images2/eventTabelCellBackground@2x.png"; sourceTree = "<group>"; };
+		C7E1118715C7AAF000C464F6 /* eventTableFooter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "eventTableFooter@2x.png"; path = "EventApp/images2/eventTableFooter@2x.png"; sourceTree = "<group>"; };
 		C7E259FB15BE805300496F94 /* FECreateEventController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FECreateEventController.h; sourceTree = "<group>"; };
 		C7E259FC15BE805300496F94 /* FECreateEventController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FECreateEventController.m; sourceTree = "<group>"; };
 		C7E6608315A41A4F000FC01A /* FERegisterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FERegisterView.xib; sourceTree = "<group>"; };
@@ -637,7 +669,7 @@
 		C783E09315A1518F000B9418 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C783E09215A1518F000B9418 /* EventApp.app */,
+				C783E09215A1518F000B9418 /* 活动达人.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -757,6 +789,22 @@
 		C7DECB5015BD272300E1DCC7 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				C7E1118715C7AAF000C464F6 /* eventTableFooter@2x.png */,
+				C7DCE8C215C69AF7004536FA /* dotGreyBackground@2x.png */,
+				C7E1118315C78F3100C464F6 /* eventTabelCellBackground@2x.png */,
+				C7DCE8C015C6942C004536FA /* navButton@2x.png */,
+				C7DCE8BE15C68FF9004536FA /* navBackground@2x.png */,
+				C7DCE8BC15C6395D004536FA /* leather@2x.png */,
+				C7DD169115C28E8E0067E2D6 /* pullArrowDark.png */,
+				C7DD169915C2A8650067E2D6 /* contentBg.png */,
+				C7DD169A15C2A8650067E2D6 /* contentBg@2x.png */,
+				C7DD169215C28E8E0067E2D6 /* pullArrowDark@2x.png */,
+				C7DD168915C28BA30067E2D6 /* mainBackground.png */,
+				C7DD168A15C28BA30067E2D6 /* mainBackground@2x.png */,
+				C7DD168D15C28C110067E2D6 /* navigationBarSquareButton.png */,
+				C7DD168E15C28C110067E2D6 /* navigationBarSquareButton@2x.png */,
+				C7DD168415C28A610067E2D6 /* navigationBarBackgroundRetro.png */,
+				C7DD168515C28A610067E2D6 /* navigationBarBackgroundRetro@2x.png */,
 				C7DECB5115BD273E00E1DCC7 /* ActionSheetButtonBackgroundCancel.png */,
 				C7DECB5215BD273E00E1DCC7 /* ActionSheetButtonBackgroundCancel@2x.png */,
 				C7DECB5315BD273E00E1DCC7 /* ActionSheetButtonBackgroundCancelSelected.png */,
@@ -1066,7 +1114,7 @@
 			);
 			name = EventApp;
 			productName = EventApp;
-			productReference = C783E09215A1518F000B9418 /* EventApp.app */;
+			productReference = C783E09215A1518F000B9418 /* 活动达人.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1296,6 +1344,22 @@
 				C7DECCBE15BD273E00E1DCC7 /* WKWorkspaceTableViewHeaderFooter@2x.jpg in Resources */,
 				C7D6DFBC15BFFF2400D29E27 /* pullArrow.png in Resources */,
 				C7D6DFBD15BFFF2400D29E27 /* pullArrow@2x.png in Resources */,
+				C7DD168615C28A610067E2D6 /* navigationBarBackgroundRetro.png in Resources */,
+				C7DD168715C28A610067E2D6 /* navigationBarBackgroundRetro@2x.png in Resources */,
+				C7DD168B15C28BA30067E2D6 /* mainBackground.png in Resources */,
+				C7DD168C15C28BA30067E2D6 /* mainBackground@2x.png in Resources */,
+				C7DD168F15C28C110067E2D6 /* navigationBarSquareButton.png in Resources */,
+				C7DD169015C28C110067E2D6 /* navigationBarSquareButton@2x.png in Resources */,
+				C7DD169315C28E8E0067E2D6 /* pullArrowDark.png in Resources */,
+				C7DD169415C28E8E0067E2D6 /* pullArrowDark@2x.png in Resources */,
+				C7DD169B15C2A8650067E2D6 /* contentBg.png in Resources */,
+				C7DD169C15C2A8650067E2D6 /* contentBg@2x.png in Resources */,
+				C7DCE8BD15C6395D004536FA /* leather@2x.png in Resources */,
+				C7DCE8BF15C68FF9004536FA /* navBackground@2x.png in Resources */,
+				C7DCE8C115C6942C004536FA /* navButton@2x.png in Resources */,
+				C7DCE8C315C69AF7004536FA /* dotGreyBackground@2x.png in Resources */,
+				C7E1118415C78F3200C464F6 /* eventTabelCellBackground@2x.png in Resources */,
+				C7E1118815C7AAF000C464F6 /* eventTableFooter@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1415,7 +1479,7 @@
 				GCC_PREFIX_HEADER = "EventApp/EventApp-Prefix.pch";
 				INFOPLIST_FILE = "EventApp/EventApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "活动达人";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1427,7 +1491,7 @@
 				GCC_PREFIX_HEADER = "EventApp/EventApp-Prefix.pch";
 				INFOPLIST_FILE = "EventApp/EventApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "活动达人";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

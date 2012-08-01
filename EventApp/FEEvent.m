@@ -18,6 +18,7 @@
 @synthesize venue = _venue;
 @synthesize desc = _desc;
 @synthesize detail = _detail;
+@synthesize logoURL = _logoURL;
 
 
 - (id)initWithJSONObject:(NSDictionary *)object
@@ -39,6 +40,7 @@
     self.venue = [object objectForKey:@"venue"];
     self.desc = [object objectForKey:@"desc"];
     self.detail = [object objectForKey:@"detail"];
+    self.logoURL = [self getStringValue:object withKey:@"logo"];
 }
 
 + (NSMutableArray *)translateJSONEvents:(NSMutableArray *)jsonData
@@ -50,6 +52,19 @@
         [event release];
     }
     return result;
+}
+
+- (NSString *)getStringValue:(NSDictionary *)jsonObject withKey:(NSString *)key
+{
+    id value = [jsonObject objectForKey:key];
+    if(value == nil){
+        return  nil;
+    }else if ([value isEqual:[NSNull null]]) {
+        return  nil;
+    }else if ([value isEqualToString:@"0"]) {
+        return  nil;
+    }
+    return (NSString *)value;
 }
 
 @end
