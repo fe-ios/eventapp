@@ -13,6 +13,8 @@
 @property (strong, nonatomic) UIImageView *backgroundImageView;
 @property (strong, nonatomic) UILabel *menuLabel;
 @property (strong, nonatomic) UIImageView *menuIcon;
+@property (strong, nonatomic) UIImageView *menuSeparator;
+@property (strong, nonatomic) UIImageView *menuIconHighlighted;
 @property (strong, nonatomic) UILabel *detailLabel;
 
 
