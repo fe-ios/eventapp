@@ -20,7 +20,7 @@
 //		backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
 //		[backgroundImageView setFrame:CGRectMake(0, 0, 320, 44)];
 //		self.backgroundView = backgroundImageView;
-		menuLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 10, 100, 24)];
+		menuLabel = [[UILabel alloc] initWithFrame:CGRectMake(72, 10, 100, 24)];
 		[menuLabel setFont:[UIFont boldSystemFontOfSize:14.0f]];
 		menuLabel.backgroundColor = [UIColor clearColor];
 		menuLabel.shadowColor = [UIColor blackColor];
