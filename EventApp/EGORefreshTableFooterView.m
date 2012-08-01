@@ -9,6 +9,7 @@
 
 #define RefreshViewHight 35.0f
 #define TEXT_COLOR [UIColor blackColor]
+#define SHADOW_COLOR [UIColor colorWithRed:255.0/255 green:255.0/255 blue:255.0/255 alpha:1.0];
 #define FLIP_ANIMATION_DURATION 0.18f
 
 
@@ -35,7 +36,7 @@
 //		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 //		label.font = [UIFont systemFontOfSize:12.0f];
 //		label.textColor = TEXT_COLOR;
-//		label.shadowColor = [UIColor blackColor];
+//		label.shadowColor = SHADOW_COLOR;
 //		label.shadowOffset = CGSizeMake(1.0f, 1.0f);
 //		label.backgroundColor = [UIColor clearColor];
 //		label.textAlignment = UITextAlignmentCenter;
@@ -47,8 +48,8 @@
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		label.font = [UIFont boldSystemFontOfSize:13.0f];
 		label.textColor = TEXT_COLOR;
-		label.shadowColor = [UIColor whiteColor];
-		label.shadowOffset = CGSizeMake(1.0f, 1.0f);
+		label.shadowColor = SHADOW_COLOR;
+		label.shadowOffset = CGSizeMake(0.0f, 1.0f);
 		label.backgroundColor = [UIColor clearColor];
 		label.textAlignment = UITextAlignmentCenter;
 		[self addSubview:label];

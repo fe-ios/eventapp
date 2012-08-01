@@ -41,18 +41,6 @@
     self = [super initWithStyle:style];
     if (self) {
         self.eventData = [NSMutableArray arrayWithObjects:nil];
-//        self.eventData = [[NSMutableArray alloc] initWithObjects:
-//                          @"http://ww4.sinaimg.cn/mw205/89b2cba9jw1dtfy4uzsokj.jpg", 
-//                          @"http://ww4.sinaimg.cn/mw205/a325727fjw1dtfy6ajt9cj.jpg", 
-//                          @"http://ww1.sinaimg.cn/mw205/a325727fjw1dtfxvvy7svj.jpg",
-//                          @"http://ww2.sinaimg.cn/mw205/89b2cba9jw1dtes823b8zj.jpg",
-//                          @"http://ww2.sinaimg.cn/mw205/87ede685jw1dtfylqslh1j.jpg", 
-//                          @"http://ww1.sinaimg.cn/mw205/7b94d863jw1dteshud99aj.jpg",
-//                          @"http://ww3.sinaimg.cn/mw205/83c51a57jw1dtdpf0vlldj.jpg",
-//                          @"http://ww1.sinaimg.cn/mw205/82e54aaejw1dtdom0x7u6j.jpg",
-//                          @"http://ww4.sinaimg.cn/mw205/5c703123jw1dtdnh3hob5j.jpg",
-//                          @"http://ww3.sinaimg.cn/mw205/6830bbefgw1dtbr36tjqfj.jpg",
-//                          nil];
     }
     return self;
 }
@@ -74,10 +62,10 @@
     
     self.downloadQueue = [[[NSOperationQueue alloc] init] autorelease];
     
-    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"WKNavigationSidebarButton"] style:UIBarButtonItemStylePlain target:self.viewDeckController action:@selector(toggleLeftView)];
+    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuButton"] style:UIBarButtonItemStylePlain target:self.viewDeckController action:@selector(toggleLeftView)];
 	self.navigationItem.leftBarButtonItem = leftBarButton;
     
-    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuIconPlus"] style:UIBarButtonItemStylePlain target:self action:@selector(createEvent)];
+    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"addButton"] style:UIBarButtonItemStylePlain target:self action:@selector(createEvent)];
 	self.navigationItem.rightBarButtonItem = rightBarButton;
     
     if(_updateHeaderView == nil)

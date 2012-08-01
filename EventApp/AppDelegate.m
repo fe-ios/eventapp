@@ -163,7 +163,7 @@
 	[[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBackSelected forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
 	
 	//UIBarButtonItem Button
-	UIImage *navButton = [[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 5, 15, 5)];
+	UIImage *navButton = [[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 10, 15, 10)];
 	//UIImage *navButtonSelected = [[UIImage imageNamed:@"WKButtonDarkGrey30pxSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 5, 15, 5)];
 	
 	[[UIBarButtonItem appearance] setBackgroundImage:navButton forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
