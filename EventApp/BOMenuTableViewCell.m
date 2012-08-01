@@ -20,11 +20,12 @@
 //		backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
 //		[backgroundImageView setFrame:CGRectMake(0, 0, 320, 44)];
 //		self.backgroundView = backgroundImageView;
-		menuLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 10, 100, 24)];
+		menuLabel = [[UILabel alloc] initWithFrame:CGRectMake(72, 10, 100, 24)];
+		[menuLabel setFont:[UIFont boldSystemFontOfSize:14.0f]];
 		menuLabel.backgroundColor = [UIColor clearColor];
 		menuLabel.shadowColor = [UIColor blackColor];
 		menuLabel.shadowOffset = CGSizeMake(0, 1);
-		menuLabel.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1.0];
+		menuLabel.textColor = [UIColor colorWithRed:120.0/255.0 green:120.0/255.0 blue:120.0/255.0 alpha:1.0];
 		menuLabel.highlightedTextColor = [UIColor whiteColor];
 		
 		menuIcon = [[UIImageView alloc] initWithFrame:CGRectMake(25, 6, 30, 30)];

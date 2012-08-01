@@ -35,7 +35,10 @@
 	[self.menuTableView setBackgroundColor:[UIColor clearColor]];
 	
 	//account cell
-	UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 64)];
+	UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 88)];
+	UIImageView *logo = [[UIImageView alloc] initWithFrame:CGRectMake(49, 20, 102, 56)];
+	logo.image = [UIImage imageNamed:@"tmp_logo"];
+	[tableHeaderView addSubview:logo];
 	self.menuTableView.tableHeaderView = tableHeaderView;
 }
 
@@ -113,37 +116,37 @@
 	}
 	switch (indexPath.row) {
 		case 0:
-			[cell.menuLabel setText:@"Popular"];
+			[cell.menuLabel setText:@"热门"];
 			[cell.menuIcon setImage:[UIImage imageNamed:@"122-glyphish-stats-gray"]];
 			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"122-glyphish-stats-blue"]];
 			break;
 		case 1:
-			[cell.menuLabel setText:@"Near"];
+			[cell.menuLabel setText:@"附近"];
 			[cell.menuIcon setImage:[UIImage imageNamed:@"7-glyphish-map-marker-gray"]];
 			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"7-glyphish-map-marker-blue"]];
 			break;
 		case 2:
-			[cell.menuLabel setText:@"Recent"];
+			[cell.menuLabel setText:@"最新"];
 			[cell.menuIcon setImage:[UIImage imageNamed:@"11-glyphish-clock-gray"]];
 			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"11-glyphish-clock-blue"]];
 			break;
 		case 3:
-			[cell.menuLabel setText:@"Watched"];
+			[cell.menuLabel setText:@"关注"];
 			[cell.menuIcon setImage:[UIImage imageNamed:@"44-glyphish-shoebox-gray"]];
 			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"44-glyphish-shoebox-blue"]];
 			break;
 		case 4:
-			[cell.menuLabel setText:@"My Events"];
+			[cell.menuLabel setText:@"我的活动"];
 			[cell.menuIcon setImage:[UIImage imageNamed:@"29-glyphish-heart-gray"]];
 			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"29-glyphish-heart-blue"]];
 			break;
 		case 5:
-			[cell.menuLabel setText:@"Friends"];
+			[cell.menuLabel setText:@"朋友圈"];
 			[cell.menuIcon setImage:[UIImage imageNamed:@"112-glyphish-group-gray"]];
 			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"112-glyphish-group-blue"]];
 			break;
 		case 6:
-			[cell.menuLabel setText:@"Settings"];
+			[cell.menuLabel setText:@"设置"];
 			[cell.menuIcon setImage:[UIImage imageNamed:@"19-glyphish-gear-gray"]];
 			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"19-glyphish-gear-blue"]];
 			break;
