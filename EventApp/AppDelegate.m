@@ -71,7 +71,7 @@
     BOMenuViewController *menuViewController = [[[BOMenuViewController alloc] initWithNibName:@"BOMenuViewController" bundle:nil] autorelease];
     IIViewDeckController *deckController = [[[IIViewDeckController alloc] initWithCenterViewController:self.navigationController leftViewController: menuViewController rightViewController:eventsViewController] autorelease];
     deckController.navigationControllerBehavior = IIViewDeckNavigationControllerIntegrated;
-    deckController.leftLedge = 60;
+    deckController.leftLedge = 120;
     
     self.viewDeckController = deckController;
     self.window.rootViewController = self.viewDeckController;
