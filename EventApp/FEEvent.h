@@ -19,6 +19,7 @@
 @property(nonatomic, retain) NSString *venue;
 @property(nonatomic, retain) NSString *detail;
 @property(nonatomic, retain) NSString *logoURL;
+@property(nonatomic, assign) BOOL isWatched;
 
 - (id)initWithJSONObject:(NSDictionary *)object;
 

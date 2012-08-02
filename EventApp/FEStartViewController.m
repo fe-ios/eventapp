@@ -144,10 +144,10 @@
     }else {
         [self.view.window exchangeSubviewAtIndex:0 withSubviewAtIndex:1];
     }
-    
     if(![appDelegate.navigationController.viewControllers containsObject:self.loginController]){
         [appDelegate.navigationController pushViewController:self.loginController animated:NO];
     }
+    [self.loginController performSelector:@selector(focusFirstTextInput) withObject:nil afterDelay:0.2];
     
     [[self.view.window.subviews objectAtIndex:0] setHidden:YES];
     [[self.view.window.subviews objectAtIndex:1] setHidden:NO];
@@ -174,6 +174,7 @@
     if(![appDelegate.navigationController.viewControllers containsObject:self.registerController]){
         [appDelegate.navigationController pushViewController:self.registerController animated:NO];
     }
+    [self.registerController performSelector:@selector(focusFirstTextInput) withObject:nil afterDelay:0.2];
     
     [[self.view.window.subviews objectAtIndex:0] setHidden:YES];
     [[self.view.window.subviews objectAtIndex:1] setHidden:NO];

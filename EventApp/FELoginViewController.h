@@ -10,4 +10,6 @@
 
 @interface FELoginViewController : UITableViewController <UITextFieldDelegate, UIActionSheetDelegate>
 
+-(void)focusFirstTextInput;
+
 @end

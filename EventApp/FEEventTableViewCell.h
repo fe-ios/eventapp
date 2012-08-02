@@ -19,4 +19,6 @@
 @property (retain, nonatomic) IBOutlet UILabel *peopleCountLabel;
 @property (retain, nonatomic) IBOutlet UILabel *pictureCountLabel;
 
+@property(retain, nonatomic) UIButton *watchButton;
+
 @end

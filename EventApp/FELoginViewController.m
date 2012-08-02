@@ -42,8 +42,8 @@
     [super viewDidLoad];
     
     self.title = @"登录";
-    self.navigationController.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"MainBackground_wood.jpg"]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavigationBarBackground"] forBarMetrics:UIBarMetricsDefault];
+    self.tableView.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dotGreyBackground"]] autorelease];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBackground"] forBarMetrics:UIBarMetricsDefault];
     
     self.view.backgroundColor = [UIColor clearColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -55,8 +55,8 @@
     leftButton.frame = CGRectMake(0, 0, 55, 31);
     [leftButton setTitle:@"取消" forState:UIControlStateNormal];
     leftButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
-    [leftButton setBackgroundImage:[[UIImage imageNamed:@"ButtonDarkGrey30px"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
-    [leftButton setBackgroundImage:[[UIImage imageNamed:@"ButtonDarkGrey30pxSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
+    [leftButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
+    //[leftButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
     [leftButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:leftButton] autorelease];
     
@@ -65,8 +65,8 @@
     rightButton.frame = CGRectMake(0, 0, 55, 31);
     [rightButton setTitle:@"登录" forState:UIControlStateNormal];
     rightButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"ButtonBlue30px"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"ButtonBlue30pxSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
+    [rightButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
+    //[rightButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
     [rightButton addTarget:self action:@selector(loginAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:rightButton] autorelease];
     
@@ -102,8 +102,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int maxRow = 1;
-    return indexPath.row == 0 || indexPath.row == maxRow ? 47 : 44;
+    return indexPath.row == 0 || indexPath.row == 1 ? 47 : 44;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -115,9 +114,8 @@
         cell = (FELoginTableViewCell *)[nibs objectAtIndex:0];
     }
     
-    int maxRow = 1;
-    NSString *cellBgName = indexPath.row == 0 ? @"RoundedTableViewCellLightTop" : indexPath.row == maxRow ? @"RoundedTableViewCellLightBottom" : @"RoundedTableViewCellLightMiddle";
-    cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:cellBgName]];
+    NSString *cellBgName = indexPath.row == 0 ? @"roundTableCellTop" : indexPath.row == 1 ? @"roundTableCellBottom" : @"roundTableCellMiddle";
+    cell.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:cellBgName]] autorelease];
     
     switch (indexPath.row) {
         case 0:
@@ -158,6 +156,7 @@
 
 - (void)backAction
 {
+    [self.tableView endEditing:YES];
     [self.navigationController popViewControllerAnimated:NO];
     
     [self.view.window exchangeSubviewAtIndex:0 withSubviewAtIndex:1];
@@ -244,14 +243,19 @@
     button.titleLabel.shadowOffset = CGSizeMake(0, 1);
 }
 
--(NSString *) getTableCellTextAtRow: (int)row
+-(NSString *)getTableCellTextAtRow: (int)row
 {
     return ((FELoginTableViewCell *) [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]]).fieldInput.text;
 }
 
--(void) setTableCellTextAtRow: (NSString *)text row:(int)row 
+-(void)setTableCellTextAtRow: (NSString *)text row:(int)row 
 {
     ((FELoginTableViewCell *) [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]]).fieldInput.text = text;
+}
+
+-(void)focusFirstTextInput
+{
+    [((FELoginTableViewCell *) [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).fieldInput becomeFirstResponder];
 }
 
 @end

@@ -42,7 +42,8 @@
     
     self.navigationController = [[[UINavigationController alloc] init] autorelease];
     
-    if(![self checkAutoLogin]){
+    //if(![self checkAutoLogin]){
+    if(true){
         FEStartViewController *startController = [[[FEStartViewController alloc] init] autorelease];
         self.window.rootViewController = startController;
     }
@@ -67,9 +68,9 @@
     FEEentListController *centerController = [[[FEEentListController alloc] init] autorelease];
     
     //BOCenterViewController *centerController = [[[BOCenterViewController alloc] initWithNibName:@"BOCenterViewController" bundle:nil] autorelease];
-    BOEventsViewController *eventsViewController = [[[BOEventsViewController alloc] initWithNibName:@"BOEventsViewController" bundle:nil] autorelease];
+    //BOEventsViewController *eventsViewController = [[[BOEventsViewController alloc] initWithNibName:@"BOEventsViewController" bundle:nil] autorelease];
     BOMenuViewController *menuViewController = [[[BOMenuViewController alloc] initWithNibName:@"BOMenuViewController" bundle:nil] autorelease];
-    IIViewDeckController *deckController = [[[IIViewDeckController alloc] initWithCenterViewController:self.navigationController leftViewController: menuViewController rightViewController:eventsViewController] autorelease];
+    IIViewDeckController *deckController = [[[IIViewDeckController alloc] initWithCenterViewController:self.navigationController leftViewController: menuViewController rightViewController:nil] autorelease];
     deckController.navigationControllerBehavior = IIViewDeckNavigationControllerIntegrated;
     deckController.leftLedge = 120;
     

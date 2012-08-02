@@ -10,4 +10,6 @@
 
 @interface FERegisterViewController : UITableViewController <UITextFieldDelegate>
 
+-(void)focusFirstTextInput;
+
 @end

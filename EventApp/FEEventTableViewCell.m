@@ -16,6 +16,7 @@
 @synthesize eventNameLabel;
 @synthesize peopleCountLabel;
 @synthesize pictureCountLabel;
+@synthesize watchButton;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -40,6 +41,7 @@
     [eventNameLabel release];
     [peopleCountLabel release];
     [pictureCountLabel release];
+    [watchButton release];
     [super dealloc];
 }
 

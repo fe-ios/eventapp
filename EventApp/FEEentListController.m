@@ -147,6 +147,15 @@
         cell.peopleCountLabel.font = font;
         cell.pictureCountLabel.font = font;
         
+        UIButton *watchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        watchButton.frame = CGRectMake(self.tableView.contentSize.width-44, (80-44)*0.5, 44, 44);
+        [watchButton setBackgroundImage:[UIImage imageNamed:@"big-heart-normal"] forState:UIControlStateNormal];
+        [watchButton setBackgroundImage:[UIImage imageNamed:@"big-heart-selected"] forState:UIControlStateSelected];
+        [cell.contentView addSubview:watchButton];
+        [watchButton addTarget:self action:@selector(toggleWatchEvent:) forControlEvents:UIControlEventTouchUpInside];
+        watchButton.adjustsImageWhenHighlighted = NO;
+        cell.watchButton = watchButton;
+        
         //[cell.eventImage1 setRoundBorder];
         //[[cell.subviews objectAtIndex:1] setHidden:YES];
     }
@@ -163,7 +172,15 @@
         NSLog(@"logo exist: %@", event.name);
     }
     
+    cell.watchButton.tag = indexPath.row;
+    cell.watchButton.selected = indexPath.row%2 == 0;
+    
     return cell;
+}
+
+- (void)toggleWatchEvent:(UIButton *)sender
+{
+    sender.selected = !sender.selected;
 }
 
 #pragma mark - Table view delegate

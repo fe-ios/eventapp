@@ -19,6 +19,7 @@
 @synthesize desc = _desc;
 @synthesize detail = _detail;
 @synthesize logoURL = _logoURL;
+@synthesize isWatched = _isWatched;
 
 
 - (id)initWithJSONObject:(NSDictionary *)object

@@ -40,8 +40,8 @@
     [super viewDidLoad];
 
     self.title = @"注册";
-    self.navigationController.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"MainBackground_wood.jpg"]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavigationBarBackground"] forBarMetrics:UIBarMetricsDefault];
+    self.tableView.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dotGreyBackground"]] autorelease];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBackground"] forBarMetrics:UIBarMetricsDefault];
     
     self.view.backgroundColor = [UIColor clearColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -53,8 +53,8 @@
     leftButton.frame = CGRectMake(0, 0, 55, 31);
     [leftButton setTitle:@"取消" forState:UIControlStateNormal];
     leftButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
-    [leftButton setBackgroundImage:[[UIImage imageNamed:@"ButtonDarkGrey30px"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
-    [leftButton setBackgroundImage:[[UIImage imageNamed:@"ButtonDarkGrey30pxSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
+    [leftButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
+    //[leftButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
     [leftButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:leftButton] autorelease];
     
@@ -63,8 +63,8 @@
     rightButton.frame = CGRectMake(0, 0, 55, 31);
     [rightButton setTitle:@"注册" forState:UIControlStateNormal];
     rightButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"ButtonBlue30px"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"ButtonBlue30pxSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
+    [rightButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
+    //[rightButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
     [rightButton addTarget:self action:@selector(registerAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:rightButton] autorelease];
 }
@@ -88,13 +88,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int maxRow = 2;
-    return indexPath.row == 0 || indexPath.row == maxRow ? 47 : 44;
+    return indexPath.row == 0 || indexPath.row == 3 ? 47 : 44;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -106,9 +105,8 @@
         cell = (FELoginTableViewCell *)[nibs objectAtIndex:0];
     }
     
-    int maxRow = 2;
-    NSString *cellBgName = indexPath.row == 0 ? @"RoundedTableViewCellLightTop" : indexPath.row == maxRow ? @"RoundedTableViewCellLightBottom" : @"RoundedTableViewCellLightMiddle";
-    cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:cellBgName]];
+    NSString *cellBgName = indexPath.row == 0 ? @"roundTableCellTop" : indexPath.row == 3 ? @"roundTableCellBottom" : @"roundTableCellMiddle";
+    cell.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:cellBgName]] autorelease];
     
     switch (indexPath.row) {
         case 0:
@@ -116,25 +114,34 @@
             cell.fieldInput.placeholder = @"必填";
             cell.fieldInput.delegate = self;
             cell.fieldInput.returnKeyType = UIReturnKeyNext;
-            cell.fieldInput.tag = 0;
+            cell.fieldInput.tag = indexPath.row;
+            [cell.fieldInput becomeFirstResponder];
             break;
             
         case 1:
+            cell.fieldLabel.text = @"邮箱";
+            cell.fieldInput.placeholder = @"必填";
+            cell.fieldInput.delegate = self;
+            cell.fieldInput.returnKeyType = UIReturnKeyNext;
+            cell.fieldInput.tag = indexPath.row;
+            break;
+            
+        case 2:
             cell.fieldLabel.text = @"密码";
             cell.fieldInput.placeholder = @"必填";
             cell.fieldInput.delegate = self;
             cell.fieldInput.returnKeyType = UIReturnKeyNext;
             cell.fieldInput.secureTextEntry = YES;
-            cell.fieldInput.tag = 1;
+            cell.fieldInput.tag = indexPath.row;
             break;
             
-        case 2:
+        case 3:
             cell.fieldLabel.text = @"重复密码";
             cell.fieldInput.placeholder = @"必填";
             cell.fieldInput.delegate = self;
             cell.fieldInput.returnKeyType = UIReturnKeyGo;
             cell.fieldInput.secureTextEntry = YES;
-            cell.fieldInput.tag = 2;
+            cell.fieldInput.tag = indexPath.row;
             break;
             
         default:
@@ -146,7 +153,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if(textField.tag < 2){
+    if(textField.tag < 3){
         UIResponder *nextResponder = [self.tableView viewWithTag:(textField.tag+1)];
         [nextResponder becomeFirstResponder];
     }else {
@@ -158,6 +165,7 @@
 
 - (void)backAction
 {
+    [self.tableView endEditing:YES];
     [self.navigationController popViewControllerAnimated:NO];
     
     [self.view.window exchangeSubviewAtIndex:0 withSubviewAtIndex:1];
@@ -173,6 +181,12 @@
 
 - (void)registerAction
 {
+    if(![[self getTableCellTextAtRow:2] isEqualToString:[self getTableCellTextAtRow:3]])
+    {
+        [self showFailedAction:NSLocalizedString(@"两次输入的密码不一致！", @"两次输入的密码不一致！")];
+        return;
+    }
+    
     _progress = [MBProgressHUD showHUDAddedTo:self.view.window animated:YES];
     _progress.mode = MBProgressHUDModeIndeterminate;
     _progress.dimBackground = YES;
@@ -182,7 +196,8 @@
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:registerURL]];
     [request setRequestMethod:@"POST"];
     [request setPostValue:[self getTableCellTextAtRow:0] forKey:@"username"];
-    [request setPostValue:[[self getTableCellTextAtRow:1] md5] forKey:@"password"];
+    [request setPostValue:[self getTableCellTextAtRow:1] forKey:@"email"];
+    [request setPostValue:[[self getTableCellTextAtRow:2] md5] forKey:@"password"];
     request.delegate = self;
     [request startAsynchronous];
     [request release];
@@ -200,7 +215,7 @@
     NSString *status = [result objectForKey:@"status"];
     
     if([status isEqualToString:@"error"]){
-        [self showFailedAction];
+        [self showFailedAction:[result objectForKey:@"msg"]];
     }else if([status isEqualToString:@"success"]){
         //save user info
         int userid = [[[result objectForKey:@"user"] objectForKey:@"userid"] intValue];
@@ -223,13 +238,13 @@
         [_progress removeFromSuperview];
         _progress = nil;
     }
-    [self showFailedAction];
+    [self showFailedAction:@"注册失败，请重试。"];
 }
 
-- (void) showFailedAction
+- (void) showFailedAction:(NSString *)title
 {
     FEActionSheet *action = [[FEActionSheet alloc] init];
-    action.title = @"注册失败，请重试。";
+    action.title = title;
     int buttonIndex = [action addButtonWithTitle:@"取消"];
     [action setActionSheetStyle:UIActionSheetStyleDefault];
     action.backgroundImage = [[UIImage imageNamed:@"ToolbarBackground"] resizableImageWithCapInsets:UIEdgeInsetsMake(30, 10, 37-30-1, 10)];
@@ -243,14 +258,19 @@
     button.titleLabel.shadowOffset = CGSizeMake(0, 1);
 }
 
--(NSString *) getTableCellTextAtRow: (int)row
+-(NSString *)getTableCellTextAtRow: (int)row
 {
     return ((FELoginTableViewCell *) [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]]).fieldInput.text;
 }
 
--(void) setTableCellTextAtRow: (NSString *)text row:(int)row 
+-(void)setTableCellTextAtRow: (NSString *)text row:(int)row 
 {
     ((FELoginTableViewCell *) [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]]).fieldInput.text = text;
+}
+
+-(void)focusFirstTextInput
+{
+    [((FELoginTableViewCell *) [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).fieldInput becomeFirstResponder];
 }
 
 @end
