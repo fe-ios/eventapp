@@ -12,6 +12,8 @@
 		811387A515B514900033D455 /* DAKeyboardControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8113879D15B514900033D455 /* DAKeyboardControlView.m */; };
 		811387A615B514900033D455 /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = 811387A015B514900033D455 /* IIViewDeckController.m */; };
 		811387A715B514900033D455 /* WrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 811387A215B514900033D455 /* WrapController.m */; };
+		8130CC7615CA343E00E955F6 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8130CC7515CA343E00E955F6 /* Icon@2x.png */; };
+		8130CC7A15CA350F00E955F6 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8130CC7915CA350F00E955F6 /* Icon.png */; };
 		8152229B15B534840089895F /* BOEventQuickAddInputAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8152229715B534840089895F /* BOEventQuickAddInputAccessoryView.m */; };
 		8152229C15B534840089895F /* BOEventQuickAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8152229915B534840089895F /* BOEventQuickAddViewController.m */; };
 		8152229D15B534840089895F /* BOEventQuickAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8152229A15B534840089895F /* BOEventQuickAddViewController.xib */; };
@@ -316,6 +318,8 @@
 		811387A015B514900033D455 /* IIViewDeckController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IIViewDeckController.m; sourceTree = "<group>"; };
 		811387A115B514900033D455 /* WrapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrapController.h; sourceTree = "<group>"; };
 		811387A215B514900033D455 /* WrapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WrapController.m; sourceTree = "<group>"; };
+		8130CC7515CA343E00E955F6 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		8130CC7915CA350F00E955F6 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		8152229615B534840089895F /* BOEventQuickAddInputAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOEventQuickAddInputAccessoryView.h; sourceTree = "<group>"; };
 		8152229715B534840089895F /* BOEventQuickAddInputAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOEventQuickAddInputAccessoryView.m; sourceTree = "<group>"; };
 		8152229815B534840089895F /* BOEventQuickAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOEventQuickAddViewController.h; sourceTree = "<group>"; };
@@ -730,6 +734,8 @@
 		C783E08715A1518F000B9418 = {
 			isa = PBXGroup;
 			children = (
+				8130CC7915CA350F00E955F6 /* Icon.png */,
+				8130CC7515CA343E00E955F6 /* Icon@2x.png */,
 				C783E09C15A1518F000B9418 /* EventApp */,
 				C783E09515A1518F000B9418 /* Frameworks */,
 				C783E09315A1518F000B9418 /* Products */,
@@ -1500,6 +1506,8 @@
 				C7D34DBD15C8E3A2003CDD76 /* eventTableFooter@2x.png in Resources */,
 				C7D34DBE15C8E3A2003CDD76 /* navBackground@2x.png in Resources */,
 				C7D34DBF15C8E3A2003CDD76 /* navButton@2x.png in Resources */,
+				8130CC7615CA343E00E955F6 /* Icon@2x.png in Resources */,
+				8130CC7A15CA350F00E955F6 /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
