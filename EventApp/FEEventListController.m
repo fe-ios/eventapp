@@ -1,12 +1,12 @@
 //
-//  FEEentListController.m
+//  FEEventListController.m
 //  EventApp
 //
 //  Created by zhenglin li on 12-7-19.
 //  Copyright (c) 2012年 snda. All rights reserved.
 //
 
-#import "FEEentListController.h"
+#import "FEEventListController.h"
 #import "FEEventTableViewCell.h"
 #import "AppDelegate.h"
 #import "UIAsyncImageView.h"
@@ -18,7 +18,7 @@
 #import "MBProgressHUD.h"
 
 
-@interface FEEentListController ()
+@interface FEEventListController ()
 {
     EGORefreshTableHeaderView* _updateHeaderView;
     EGORefreshTableFooterView* _updateFooterView;
@@ -31,7 +31,7 @@
 
 @end
 
-@implementation FEEentListController
+@implementation FEEventListController
 
 @synthesize downloadQueue = _downloadQueue;
 @synthesize eventData = _eventData;

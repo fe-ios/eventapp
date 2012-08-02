@@ -208,6 +208,7 @@
         [[NSUserDefaults standardUserDefaults] setInteger:userid forKey:@"userid"];
         [[NSUserDefaults standardUserDefaults] setValue:username forKey:@"username"];
         [[NSUserDefaults standardUserDefaults] setValue:password forKey:@"password"];
+        [[NSUserDefaults standardUserDefaults] setValue:password forKey:@"email"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];

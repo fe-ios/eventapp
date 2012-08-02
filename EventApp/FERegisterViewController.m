@@ -106,7 +106,7 @@
     }
     
     NSString *cellBgName = indexPath.row == 0 ? @"roundTableCellTop" : indexPath.row == 3 ? @"roundTableCellBottom" : @"roundTableCellMiddle";
-    cell.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:cellBgName]] autorelease];
+    cell.backgroundView = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:cellBgName] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 20, 33, 20)]] autorelease];
     
     switch (indexPath.row) {
         case 0:
@@ -224,6 +224,7 @@
         [[NSUserDefaults standardUserDefaults] setInteger:userid forKey:@"userid"];
         [[NSUserDefaults standardUserDefaults] setValue:username forKey:@"username"];
         [[NSUserDefaults standardUserDefaults] setValue:password forKey:@"password"];
+        [[NSUserDefaults standardUserDefaults] setValue:password forKey:@"email"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];

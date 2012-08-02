@@ -308,11 +308,14 @@
 		C7E2B80A15CA2862005BC806 /* roundTableCellTop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E2B80715CA2862005BC806 /* roundTableCellTop@2x.png */; };
 		C7E2B81215CA5AB8005BC806 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E2B81115CA5AB8005BC806 /* Icon.png */; };
 		C7E2B81415CA5ABF005BC806 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E2B81315CA5ABF005BC806 /* Icon@2x.png */; };
+		C7E2B81815CA84A7005BC806 /* startLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E2B81715CA84A7005BC806 /* startLogo@2x.png */; };
+		C7E2B82115CA87FE005BC806 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E2B81F15CA87FE005BC806 /* Default.png */; };
+		C7E2B82215CA87FE005BC806 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E2B82015CA87FE005BC806 /* Default@2x.png */; };
 		C7E6608415A41A4F000FC01A /* FERegisterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7E6608315A41A4F000FC01A /* FERegisterView.xib */; };
 		C7E6608715A41AFC000FC01A /* FERegisterView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E6608615A41AFC000FC01A /* FERegisterView.m */; };
 		C7E6608C15A41FE8000FC01A /* FELoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7E6608B15A41FE8000FC01A /* FELoginView.xib */; };
 		C7E86C6D15B7FE41001960C2 /* FEEventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E86C6C15B7FE41001960C2 /* FEEventTableViewCell.m */; };
-		C7E86C7015B7FE7A001960C2 /* FEEentListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E86C6F15B7FE7A001960C2 /* FEEentListController.m */; };
+		C7E86C7015B7FE7A001960C2 /* FEEventListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E86C6F15B7FE7A001960C2 /* FEEventListController.m */; };
 		C7E86C7F15B81A9D001960C2 /* FEEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E86C7E15B81A9D001960C2 /* FEEventCell.m */; };
 /* End PBXBuildFile section */
 
@@ -660,6 +663,9 @@
 		C7E2B80715CA2862005BC806 /* roundTableCellTop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "roundTableCellTop@2x.png"; path = "EventApp/images2/roundTableCellTop@2x.png"; sourceTree = "<group>"; };
 		C7E2B81115CA5AB8005BC806 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		C7E2B81315CA5ABF005BC806 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		C7E2B81715CA84A7005BC806 /* startLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "startLogo@2x.png"; path = "EventApp/images2/startLogo@2x.png"; sourceTree = "<group>"; };
+		C7E2B81F15CA87FE005BC806 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = EventApp/images2/Default.png; sourceTree = "<group>"; };
+		C7E2B82015CA87FE005BC806 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "EventApp/images2/Default@2x.png"; sourceTree = "<group>"; };
 		C7E6608315A41A4F000FC01A /* FERegisterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FERegisterView.xib; sourceTree = "<group>"; };
 		C7E6608515A41AFC000FC01A /* FERegisterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FERegisterView.h; sourceTree = "<group>"; };
 		C7E6608615A41AFC000FC01A /* FERegisterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FERegisterView.m; sourceTree = "<group>"; };
@@ -670,8 +676,8 @@
 		C7E86C5D15B7EE11001960C2 /* FELoginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FELoginView.m; sourceTree = "<group>"; };
 		C7E86C6B15B7FE41001960C2 /* FEEventTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEEventTableViewCell.h; sourceTree = "<group>"; };
 		C7E86C6C15B7FE41001960C2 /* FEEventTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEEventTableViewCell.m; sourceTree = "<group>"; };
-		C7E86C6E15B7FE7A001960C2 /* FEEentListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEEentListController.h; sourceTree = "<group>"; };
-		C7E86C6F15B7FE7A001960C2 /* FEEentListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEEentListController.m; sourceTree = "<group>"; };
+		C7E86C6E15B7FE7A001960C2 /* FEEventListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEEventListController.h; sourceTree = "<group>"; };
+		C7E86C6F15B7FE7A001960C2 /* FEEventListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEEventListController.m; sourceTree = "<group>"; };
 		C7E86C7D15B81A9D001960C2 /* FEEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEEventCell.h; sourceTree = "<group>"; };
 		C7E86C7E15B81A9D001960C2 /* FEEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEEventCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -883,6 +889,9 @@
 		C7DECB5015BD272300E1DCC7 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				C7E2B81F15CA87FE005BC806 /* Default.png */,
+				C7E2B82015CA87FE005BC806 /* Default@2x.png */,
+				C7E2B81715CA84A7005BC806 /* startLogo@2x.png */,
 				C7E2B80515CA2862005BC806 /* roundTableCellBottom@2x.png */,
 				C7E2B80615CA2862005BC806 /* roundTableCellMiddle@2x.png */,
 				C7E2B80715CA2862005BC806 /* roundTableCellTop@2x.png */,
@@ -1221,8 +1230,8 @@
 				C7DECB3D15BD1F9D00E1DCC7 /* EventTableViewCell.xib */,
 				C7E259FB15BE805300496F94 /* FECreateEventController.h */,
 				C7E259FC15BE805300496F94 /* FECreateEventController.m */,
-				C7E86C6E15B7FE7A001960C2 /* FEEentListController.h */,
-				C7E86C6F15B7FE7A001960C2 /* FEEentListController.m */,
+				C7E86C6E15B7FE7A001960C2 /* FEEventListController.h */,
+				C7E86C6F15B7FE7A001960C2 /* FEEventListController.m */,
 				C7E86C7D15B81A9D001960C2 /* FEEventCell.h */,
 				C7E86C7E15B81A9D001960C2 /* FEEventCell.m */,
 				C7E86C6B15B7FE41001960C2 /* FEEventTableViewCell.h */,
@@ -1544,6 +1553,9 @@
 				C7E2B80A15CA2862005BC806 /* roundTableCellTop@2x.png in Resources */,
 				C7E2B81215CA5AB8005BC806 /* Icon.png in Resources */,
 				C7E2B81415CA5ABF005BC806 /* Icon@2x.png in Resources */,
+				C7E2B81815CA84A7005BC806 /* startLogo@2x.png in Resources */,
+				C7E2B82115CA87FE005BC806 /* Default.png in Resources */,
+				C7E2B82215CA87FE005BC806 /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1588,7 +1600,7 @@
 				815222AA15B534BB0089895F /* BOEventsViewController.m in Sources */,
 				815222AC15B534BB0089895F /* BOCenterViewController.m in Sources */,
 				C7E86C6D15B7FE41001960C2 /* FEEventTableViewCell.m in Sources */,
-				C7E86C7015B7FE7A001960C2 /* FEEentListController.m in Sources */,
+				C7E86C7015B7FE7A001960C2 /* FEEventListController.m in Sources */,
 				C7E86C7F15B81A9D001960C2 /* FEEventCell.m in Sources */,
 				C7D39E9015B951F0009EE420 /* UIAsyncImageView.m in Sources */,
 				C7DECCC215BD444D00E1DCC7 /* FEUploadController.m in Sources */,

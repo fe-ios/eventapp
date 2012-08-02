@@ -47,7 +47,8 @@
 {
     [super viewDidLoad];
     
-    NSMutableArray *pages = [[NSMutableArray alloc] initWithObjects:@"StartViewIcon", @"StartViewTutorial_0", @"StartViewTutorial_1", nil];
+    //NSMutableArray *pages = [[NSMutableArray alloc] initWithObjects:@"StartViewIcon", @"StartViewTutorial_0", @"StartViewTutorial_1", nil];
+    NSMutableArray *pages = [[NSMutableArray alloc] initWithObjects:@"startLogo", nil];
     
     //翻页容器
     CGRect scrollFrame = CGRectMake(0, 20, 320, 230);

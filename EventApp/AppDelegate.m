@@ -13,7 +13,7 @@
 #import "BOCenterViewController.h"
 #import "BOMenuViewController.h"
 #import "BOEventsViewController.h"
-#import "FEEentListController.h"
+#import "FEEventListController.h"
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 #import "ASIDownloadCache.h"
@@ -42,10 +42,20 @@
     
     self.navigationController = [[[UINavigationController alloc] init] autorelease];
     
-    //if(![self checkAutoLogin]){
-    if(true){
+    if(![self checkAutoLogin]){
+    //if(true){
+        
         FEStartViewController *startController = [[[FEStartViewController alloc] init] autorelease];
         self.window.rootViewController = startController;
+        
+        ((UIView *)[startController.view.subviews objectAtIndex:1]).alpha = 0.0;
+        ((UIView *)[startController.view.subviews objectAtIndex:2]).alpha = 0.0;
+        [UIView beginAnimations:@"fadeIn" context:NULL];
+        [UIView setAnimationDuration:0.5];
+        ((UIView *)[startController.view.subviews objectAtIndex:1]).alpha = 1.0;
+        ((UIView *)[startController.view.subviews objectAtIndex:2]).alpha = 1.0;
+        [UIView commitAnimations];
+        
     }
     
     //[self startMainView];
@@ -65,7 +75,7 @@
 {
     [self customApperance];
     
-    FEEentListController *centerController = [[[FEEentListController alloc] init] autorelease];
+    FEEventListController *centerController = [[[FEEventListController alloc] init] autorelease];
     
     //BOCenterViewController *centerController = [[[BOCenterViewController alloc] initWithNibName:@"BOCenterViewController" bundle:nil] autorelease];
     //BOEventsViewController *eventsViewController = [[[BOEventsViewController alloc] initWithNibName:@"BOEventsViewController" bundle:nil] autorelease];

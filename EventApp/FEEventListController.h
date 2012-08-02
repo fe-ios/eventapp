@@ -1,5 +1,5 @@
 //
-//  FEEentListController.h
+//  FEEventListController.h
 //  EventApp
 //
 //  Created by zhenglin li on 12-7-19.
@@ -12,7 +12,7 @@
 #import "EGORefreshTableHeaderView.h"
 #import "EGORefreshTableFooterView.h"
 
-@interface FEEentListController : UITableViewController <ASIHTTPRequestDelegate, EGORefreshTableHeaderDelegate, EGORefreshTableFooterDelegate>
+@interface FEEventListController : UITableViewController <ASIHTTPRequestDelegate, EGORefreshTableHeaderDelegate, EGORefreshTableFooterDelegate>
 
 
 @property(nonatomic, retain) NSOperationQueue *downloadQueue;
