@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "FERegisterViewController.h"
 #import "FELoginTableViewCell.h"
@@ -16,10 +17,12 @@
 #import "FEActionSheet.h"
 #import "MD5+Helper.h"
 #import "FEServerAPI.h"
+#import "FEToolTipView.h"
 
 @interface FERegisterViewController ()
 {
     MBProgressHUD* _progress;
+    FEToolTipView* _tooltip;
 }
 
 @end
@@ -67,10 +70,15 @@
     //[rightButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
     [rightButton addTarget:self action:@selector(registerAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:rightButton] autorelease];
+    
+    _tooltip = [[FEToolTipView alloc] init];
+    _tooltip.backgroundImage = [[UIImage imageNamed:@"tooltip_invalid"] resizableImageWithCapInsets:UIEdgeInsetsMake(14, 40, 6, 40)];
+    _tooltip.edgeInsets = UIEdgeInsetsMake(14, 10, 8, 10);
 }
 
 - (void)viewDidUnload
 {
+    _tooltip = nil;
     [super viewDidUnload];
 }
 
@@ -114,8 +122,7 @@
             cell.fieldInput.placeholder = @"必填";
             cell.fieldInput.delegate = self;
             cell.fieldInput.returnKeyType = UIReturnKeyNext;
-            cell.fieldInput.tag = indexPath.row;
-            [cell.fieldInput becomeFirstResponder];
+            cell.fieldInput.tag = indexPath.row+1;
             break;
             
         case 1:
@@ -123,7 +130,7 @@
             cell.fieldInput.placeholder = @"必填";
             cell.fieldInput.delegate = self;
             cell.fieldInput.returnKeyType = UIReturnKeyNext;
-            cell.fieldInput.tag = indexPath.row;
+            cell.fieldInput.tag = indexPath.row+1;
             break;
             
         case 2:
@@ -132,7 +139,7 @@
             cell.fieldInput.delegate = self;
             cell.fieldInput.returnKeyType = UIReturnKeyNext;
             cell.fieldInput.secureTextEntry = YES;
-            cell.fieldInput.tag = indexPath.row;
+            cell.fieldInput.tag = indexPath.row+1;
             break;
             
         case 3:
@@ -141,7 +148,7 @@
             cell.fieldInput.delegate = self;
             cell.fieldInput.returnKeyType = UIReturnKeyGo;
             cell.fieldInput.secureTextEntry = YES;
-            cell.fieldInput.tag = indexPath.row;
+            cell.fieldInput.tag = indexPath.row+1;
             break;
             
         default:
@@ -151,9 +158,14 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [[self.tableView viewWithTag:indexPath.row+1] becomeFirstResponder]; 
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if(textField.tag < 3){
+    if(textField.tag < 4){
         UIResponder *nextResponder = [self.tableView viewWithTag:(textField.tag+1)];
         [nextResponder becomeFirstResponder];
     }else {
@@ -161,6 +173,13 @@
         [self registerAction];
     }
     return NO;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *futureString = [textField.text stringByReplacingCharactersInRange:range withString:string];    
+    [self validateInput:textField.tag text:futureString showTip:NO];
+    return YES;
 }
 
 - (void)backAction
@@ -179,11 +198,101 @@
     [self.view.window.layer addAnimation:transition forKey:@"pushAnimaition"];
 }
 
+- (BOOL)validateInput: (NSInteger)textFieldTag text:(NSString *)text showTip:(BOOL)showTip
+{
+    NSError *error = NULL;
+    NSRegularExpression *regex = nil;
+    NSUInteger numberOfMatches = 0;
+    UITextField *textField = nil;
+    NSString *contentText = nil;
+    CGPoint point = CGPointZero;
+    
+    if(textFieldTag == 0 || textFieldTag == 1){
+        textField = (UITextField *)[self.tableView viewWithTag:1];
+        contentText = textFieldTag == 0 ? textField.text : text;
+        regex = [NSRegularExpression regularExpressionWithPattern:@"^[a-zA-Z][a-zA-Z0-9\\-]{3,9}$" options:NSRegularExpressionCaseInsensitive error:&error];
+        numberOfMatches = [regex numberOfMatchesInString:contentText options:0 range:NSMakeRange(0, contentText.length)];
+        if (numberOfMatches != 1) {
+            if(showTip){
+                _tooltip.backgroundView.transform = CGAffineTransformIdentity;
+                _tooltip.edgeInsets = UIEdgeInsetsMake(14, 10, 8, 10);
+                _tooltip.text = @"用户名的有效长度为4到10个字符，且不能以数字开头。";
+                point.x = self.tableView.frame.size.width - _tooltip.frame.size.width - 8;
+                point.y = self.tableView.frame.origin.y + textField.superview.superview.frame.origin.y + textField.superview.superview.frame.size.height - 10;
+                [_tooltip showAtPoint:point inView:self.tableView];
+                [textField becomeFirstResponder]; 
+            }
+            return NO;
+        }else {
+            [_tooltip removeFromSuperview];
+        }
+    }
+    
+    if(textFieldTag == 0 || textFieldTag == 2){
+        textField = (UITextField *)[self.tableView viewWithTag:2];
+        contentText = textFieldTag == 0 ? textField.text : text;
+        regex = [NSRegularExpression regularExpressionWithPattern:@"^[+\\w\\.\\-']+@[a-zA-Z0-9-]+(\\.[a-zA-Z]{2,})+$" options:NSRegularExpressionCaseInsensitive error:&error];
+        numberOfMatches = [regex numberOfMatchesInString:contentText options:0 range:NSMakeRange(0, contentText.length)];
+        if(numberOfMatches != 1){
+            if(showTip){
+                _tooltip.backgroundView.transform = CGAffineTransformIdentity;
+                _tooltip.edgeInsets = UIEdgeInsetsMake(14, 10, 8, 10);
+                _tooltip.text = @"请输入合法的邮箱地址。";
+                point.x = self.tableView.frame.size.width - _tooltip.frame.size.width - 8;
+                point.y = self.tableView.frame.origin.y + textField.superview.superview.frame.origin.y + textField.superview.superview.frame.size.height - 10;
+                [_tooltip showAtPoint:point inView:self.tableView];
+                [textField becomeFirstResponder];
+            }
+            return  NO;
+        }else {
+            [_tooltip removeFromSuperview];
+        }
+    }
+    
+    if(textFieldTag == 0 || textFieldTag == 3){
+        textField = (UITextField *)[self.tableView viewWithTag:3];
+        contentText = textFieldTag == 0 ? textField.text : text;
+        if (contentText.length < 6 || contentText.length > 20) {
+            if(showTip){
+                _tooltip.backgroundView.transform = CGAffineTransformIdentity;
+                _tooltip.edgeInsets = UIEdgeInsetsMake(14, 10, 8, 10);
+                _tooltip.text = @"密码的有效长度为6到20个字符。";
+                point.x = self.tableView.frame.size.width - _tooltip.frame.size.width - 8;
+                point.y = self.tableView.frame.origin.y + textField.superview.superview.frame.origin.y + textField.superview.superview.frame.size.height - 10;
+                [_tooltip showAtPoint:point inView:self.tableView];
+                [textField becomeFirstResponder];
+            }
+            return NO;
+        }else {
+            [_tooltip removeFromSuperview];
+        }
+    }
+    
+    if(textFieldTag == 0 || textFieldTag == 4){
+        textField = (UITextField *)[self.tableView viewWithTag:4];
+        contentText = textFieldTag == 0 ? textField.text : text;
+        if(![contentText isEqualToString:[self getTableCellTextAtRow:2]]){
+            if(showTip){
+                _tooltip.backgroundView.transform = CGAffineTransformMakeScale(1.0f, -1.0f);
+                _tooltip.edgeInsets = UIEdgeInsetsMake(8, 10, 14, 10);
+                _tooltip.text = @"两次输入的密码不一致。";
+                point.x = self.tableView.frame.size.width - _tooltip.frame.size.width - 8;
+                point.y = self.tableView.frame.origin.y + textField.superview.superview.frame.origin.y - _tooltip.frame.size.height + 10;
+                [_tooltip showAtPoint:point inView:self.tableView];
+                [textField becomeFirstResponder];
+            }
+            return NO;
+        }else {
+            [_tooltip removeFromSuperview];
+        }
+    }
+    
+    return YES;
+}
+
 - (void)registerAction
 {
-    if(![[self getTableCellTextAtRow:2] isEqualToString:[self getTableCellTextAtRow:3]])
-    {
-        [self showFailedAction:NSLocalizedString(@"两次输入的密码不一致！", @"两次输入的密码不一致！")];
+    if(![self validateInput:0 text:nil showTip:YES]){
         return;
     }
     

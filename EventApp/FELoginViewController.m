@@ -16,6 +16,7 @@
 #import "AppDelegate.h"
 #import "MD5+Helper.h"
 #import "FEServerAPI.h"
+#import "FEToolTipView.h"
 
 
 @interface FELoginViewController ()
@@ -69,7 +70,6 @@
     //[rightButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
     [rightButton addTarget:self action:@selector(loginAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:rightButton] autorelease];
-    
 }
 
 - (void)viewDidUnload
@@ -123,7 +123,7 @@
             cell.fieldInput.placeholder = @"必填";
             cell.fieldInput.delegate = self;
             cell.fieldInput.returnKeyType = UIReturnKeyNext;
-            cell.fieldInput.tag = 0;
+            cell.fieldInput.tag = indexPath.row+1;
             break;
             
         case 1:
@@ -132,7 +132,7 @@
             cell.fieldInput.delegate = self;
             cell.fieldInput.returnKeyType = UIReturnKeyGo;
             cell.fieldInput.secureTextEntry = YES;
-            cell.fieldInput.tag = 1;
+            cell.fieldInput.tag = indexPath.row+1;
             break;
             
         default:
@@ -142,9 +142,14 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [[self.tableView viewWithTag:indexPath.row+1] becomeFirstResponder]; 
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if(textField.tag < 1){
+    if(textField.tag < 2){
         UIResponder *nextResponder = [self.tableView viewWithTag:(textField.tag+1)];
         [nextResponder becomeFirstResponder];
     }else {

@@ -47,11 +47,13 @@
 {
     [super viewDidLoad];
     
-    //NSMutableArray *pages = [[NSMutableArray alloc] initWithObjects:@"StartViewIcon", @"StartViewTutorial_0", @"StartViewTutorial_1", nil];
+    UIImageView *bgImage = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"startBackground"]] autorelease];
+    [self.view addSubview:bgImage];
+    
     NSMutableArray *pages = [[NSMutableArray alloc] initWithObjects:@"startLogo", nil];
     
     //翻页容器
-    CGRect scrollFrame = CGRectMake(0, 20, 320, 230);
+    CGRect scrollFrame = CGRectMake(0, 0, 320, 255);
     _scrollView = [[[UIScrollView alloc] init] autorelease];
     _scrollView.frame = scrollFrame;
     _scrollView.contentSize = CGSizeMake(scrollFrame.size.width*pages.count, scrollFrame.size.height);
@@ -66,15 +68,15 @@
     //创建所有内容页面
     for(int i = 0; i < pages.count; i++){
         UIImageView *imageView = [[UIImageView alloc] init];
-        imageView.frame = CGRectMake(i*scrollFrame.size.width, 0, scrollFrame.size.width, scrollFrame.size.height);
         imageView.image = [UIImage imageNamed:[pages objectAtIndex:i]];
+        imageView.frame = CGRectMake(i*scrollFrame.size.width, 0, imageView.image.size.width, imageView.image.size.height);
         [_scrollView addSubview:imageView];
         [imageView release];
     }
     
     //翻页控件
     _pageControl = [[[UIPageControl alloc] init] autorelease];
-    _pageControl.frame = CGRectMake(0, 250, 320, 60);
+    _pageControl.frame = CGRectMake(0, 270, 320, 60);
     _pageControl.numberOfPages = pages.count;
     _pageControl.currentPage = 0;
     [_pageControl addTarget:self action:@selector(turnPage:) forControlEvents:UIControlEventValueChanged];
@@ -82,7 +84,7 @@
     
     //登录按钮
     UIButton *loginBtn = [[UIButton alloc] init];
-    loginBtn.frame = CGRectMake(30, 320, 320-30*2, 46);
+    loginBtn.frame = CGRectMake(30, 330, 320-30*2, 46);
     [loginBtn setBackgroundImage:[[UIImage imageNamed:@"ButtonLightGreyShadow46px"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 9, 10, 9)] forState:UIControlStateNormal];
     [loginBtn setBackgroundImage:[[UIImage imageNamed:@"ButtonLightGreyShadow46pxSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 9, 10, 9)] forState:UIControlStateHighlighted];
     [loginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -98,7 +100,7 @@
     
     //注册按钮
     UIButton *registerBtn = [[UIButton alloc] init];
-    registerBtn.frame = CGRectMake(30, 320+60, 320-30*2, 46);
+    registerBtn.frame = CGRectMake(30, 330+60, 320-30*2, 46);
     [registerBtn setBackgroundImage:[[UIImage imageNamed:@"ButtonLightGreyShadow46px"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 9, 10, 9)] forState:UIControlStateNormal];
     [registerBtn setBackgroundImage:[[UIImage imageNamed:@"ButtonLightGreyShadow46pxSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 9, 10, 9)] forState:UIControlStateHighlighted];
     [registerBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -118,6 +120,21 @@
     [super viewDidUnload];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    //_scrollView.alpha = 0.0;
+    _pageControl.alpha = 0.0;
+    _loginBtn.alpha = 0.0;
+    _registerBtn.alpha = 0.0;
+    [UIView beginAnimations:@"fadeInAnimation" context:NULL];
+    [UIView setAnimationDuration:0.5];
+    //_scrollView.alpha = 1.0;
+    _pageControl.alpha = 1.0;
+    _loginBtn.alpha = 1.0;
+    _registerBtn.alpha = 1.0;
+    [UIView commitAnimations];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
@@ -129,12 +146,12 @@
     _pageControl.currentPage = page;
 }
 
-- (void) turnPage: (UIPageControl *) pageControl
+- (void)turnPage: (UIPageControl *) pageControl
 {
     [_scrollView scrollRectToVisible:CGRectMake(_scrollView.frame.size.width*pageControl.currentPage, 0, _scrollView.frame.size.width, _scrollView.frame.size.height) animated:YES];
 }
 
-- (void) goLogin: (UIButton *)sender
+- (void)goLogin: (UIButton *)sender
 {
     AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
     
@@ -148,7 +165,7 @@
     if(![appDelegate.navigationController.viewControllers containsObject:self.loginController]){
         [appDelegate.navigationController pushViewController:self.loginController animated:NO];
     }
-    [self.loginController performSelector:@selector(focusFirstTextInput) withObject:nil afterDelay:0.2];
+    [self.loginController performSelector:@selector(focusFirstTextInput) withObject:nil afterDelay:0.1];
     
     [[self.view.window.subviews objectAtIndex:0] setHidden:YES];
     [[self.view.window.subviews objectAtIndex:1] setHidden:NO];
@@ -160,7 +177,7 @@
     [self.view.window.layer addAnimation:transition forKey:@"pushAnimaition"];
 }
 
-- (void) goRegistration: (UIButton *)sender
+- (void)goRegistration: (UIButton *)sender
 {
     AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
     
@@ -175,7 +192,7 @@
     if(![appDelegate.navigationController.viewControllers containsObject:self.registerController]){
         [appDelegate.navigationController pushViewController:self.registerController animated:NO];
     }
-    [self.registerController performSelector:@selector(focusFirstTextInput) withObject:nil afterDelay:0.2];
+    [self.registerController performSelector:@selector(focusFirstTextInput) withObject:nil afterDelay:0.1];
     
     [[self.view.window.subviews objectAtIndex:0] setHidden:YES];
     [[self.view.window.subviews objectAtIndex:1] setHidden:NO];

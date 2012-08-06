@@ -42,20 +42,10 @@
     
     self.navigationController = [[[UINavigationController alloc] init] autorelease];
     
+    //if(YES){
     if(![self checkAutoLogin]){
-    //if(true){
-        
         FEStartViewController *startController = [[[FEStartViewController alloc] init] autorelease];
         self.window.rootViewController = startController;
-        
-        ((UIView *)[startController.view.subviews objectAtIndex:1]).alpha = 0.0;
-        ((UIView *)[startController.view.subviews objectAtIndex:2]).alpha = 0.0;
-        [UIView beginAnimations:@"fadeIn" context:NULL];
-        [UIView setAnimationDuration:0.5];
-        ((UIView *)[startController.view.subviews objectAtIndex:1]).alpha = 1.0;
-        ((UIView *)[startController.view.subviews objectAtIndex:2]).alpha = 1.0;
-        [UIView commitAnimations];
-        
     }
     
     //[self startMainView];
@@ -96,7 +86,8 @@
     NSString *password = [[NSUserDefaults standardUserDefaults] stringForKey:@"password"];
     NSLog(@"check: %d, %@, %@", userid, username, password);
     if(username != nil && password != nil){
-        [self login:username withPassword:password];
+        [self startMainView];
+        //[self login:username withPassword:password];
         return YES;
     }
     return NO;
