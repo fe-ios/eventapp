@@ -45,9 +45,7 @@
     self.title = @"登录";
     self.tableView.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dotGreyBackground"]] autorelease];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBackground"] forBarMetrics:UIBarMetricsDefault];
-    
-    self.view.backgroundColor = [UIColor clearColor];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     UIView *headerView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 10)] autorelease];
     self.tableView.tableHeaderView = headerView;
     

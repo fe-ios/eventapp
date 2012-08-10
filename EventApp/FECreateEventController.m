@@ -43,14 +43,14 @@
     [super viewDidLoad];
 
     self.title = @"新活动";
+		
+	//self.view.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
     self.tableView.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dotGreyBackground"]] autorelease];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBackground"] forBarMetrics:UIBarMetricsDefault];
-    
-    self.view.backgroundColor = [UIColor clearColor];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     UIView *headerView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 10)] autorelease];
     self.tableView.tableHeaderView = headerView;
-    
+	
     //left button
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     leftButton.frame = CGRectMake(0, 0, 50, 31);
@@ -70,6 +70,57 @@
     //[rightButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
     [rightButton addTarget:self action:@selector(createAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:rightButton] autorelease];
+	
+	//center bar
+	UIView *toolbar = [[UIView alloc] initWithFrame:CGRectMake(0, 220, 320, 44)];
+	UIImageView *toolbarBg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+	[toolbarBg setImage:[UIImage imageNamed:@"tool_bar_gray"]];
+	[toolbar addSubview:toolbarBg];
+	[self.navigationController.view addSubview:toolbar];
+	
+	//center bar items
+	UIButton *buttonSetIcon = [[UIButton alloc] initWithFrame:CGRectMake(20, 12, 22, 22)];
+	[buttonSetIcon setImage:[UIImage imageNamed:@"tool_bar_icon_gallery"] forState:UIControlStateNormal];
+	[buttonSetIcon setImage:[UIImage imageNamed:@"tool_bar_icon_gallery_s"] forState:UIControlStateSelected];
+	[buttonSetIcon addTarget:self action:@selector(toggleButtonSelected:) forControlEvents:UIControlEventTouchDown];
+	[toolbar addSubview:buttonSetIcon];
+
+	UIButton *buttonSetTag = [[UIButton alloc] initWithFrame:CGRectMake(75, 12, 22, 22)];
+	[buttonSetTag setImage:[UIImage imageNamed:@"tool_bar_icon_tag"] forState:UIControlStateNormal];
+	[buttonSetTag setImage:[UIImage imageNamed:@"tool_bar_icon_tag_s"] forState:UIControlStateSelected];
+	[buttonSetTag addTarget:self action:@selector(toggleButtonSelected:) forControlEvents:UIControlEventTouchDown];
+	[toolbar addSubview:buttonSetTag];
+
+	UIButton *buttonSetDetail = [[UIButton alloc] initWithFrame:CGRectMake(130, 12, 22, 22)];
+	[buttonSetDetail setImage:[UIImage imageNamed:@"tool_bar_icon_info"] forState:UIControlStateNormal];
+	[buttonSetDetail setImage:[UIImage imageNamed:@"tool_bar_icon_info_s"] forState:UIControlStateSelected];
+	[buttonSetDetail addTarget:self action:@selector(toggleButtonSelected:) forControlEvents:UIControlEventTouchDown];
+	[toolbar addSubview:buttonSetDetail];
+
+	UIButton *buttonSetMember = [[UIButton alloc] initWithFrame:CGRectMake(185, 14, 30, 18)];
+	[buttonSetMember setImage:[UIImage imageNamed:@"tool_bar_icon_people"] forState:UIControlStateNormal];
+	[buttonSetMember setImage:[UIImage imageNamed:@"tool_bar_icon_people_s"] forState:UIControlStateSelected];
+	[buttonSetMember addTarget:self action:@selector(toggleButtonSelected:) forControlEvents:UIControlEventTouchDown];
+	[toolbar addSubview:buttonSetMember];
+	
+//	// custom switch
+//	UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(240, 12, 52, 23)];
+//	UIImage *trackLeft = [UIImage imageNamed:@"switch_inner_shadow"];
+//	UIImage *trackRight = [UIImage imageNamed:@"switch_inner_shadow"];
+//	UIImage *sliderThumb = [UIImage imageNamed:@"switch_handle"];
+//	
+//	[slider setMinimumTrackImage:trackLeft forState:UIControlStateNormal];
+//	[slider setMaximumTrackImage:trackRight forState:UIControlStateHighlighted];
+//	[slider setThumbImage:sliderThumb forState:UIControlStateNormal];
+//	[slider setThumbImage:sliderThumb forState:UIControlStateHighlighted];
+//	
+//	[slider setContinuous:NO];
+//	[toolbar addSubview:slider];
+
+	//switch
+	UISwitch *toggleShare = [[UISwitch alloc] initWithFrame:CGRectMake(230, 10, 70, 25)];
+	[toolbar addSubview:toggleShare];
+	
 }
 
 - (void)viewDidUnload
@@ -275,6 +326,11 @@
 -(void) setTableCellTextAtRow: (NSString *)text row:(int)row 
 {
     ((FELoginTableViewCell *) [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]]).fieldInput.text = text;
+}
+
+- (void)toggleButtonSelected:(UIButton *)sender
+{
+    sender.selected = !sender.selected;
 }
 
 @end
