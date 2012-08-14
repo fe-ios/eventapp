@@ -105,6 +105,8 @@
 
 - (void)viewDidUnload
 {
+    _updateHeaderView = nil;
+    _updateFooterView = nil;
     [super viewDidUnload];
 }
 

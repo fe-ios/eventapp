@@ -32,9 +32,9 @@
     //upload test
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *imgPath = [NSString stringWithFormat:@"%@/demo.jpg", path];
-    NSData *imgData = [NSData dataWithContentsOfFile:imgPath];
-    //[self uploadImageFile:imgPath];
-    [self uploadImageData:imgData];
+    [self uploadImageFile:imgPath];
+    //NSData *imgData = [NSData dataWithContentsOfFile:imgPath];
+    //[self uploadImageData:imgData];
 }
 
 - (void)viewDidUnload
@@ -52,6 +52,7 @@
     NSString *requestURL = [NSString stringWithFormat:@"%@%@", API_BASE, API_UPLOAD];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:requestURL]];
     [request setFile:imagePath forKey:@"userfile"];
+    //[request setPostValue:@"image_title" forKey:@"title"];
     request.delegate = self;
     request.didFinishSelector = @selector(uploadFinish:);
     [request startAsynchronous];

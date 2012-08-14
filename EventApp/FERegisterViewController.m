@@ -38,6 +38,12 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [_tooltip release];
+    [super dealloc]; 
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -71,14 +77,14 @@
     [rightButton addTarget:self action:@selector(registerAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:rightButton] autorelease];
     
-    _tooltip = [[FEToolTipView alloc] init];
+    _tooltip = [[[[FEToolTipView alloc] init] autorelease] retain];
     _tooltip.backgroundImage = [[UIImage imageNamed:@"tooltip_invalid"] resizableImageWithCapInsets:UIEdgeInsetsMake(14, 40, 6, 40)];
     _tooltip.edgeInsets = UIEdgeInsetsMake(14, 10, 8, 10);
 }
 
 - (void)viewDidUnload
 {
-    _tooltip = nil;
+    _progress = nil;
     [super viewDidUnload];
 }
 
@@ -129,6 +135,7 @@
             cell.fieldLabel.text = @"邮箱";
             cell.fieldInput.placeholder = @"必填";
             cell.fieldInput.delegate = self;
+            cell.fieldInput.keyboardType = UIKeyboardTypeEmailAddress;
             cell.fieldInput.returnKeyType = UIReturnKeyNext;
             cell.fieldInput.tag = indexPath.row+1;
             break;

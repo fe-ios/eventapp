@@ -15,6 +15,13 @@
 
 NSString* _imagePath;
 
+
+- (void)dealloc
+{
+    [_imagePath release];
+    [super dealloc];
+}
+
 - (void)loadImageAsync:(NSString *)imageURL withQueue:(NSOperationQueue *)queue
 {
     [_imagePath release];

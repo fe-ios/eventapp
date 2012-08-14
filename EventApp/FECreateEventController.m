@@ -13,10 +13,12 @@
 #import "FEServerAPI.h"
 #import "ASIFormDataRequest.h"
 #import "JSONKit.h"
+#import "FEToolTipView.h"
 
 @interface FECreateEventController ()
 {
     FEActionSheet* _dateSheet;
+    FEToolTipView* _tooltip;
 }
 
 @end
@@ -35,6 +37,7 @@
 - (void)dealloc
 {
     [_dateSheet release];
+    [_tooltip release];
     [super dealloc];
 }
 
@@ -70,6 +73,10 @@
     //[rightButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
     [rightButton addTarget:self action:@selector(createAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:rightButton] autorelease];
+    
+    _tooltip = [[[[FEToolTipView alloc] init] autorelease] retain];
+    _tooltip.backgroundImage = [[UIImage imageNamed:@"tooltip_invalid"] resizableImageWithCapInsets:UIEdgeInsetsMake(14, 40, 6, 40)];
+    _tooltip.edgeInsets = UIEdgeInsetsMake(14, 10, 8, 10);
 }
 
 - (void)viewDidUnload
@@ -96,12 +103,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return indexPath.row == 2 ? 47 : 44;
+    return indexPath.row == 3 ? 47 : 44;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -113,7 +120,7 @@
         cell = (FELoginTableViewCell *)[nibs objectAtIndex:0];
     }
     
-    NSString *cellBgName = indexPath.row == 0 ? @"roundTableCellTop" : indexPath.row == 2 ? @"roundTableCellBottom" : @"roundTableCellMiddle";
+    NSString *cellBgName = indexPath.row == 0 ? @"roundTableCellTop" : indexPath.row == 3 ? @"roundTableCellBottom" : @"roundTableCellMiddle";
     cell.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:cellBgName]] autorelease];
     
     switch (indexPath.row) {
@@ -122,25 +129,35 @@
             cell.fieldInput.placeholder = @"必填";
             cell.fieldInput.delegate = self;
             cell.fieldInput.returnKeyType = UIReturnKeyNext;
-            cell.fieldInput.tag = 0;
+            cell.fieldInput.tag = indexPath.row+1;
             break;
             
         case 1:
-            cell.fieldLabel.text = @"时间";
+            cell.fieldLabel.text = @"开始时间";
             cell.fieldInput.placeholder = @"必填";
             cell.fieldInput.delegate = self;
             cell.fieldInput.returnKeyType = UIReturnKeyNext;
-            cell.fieldInput.tag = 1;
+            cell.fieldInput.tag = indexPath.row+1;
             //[cell.fieldInput addTarget:self action:@selector(getDateAction) forControlEvents:UIControlEventEditingDidBegin];
             cell.fieldInput.inputView = [self getDateAction];
             break;
             
         case 2:
+            cell.fieldLabel.text = @"结束时间";
+            cell.fieldInput.placeholder = @"可选";
+            cell.fieldInput.delegate = self;
+            cell.fieldInput.returnKeyType = UIReturnKeyNext;
+            cell.fieldInput.tag = indexPath.row+1;
+            //[cell.fieldInput addTarget:self action:@selector(getDateAction) forControlEvents:UIControlEventEditingDidBegin];
+            cell.fieldInput.inputView = [self getDateAction];
+            break;
+            
+        case 3:
             cell.fieldLabel.text = @"地点";
             cell.fieldInput.placeholder = @"必填";
             cell.fieldInput.delegate = self;
             cell.fieldInput.returnKeyType = UIReturnKeyGo;
-            cell.fieldInput.tag = 2;
+            cell.fieldInput.tag = indexPath.row+1;
             break;
             
         default:
@@ -152,17 +169,85 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if(textField.tag < 2){
-        UIResponder *nextResponder = [self.tableView viewWithTag:(textField.tag+1)];
-        if(((UITextField *)nextResponder).tag == 1){
-            [nextResponder becomeFirstResponder];
-        }else {
-            [nextResponder becomeFirstResponder];
-        }
+    if(textField.tag < 4){
+        UITextField *nextTextField = (UITextField *)[self.tableView viewWithTag:(textField.tag+1)];
+        [nextTextField becomeFirstResponder];
     }else {
         [textField resignFirstResponder];
+        [self createAction];
     }
     return NO;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(textField.tag == 2 || textField.tag == 3){
+        return NO;
+    }
+    
+    NSString *futureString = [textField.text stringByReplacingCharactersInRange:range withString:string];    
+    [self validateInput:textField.tag text:futureString showTip:NO];
+    return YES;
+}
+
+- (BOOL)validateInput: (NSInteger)textFieldTag text:(NSString *)text showTip:(BOOL)showTip
+{
+    UITextField *textField = nil;
+    NSString *contentText = nil;
+    CGPoint point = CGPointZero;
+    
+    if(textFieldTag == 0 || textFieldTag == 1){
+        textField = (UITextField *)[self.tableView viewWithTag:1];
+        contentText = textFieldTag == 0 ? textField.text : text;
+        if (contentText.length == 0) {
+            if(showTip){
+                _tooltip.text = @"请输入活动名称。";
+                point.x = self.tableView.frame.size.width - _tooltip.frame.size.width - 8;
+                point.y = self.tableView.frame.origin.y + textField.superview.superview.frame.origin.y + textField.superview.superview.frame.size.height - 10;
+                [_tooltip showAtPoint:point inView:self.tableView];
+                [textField becomeFirstResponder]; 
+            }
+            return NO;
+        }else {
+            [_tooltip removeFromSuperview];
+        }
+    }
+    
+    if(textFieldTag == 0 || textFieldTag == 2){
+        textField = (UITextField *)[self.tableView viewWithTag:2];
+        contentText = textFieldTag == 0 ? textField.text : text;
+        if (contentText.length == 0) {
+            if(showTip){
+                _tooltip.text = @"请输入活动时间。";
+                point.x = self.tableView.frame.size.width - _tooltip.frame.size.width - 8;
+                point.y = self.tableView.frame.origin.y + textField.superview.superview.frame.origin.y + textField.superview.superview.frame.size.height - 10;
+                [_tooltip showAtPoint:point inView:self.tableView];
+                [textField becomeFirstResponder]; 
+            }
+            return NO;
+        }else {
+            [_tooltip removeFromSuperview];
+        }
+    }
+    
+    if(textFieldTag == 0 || textFieldTag == 4){
+        textField = (UITextField *)[self.tableView viewWithTag:4];
+        contentText = textFieldTag == 0 ? textField.text : text;
+        if (contentText.length == 0) {
+            if(showTip){
+                _tooltip.text = @"请输入活动地点。";
+                point.x = self.tableView.frame.size.width - _tooltip.frame.size.width - 8;
+                point.y = self.tableView.frame.origin.y + textField.superview.superview.frame.origin.y + textField.superview.superview.frame.size.height - 10;
+                [_tooltip showAtPoint:point inView:self.tableView];
+                [textField becomeFirstResponder]; 
+            }
+            return NO;
+        }else {
+            [_tooltip removeFromSuperview];
+        }
+    }
+    
+    return YES;
 }
 
 - (FEActionSheet *)getDateAction
@@ -207,17 +292,27 @@
 {
     if(_dateSheet != nil){
         UIDatePicker *datePicker = (UIDatePicker *)[_dateSheet viewWithTag:1];
-        UITextField *textField = (UITextField *)[self.tableView viewWithTag:1];
+        UITextField *textField = (UITextField *)[self.tableView viewWithTag:2];
+        NSInteger nextTag = 3;
+        if(!textField.isFirstResponder){
+            textField = (UITextField *)[self.tableView viewWithTag:3];
+            nextTag = 4;
+        }
         textField.text = [datePicker.date stringWithFormat:@"YY-MM-dd HH:mm"];
-        [(UITextField *)[self.tableView viewWithTag:2] becomeFirstResponder];
+        [self validateInput:textField.tag text:textField.text showTip:NO];
+        [[self.tableView viewWithTag:nextTag] becomeFirstResponder];
     }
 }
 
 - (void)cancelDateAction
 {
     if(_dateSheet != nil){
-        //[_dateSheet dismissWithClickedButtonIndex:0 animated:YES];
-        [(UITextField *)[self.tableView viewWithTag:1] resignFirstResponder];
+        UITextField *textField = (UITextField *)[self.tableView viewWithTag:2];
+        if(!textField.isFirstResponder){
+            textField = (UITextField *)[self.tableView viewWithTag:3];
+        }
+        [textField resignFirstResponder];
+        [self validateInput:textField.tag text:textField.text showTip:NO];
     }
 }
 
@@ -225,7 +320,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //nothing
+    [[self.tableView viewWithTag:indexPath.row+1] becomeFirstResponder]; 
 }
 
 - (void)backAction
@@ -235,11 +330,15 @@
 
 - (void)createAction
 {
+    if(![self validateInput:0 text:nil showTip:YES]){
+        return;
+    }
+    
     int user_id = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userid"] intValue];
     NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:@"password"];
-    NSString *eventName = [self getTableCellTextAtRow:0];
-    NSDate *startDate = [NSDate dateFromString:[self getTableCellTextAtRow:1] withFormat:@"YY-MM-dd HH:mm"];
-    NSString *venue = [self getTableCellTextAtRow:2];
+    NSString *eventName = [self getTableCellTextAtRow:1];
+    NSDate *startDate = [NSDate dateFromString:[self getTableCellTextAtRow:2] withFormat:@"YY-MM-dd HH:mm"];
+    NSString *venue = [self getTableCellTextAtRow:3];
     
     NSString *eventURL = [NSString stringWithFormat:@"%@%@", API_BASE, API_EVENT_CREATE];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:eventURL]];
@@ -248,6 +347,7 @@
     [request setPostValue:password forKey:@"password"];
     [request setPostValue:eventName forKey:@"event_name"];
     [request setPostValue:[startDate stringWithFormat:@"YY-MM-dd HH:mm"] forKey:@"start_date"];
+    [request setPostValue:[startDate stringWithFormat:@"YY-MM-dd HH:mm"] forKey:@"end_date"];
     [request setPostValue:venue forKey:@"venue"];
     request.delegate = self;
     [request startAsynchronous];
@@ -264,7 +364,6 @@
     if([status isEqualToString:@"success"]){
         [self dismissModalViewControllerAnimated:YES];
     }
-
 }
 
 -(NSString *) getTableCellTextAtRow: (int)row
