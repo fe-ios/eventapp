@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		810A0B1215D8E65900559A0A /* FEEventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 810A0B1015D8E65900559A0A /* FEEventDetailViewController.m */; };
+		810A0B1315D8E65900559A0A /* FEEventDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 810A0B1115D8E65900559A0A /* FEEventDetailViewController.xib */; };
+		810A0B1715D8E8AF00559A0A /* detail_grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 810A0B1515D8E8AF00559A0A /* detail_grid.png */; };
+		810A0B1815D8E8AF00559A0A /* detail_grid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 810A0B1615D8E8AF00559A0A /* detail_grid@2x.png */; };
 		811387A315B514900033D455 /* DAKeyboardControlScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8113879915B514900033D455 /* DAKeyboardControlScrollView.m */; };
 		811387A415B514900033D455 /* DAKeyboardControlTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8113879B15B514900033D455 /* DAKeyboardControlTableView.m */; };
 		811387A515B514900033D455 /* DAKeyboardControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8113879D15B514900033D455 /* DAKeyboardControlView.m */; };
@@ -364,6 +368,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		810A0B0F15D8E65900559A0A /* FEEventDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEEventDetailViewController.h; sourceTree = "<group>"; };
+		810A0B1015D8E65900559A0A /* FEEventDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEEventDetailViewController.m; sourceTree = "<group>"; };
+		810A0B1115D8E65900559A0A /* FEEventDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FEEventDetailViewController.xib; sourceTree = "<group>"; };
+		810A0B1515D8E8AF00559A0A /* detail_grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = detail_grid.png; path = EventApp/image_detail/detail_grid.png; sourceTree = "<group>"; };
+		810A0B1615D8E8AF00559A0A /* detail_grid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "detail_grid@2x.png"; path = "EventApp/image_detail/detail_grid@2x.png"; sourceTree = "<group>"; };
 		8113879815B514900033D455 /* DAKeyboardControlScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAKeyboardControlScrollView.h; sourceTree = "<group>"; };
 		8113879915B514900033D455 /* DAKeyboardControlScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAKeyboardControlScrollView.m; sourceTree = "<group>"; };
 		8113879A15B514900033D455 /* DAKeyboardControlTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAKeyboardControlTableView.h; sourceTree = "<group>"; };
@@ -975,6 +984,8 @@
 		C7DECB5015BD272300E1DCC7 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				810A0B1515D8E8AF00559A0A /* detail_grid.png */,
+				810A0B1615D8E8AF00559A0A /* detail_grid@2x.png */,
 				81AA8E6415D4E0D20019748C /* tool_bar_gray.png */,
 				81AA8E6515D4E0D20019748C /* tool_bar_gray@2x.png */,
 				8136570E15D3C57000006478 /* actionsheetBg.png */,
@@ -1374,6 +1385,9 @@
 				C7DECCC115BD444D00E1DCC7 /* FEUploadController.m */,
 				C7D39E8E15B951F0009EE420 /* UIAsyncImageView.h */,
 				C7D39E8F15B951F0009EE420 /* UIAsyncImageView.m */,
+				810A0B0F15D8E65900559A0A /* FEEventDetailViewController.h */,
+				810A0B1015D8E65900559A0A /* FEEventDetailViewController.m */,
+				810A0B1115D8E65900559A0A /* FEEventDetailViewController.xib */,
 			);
 			name = event_list;
 			sourceTree = "<group>";
@@ -1733,6 +1747,9 @@
 				8136575915D3C57000006478 /* topTextFieldBg@2x.png in Resources */,
 				81AA8E6615D4E0D20019748C /* tool_bar_gray.png in Resources */,
 				81AA8E6715D4E0D20019748C /* tool_bar_gray@2x.png in Resources */,
+				810A0B1315D8E65900559A0A /* FEEventDetailViewController.xib in Resources */,
+				810A0B1715D8E8AF00559A0A /* detail_grid.png in Resources */,
+				810A0B1815D8E8AF00559A0A /* detail_grid@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1786,6 +1803,7 @@
 				C7D6DFB115BFDB3600D29E27 /* FEEvent.m in Sources */,
 				C7DC64F015C144DF00801E91 /* EGORefreshTableFooterView.m in Sources */,
 				C7DD3BAA15CBB410005A0588 /* FEToolTipView.m in Sources */,
+				810A0B1215D8E65900559A0A /* FEEventDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

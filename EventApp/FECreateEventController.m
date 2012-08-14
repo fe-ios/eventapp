@@ -85,42 +85,44 @@
 	[buttonSetIcon addTarget:self action:@selector(toggleButtonSelected:) forControlEvents:UIControlEventTouchDown];
 	[toolbar addSubview:buttonSetIcon];
 
-	UIButton *buttonSetTag = [[UIButton alloc] initWithFrame:CGRectMake(75, 12, 22, 22)];
+	UIButton *buttonSetTag = [[UIButton alloc] initWithFrame:CGRectMake(70, 12, 22, 22)];
 	[buttonSetTag setImage:[UIImage imageNamed:@"tool_bar_icon_tag"] forState:UIControlStateNormal];
 	[buttonSetTag setImage:[UIImage imageNamed:@"tool_bar_icon_tag_s"] forState:UIControlStateSelected];
 	[buttonSetTag addTarget:self action:@selector(toggleButtonSelected:) forControlEvents:UIControlEventTouchDown];
 	[toolbar addSubview:buttonSetTag];
 
-	UIButton *buttonSetDetail = [[UIButton alloc] initWithFrame:CGRectMake(130, 12, 22, 22)];
+	UIButton *buttonSetDetail = [[UIButton alloc] initWithFrame:CGRectMake(120, 12, 22, 22)];
 	[buttonSetDetail setImage:[UIImage imageNamed:@"tool_bar_icon_info"] forState:UIControlStateNormal];
 	[buttonSetDetail setImage:[UIImage imageNamed:@"tool_bar_icon_info_s"] forState:UIControlStateSelected];
 	[buttonSetDetail addTarget:self action:@selector(toggleButtonSelected:) forControlEvents:UIControlEventTouchDown];
 	[toolbar addSubview:buttonSetDetail];
 
-	UIButton *buttonSetMember = [[UIButton alloc] initWithFrame:CGRectMake(185, 14, 30, 18)];
+	UIButton *buttonSetMember = [[UIButton alloc] initWithFrame:CGRectMake(170, 14, 30, 18)];
 	[buttonSetMember setImage:[UIImage imageNamed:@"tool_bar_icon_people"] forState:UIControlStateNormal];
 	[buttonSetMember setImage:[UIImage imageNamed:@"tool_bar_icon_people_s"] forState:UIControlStateSelected];
 	[buttonSetMember addTarget:self action:@selector(toggleButtonSelected:) forControlEvents:UIControlEventTouchDown];
 	[toolbar addSubview:buttonSetMember];
-	
-//	// custom switch
-//	UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(240, 12, 52, 23)];
-//	UIImage *trackLeft = [UIImage imageNamed:@"switch_inner_shadow"];
-//	UIImage *trackRight = [UIImage imageNamed:@"switch_inner_shadow"];
-//	UIImage *sliderThumb = [UIImage imageNamed:@"switch_handle"];
-//	
-//	[slider setMinimumTrackImage:trackLeft forState:UIControlStateNormal];
-//	[slider setMaximumTrackImage:trackRight forState:UIControlStateHighlighted];
-//	[slider setThumbImage:sliderThumb forState:UIControlStateNormal];
-//	[slider setThumbImage:sliderThumb forState:UIControlStateHighlighted];
-//	
-//	[slider setContinuous:NO];
-//	[toolbar addSubview:slider];
 
 	//switch
 	UISwitch *toggleShare = [[UISwitch alloc] initWithFrame:CGRectMake(230, 10, 70, 25)];
 	[toolbar addSubview:toggleShare];
 	
+	//undertoolbar
+	UIImageView *underKeyboard = [[UIImageView alloc] initWithFrame:CGRectMake(0, 264, 320, 216)];
+	[underKeyboard setImage:[UIImage imageNamed:@"actionsheetBg"]];
+	UIImage *actionMaskImage = [[UIImage imageNamed:@"actionsheetMask"] resizableImageWithCapInsets:UIEdgeInsetsMake(100, 0, 100, 0)];
+	UIImageView *actionMask = [[UIImageView alloc] initWithFrame:CGRectMake(0, 264, 320, 216)];
+	[actionMask setImage:actionMaskImage];
+	[self.navigationController.view addSubview:underKeyboard];
+	[self.navigationController.view addSubview:actionMask];
+	
+	//photoPicker Button
+	UIButton *pickFromCamera = [[UIButton alloc] initWithFrame:CGRectMake(55, 340, 85, 60)];
+	[pickFromCamera setImage:[UIImage imageNamed:@"button_photo_camera"] forState:UIControlStateNormal];
+	UIButton *pickFromLibrary = [[UIButton alloc] initWithFrame:CGRectMake(182, 340, 85, 60)];
+	[pickFromLibrary setImage:[UIImage imageNamed:@"button_photo_library"] forState:UIControlStateNormal];
+	[self.navigationController.view addSubview:pickFromCamera];
+	[self.navigationController.view addSubview:pickFromLibrary];
 }
 
 - (void)viewDidUnload
