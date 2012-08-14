@@ -16,6 +16,7 @@
 #import "JSONKit.h"
 #import "FEEvent.h"
 #import "MBProgressHUD.h"
+#import "FEEventDetailViewController.h"
 
 
 @interface FEEventListController ()
@@ -190,6 +191,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //todo
+	//example
+	FEEventDetailViewController *detailView = [[FEEventDetailViewController alloc] init];
+	[self.navigationController pushViewController:detailView animated:YES];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
