@@ -19,6 +19,7 @@
 @implementation FECreateEventToolbar
 
 @synthesize action = _action;
+@synthesize privacy = _privacy;
 
 
 - (id)initWithFrame:(CGRect)frame
@@ -42,33 +43,33 @@
 - (void)initView
 {
     //bg
-    UIImageView *toolbarBg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-	[toolbarBg setImage:[UIImage imageNamed:@"tool_bar_gray"]];
+    UIImageView *toolbarBg = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)] autorelease];
+	[toolbarBg setImage:[UIImage imageNamed:@"tool_bar_lightgray"]];
 	[self addSubview:toolbarBg];
 	
 	//bar items
-	UIButton *buttonSetIcon = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 36, 44)];
+	UIButton *buttonSetIcon = [[[UIButton alloc] initWithFrame:CGRectMake(10, 0, 36, 44)] autorelease];
 	[buttonSetIcon setImage:[UIImage imageNamed:@"tool_bar_icon_gallery"] forState:UIControlStateNormal];
 	[buttonSetIcon setImage:[UIImage imageNamed:@"tool_bar_icon_gallery_s"] forState:UIControlStateSelected];
 	[buttonSetIcon addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchDown];
     buttonSetIcon.tag = CreateEventIconAction;
 	[self addSubview:buttonSetIcon];
     
-	UIButton *buttonSetTag = [[UIButton alloc] initWithFrame:CGRectMake(60, 0, 36, 44)];
+	UIButton *buttonSetTag = [[[UIButton alloc] initWithFrame:CGRectMake(60, 0, 36, 44)] autorelease];
 	[buttonSetTag setImage:[UIImage imageNamed:@"tool_bar_icon_tag"] forState:UIControlStateNormal];
 	[buttonSetTag setImage:[UIImage imageNamed:@"tool_bar_icon_tag_s"] forState:UIControlStateSelected];
 	[buttonSetTag addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchDown];
     buttonSetTag.tag = CreateEventTagAction;
 	[self addSubview:buttonSetTag];
     
-	UIButton *buttonSetDetail = [[UIButton alloc] initWithFrame:CGRectMake(110, 0, 36, 44)];
+	UIButton *buttonSetDetail = [[[UIButton alloc] initWithFrame:CGRectMake(110, 0, 36, 44)] autorelease];
 	[buttonSetDetail setImage:[UIImage imageNamed:@"tool_bar_icon_info"] forState:UIControlStateNormal];
 	[buttonSetDetail setImage:[UIImage imageNamed:@"tool_bar_icon_info_s"] forState:UIControlStateSelected];
 	[buttonSetDetail addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchDown];
     buttonSetDetail.tag = CreateEventDetailAction;
 	[self addSubview:buttonSetDetail];
     
-	UIButton *buttonSetMember = [[UIButton alloc] initWithFrame:CGRectMake(160, 0, 36, 44)];
+	UIButton *buttonSetMember = [[[UIButton alloc] initWithFrame:CGRectMake(160, 0, 36, 44)] autorelease];
 	[buttonSetMember setImage:[UIImage imageNamed:@"tool_bar_icon_people"] forState:UIControlStateNormal];
 	[buttonSetMember setImage:[UIImage imageNamed:@"tool_bar_icon_people_s"] forState:UIControlStateSelected];
 	[buttonSetMember addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchDown];
@@ -77,26 +78,18 @@
     
 	//switch
 	FESwitch *privacySwitch = [[[FESwitch alloc] init] autorelease];
-    privacySwitch.frame = CGRectMake(230, 10, 52, 23);
+    privacySwitch.frame = CGRectMake(320-10-5-52, 12, 52, 23);
+    [privacySwitch setToggleImage:[UIImage imageNamed:@"share_switch_bar"]];
+    [privacySwitch setOutlineImage:[UIImage imageNamed:@"switch_inner_shadow"]];
+    [privacySwitch setKnobImage:[UIImage imageNamed:@"switch_handle"]];
+    [privacySwitch setOnImage:[UIImage imageNamed:@"share_switch_on"]];
+    [privacySwitch setOffImage:[UIImage imageNamed:@"share_switch_off"]];
     [self addSubview:privacySwitch];
+    privacySwitch.on = YES;
+    [privacySwitch addTarget:self action:@selector(privacyChanged:) forControlEvents:UIControlEventValueChanged];
     
     _action = CreateEventNoneAction;
-}
-
-- (UIImage*) maskImage:(UIImage *)image withMask:(UIImage *)maskImage {
-    
-    CGImageRef maskRef = maskImage.CGImage; 
-    
-    CGImageRef mask = CGImageMaskCreate(CGImageGetWidth(maskRef),
-                                        CGImageGetHeight(maskRef),
-                                        CGImageGetBitsPerComponent(maskRef),
-                                        CGImageGetBitsPerPixel(maskRef),
-                                        CGImageGetBytesPerRow(maskRef),
-                                        CGImageGetDataProvider(maskRef), NULL, false);
-    
-    CGImageRef masked = CGImageCreateWithMask([image CGImage], mask);
-    return [UIImage imageWithCGImage:masked];
-    
+    _privacy = CreateEventPrivacyPrivate;
 }
 
 - (void)toggleButton:(UIButton *)sender
@@ -119,6 +112,13 @@
         _activeButton = nil;
     }
     _action = CreateEventNoneAction;
+}
+
+- (void)privacyChanged:(FESwitch *)sender
+{
+    _action = CreateEventPrivacyAction;
+    _privacy = sender.on ? CreateEventPrivacyPublic : CreateEventPrivacyPrivate;
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
 @end

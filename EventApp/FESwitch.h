@@ -15,4 +15,10 @@
 
 - (void)setOn:(BOOL)newOn animated:(BOOL)animated;
 
+- (void)setToggleImage:(UIImage *)newImage;
+- (void)setOutlineImage:(UIImage *)newImage;
+- (void)setKnobImage:(UIImage *)newImage;
+- (void)setOnImage:(UIImage *)newImage;
+- (void)setOffImage:(UIImage *)newImage;
+
 @end

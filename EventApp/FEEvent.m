@@ -46,7 +46,7 @@
 
 + (NSMutableArray *)translateJSONEvents:(NSMutableArray *)jsonData
 {
-    NSMutableArray *result = [[NSMutableArray alloc] init];
+    NSMutableArray *result = [[[NSMutableArray alloc] init] autorelease];
     for(int i = 0; i < jsonData.count; i++){
         FEEvent *event = [[FEEvent alloc] initWithJSONObject:[jsonData objectAtIndex:i]];
         [result addObject:event];

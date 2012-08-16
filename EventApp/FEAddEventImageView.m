@@ -32,21 +32,23 @@
 {
     //undertoolbar
     UIImageView *underKeyboard = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 216)] autorelease];
-    [underKeyboard setImage:[UIImage imageNamed:@"actionsheetBg"]];
+    [underKeyboard setImage:[UIImage imageNamed:@"actionsheetBg2"]];
     [self addSubview:underKeyboard];
     
-    UIImage *actionMaskImage = [[UIImage imageNamed:@"actionsheetMask"] resizableImageWithCapInsets:UIEdgeInsetsMake(100, 0, 100, 0)];
-    UIImageView *actionMask = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 216)] autorelease];
-    [actionMask setImage:actionMaskImage];
-    [self addSubview:actionMask];
+//    UIImage *actionMaskImage = [[UIImage imageNamed:@"actionsheetMask"] resizableImageWithCapInsets:UIEdgeInsetsMake(100, 0, 100, 0)];
+//    UIImageView *actionMask = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 216)] autorelease];
+//    [actionMask setImage:actionMaskImage];
+//    [self addSubview:actionMask];
     
     //photoPicker Button
-    UIButton *pickFromCamera = [[[UIButton alloc] initWithFrame:CGRectMake(55, 76, 85, 60)] autorelease];
-    [pickFromCamera setImage:[UIImage imageNamed:@"button_photo_camera"] forState:UIControlStateNormal];
+    UIButton *pickFromCamera = [[[UIButton alloc] initWithFrame:CGRectMake(55, 76, 88, 60)] autorelease];
+    [pickFromCamera setImage:[UIImage imageNamed:@"button_photo_camera2"] forState:UIControlStateNormal];
+    [pickFromCamera setImage:[UIImage imageNamed:@"button_photo_camera2_pressed"] forState:UIControlStateHighlighted];
     [self addSubview:pickFromCamera];
     
-    UIButton *pickFromLibrary = [[[UIButton alloc] initWithFrame:CGRectMake(182, 76, 85, 60)] autorelease];
-    [pickFromLibrary setImage:[UIImage imageNamed:@"button_photo_library"] forState:UIControlStateNormal];
+    UIButton *pickFromLibrary = [[[UIButton alloc] initWithFrame:CGRectMake(182, 76, 88, 60)] autorelease];
+    [pickFromLibrary setImage:[UIImage imageNamed:@"button_photo_library2"] forState:UIControlStateNormal];
+    [pickFromLibrary setImage:[UIImage imageNamed:@"button_photo_library2_pressed"] forState:UIControlStateHighlighted];
     [self addSubview:pickFromLibrary];
 }
 

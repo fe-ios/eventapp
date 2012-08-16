@@ -17,9 +17,15 @@ typedef enum {
     CreateEventPrivacyAction = 5
 } CreateEventAction;
 
+typedef enum {
+    CreateEventPrivacyPrivate = 0,
+    CreateEventPrivacyPublic = 1
+} CreateEventPrivacy;
+
 @interface FECreateEventToolbar : UIControl
 
 @property(nonatomic, readonly) int action;
+@property(nonatomic, readonly) int privacy;
 
 -(void)resetAction;
 

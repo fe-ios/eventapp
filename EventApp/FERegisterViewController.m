@@ -360,7 +360,7 @@
 
 - (void) showFailedAction:(NSString *)title
 {
-    FEActionSheet *action = [[FEActionSheet alloc] init];
+    FEActionSheet *action = [[[FEActionSheet alloc] init] autorelease];
     action.title = title;
     int buttonIndex = [action addButtonWithTitle:@"取消"];
     [action setActionSheetStyle:UIActionSheetStyleDefault];

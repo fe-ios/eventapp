@@ -21,19 +21,20 @@
 
 @interface FEEventListController ()
 {
-    EGORefreshTableHeaderView* _updateHeaderView;
-    EGORefreshTableFooterView* _updateFooterView;
-    UIImageView* _footerView;
-    
     BOOL _updating;
     BOOL _loadingMore;
     NSDate* _lastUpdateDate;
 }
 
+@property(nonatomic, retain) EGORefreshTableHeaderView *updateHeaderView;
+@property(nonatomic, retain) EGORefreshTableFooterView *updateFooterView;
+@property(nonatomic, retain) UIImageView *footerView;
+
 @end
 
 @implementation FEEventListController
 
+@synthesize updateHeaderView, updateFooterView, footerView;
 @synthesize downloadQueue = _downloadQueue;
 @synthesize eventData = _eventData;
 
@@ -48,8 +49,9 @@
 
 - (void)dealloc
 {
-    [_downloadQueue release];
-    [_eventData release];
+    [updateHeaderView release];
+    [updateFooterView release];
+    [footerView release];
     [super dealloc];
 }
 
@@ -58,56 +60,44 @@
     [super viewDidLoad];
     
     self.title = NSLocalizedString(@"所有活动", @"所有活动");
-    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dotGreyBackground"]];
+    self.tableView.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dotGreyBackground"]] autorelease];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.downloadQueue = [[[NSOperationQueue alloc] init] autorelease];
     
-    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuButton"] style:UIBarButtonItemStylePlain target:self.viewDeckController action:@selector(toggleLeftView)];
+    UIBarButtonItem *leftBarButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuButton"] style:UIBarButtonItemStylePlain target:self.viewDeckController action:@selector(toggleLeftView)] autorelease];
 	self.navigationItem.leftBarButtonItem = leftBarButton;
     
-    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"addButton"] style:UIBarButtonItemStylePlain target:self action:@selector(createEvent)];
+    UIBarButtonItem *rightBarButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"addButton"] style:UIBarButtonItemStylePlain target:self action:@selector(createEvent)] autorelease];
 	self.navigationItem.rightBarButtonItem = rightBarButton;
     
-    if(_updateHeaderView == nil)
-    {
-        EGORefreshTableHeaderView *headerView = [[EGORefreshTableHeaderView alloc] init];
-        headerView.frame = CGRectMake(10, -50, 320-20, 50);
-		headerView.delegate = self;
-		[self.tableView addSubview:headerView];
-		_updateHeaderView = headerView;
-		[headerView release];
-	}
+    self.updateHeaderView = [[[EGORefreshTableHeaderView alloc] init] autorelease];
+    self.updateHeaderView.frame = CGRectMake(10, -50, 320-20, 50);
+    self.updateHeaderView.delegate = self;
+    [self.tableView addSubview:self.updateHeaderView];
     
-    if(_updateFooterView == nil)
-    {
-        EGORefreshTableFooterView *footerView = [[EGORefreshTableFooterView alloc] init];
-		footerView.delegate = self;
-        footerView.hidden = YES;
-		[self.tableView addSubview:footerView];
-		_updateFooterView = footerView;
-		[footerView release];
-	}
+    self.updateFooterView = [[[EGORefreshTableFooterView alloc] init] autorelease];
+    self.updateFooterView.delegate = self;
+    self.updateFooterView.hidden = YES;
+    [self.tableView addSubview:self.updateFooterView];
     
-    if(_footerView == nil){
-        _footerView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"eventTableFooter"]] autorelease];
-        _footerView.hidden = YES;
-        [self.tableView addSubview:_footerView];
-    }
+    self.footerView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"eventTableFooter"]] autorelease];
+    self.footerView.hidden = YES;
+    [self.tableView addSubview:self.footerView];
 	
     _lastUpdateDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastUpdateDate"];
-	[_updateHeaderView refreshLastUpdatedDate];
-    
-    [_updateHeaderView setState:EGOOPullRefreshLoading];
-    [self.tableView setContentInset:UIEdgeInsetsMake(_updateHeaderView.frame.size.height, 0, 0, 0)];
+	[self.updateHeaderView refreshLastUpdatedDate];
+    [self.updateHeaderView setState:EGOOPullRefreshLoading];
+    [self.tableView setContentInset:UIEdgeInsetsMake(self.updateHeaderView.frame.size.height, 0, 0, 0)];
     
     [self loadEvent];
 }
 
 - (void)viewDidUnload
 {
-    _updateHeaderView = nil;
-    _updateFooterView = nil;
+    self.updateHeaderView = nil;
+    self.updateFooterView = nil;
+    self.footerView = nil;
     [super viewDidUnload];
 }
 
@@ -138,7 +128,7 @@
     static NSString *CellIdentifier = @"EventTableViewCell";
     FEEventTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil){
-        NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:@"EventTableViewCell" owner:nil options:nil];
+        NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:@"FEEventTableViewCell" owner:nil options:nil];
         cell = (FEEventTableViewCell *)[nibs objectAtIndex:0];
         cell.backgroundView = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"eventTabelCellBackground"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 120, 50, 120)]] autorelease];
         UIImage *placeholder = [UIImage imageNamed:@"pictureGridPlaceholder"];
@@ -192,7 +182,7 @@
 {
     //todo
 	//example
-	FEEventDetailViewController *detailView = [[FEEventDetailViewController alloc] init];
+	FEEventDetailViewController *detailView = [[[FEEventDetailViewController alloc] init] autorelease];
 	[self.navigationController pushViewController:detailView animated:YES];
 }
 
@@ -211,14 +201,14 @@
     if(!decelerate){
         self.downloadQueue.maxConcurrentOperationCount = 5;
     }
-    [_updateHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
-    [_updateFooterView egoRefreshScrollViewDidEndDragging:scrollView];
+    [self.updateHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    [self.updateFooterView egoRefreshScrollViewDidEndDragging:scrollView];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {	
-	[_updateHeaderView egoRefreshScrollViewDidScroll:scrollView];
-    [_updateFooterView egoRefreshScrollViewDidScroll:scrollView];
+	[self.updateHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    [self.updateFooterView egoRefreshScrollViewDidScroll:scrollView];
 }
 
 - (void)loadEvent
@@ -267,21 +257,21 @@
         }
         
         _loadingMore = NO;
-        [_updateFooterView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView scrollFooterBack:!hasData];
+        [self.updateFooterView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView scrollFooterBack:!hasData];
     }else {
         if(hasData){
             [self tableView:self.tableView insertDataAndRefresh:events startIndex:0];
 //            [self.eventData insertObjects:events atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, events.count)]];
 //            [self.tableView reloadData];
         }
-        [_updateHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+        [self.updateHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
     }
     
     float contentHeight = 80*self.eventData.count;
-    _updateFooterView.hidden = contentHeight < 300;
-    _updateFooterView.frame = CGRectMake(10, contentHeight, self.tableView.frame.size.width-20, 40);
-    _footerView.hidden = self.eventData.count == 0;
-    _footerView.frame = CGRectMake(0, contentHeight, self.tableView.frame.size.width, 4);
+    self.updateFooterView.hidden = contentHeight < 300;
+    self.updateFooterView.frame = CGRectMake(10, contentHeight, self.tableView.frame.size.width-20, 40);
+    self.footerView.hidden = self.eventData.count == 0;
+    self.footerView.frame = CGRectMake(0, contentHeight, self.tableView.frame.size.width, 4);
 }
 
 - (void)tableView:(UITableView *)tableView insertDataAndRefresh:(NSArray *)newData startIndex:(int)startIndex
@@ -304,8 +294,8 @@
 - (void)loadEventFailed:(ASIHTTPRequest *)request
 {
     NSLog(@"loadEventFailed: %@", request.url);
-    [_updateHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
-    [_updateFooterView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView scrollFooterBack:YES];
+    [self.updateHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+    [self.updateFooterView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView scrollFooterBack:YES];
 }
 
 - (void)createEvent

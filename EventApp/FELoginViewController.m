@@ -232,7 +232,7 @@
 
 - (void) showFailedAction
 {
-    FEActionSheet *action = [[FEActionSheet alloc] init];
+    FEActionSheet *action = [[[FEActionSheet alloc] init] autorelease];
     action.title = @"登录失败，请重试。";
     int buttonIndex = [action addButtonWithTitle:@"取消"];
     [action setActionSheetStyle:UIActionSheetStyleDefault];

@@ -497,7 +497,7 @@ static bool isFirstLaunch = YES;
 
 - (void)toolbarActionChanged:(FECreateEventToolbar *)sender
 {
-    NSLog(@"action: %d", sender.action);
+    NSLog(@"action: %d, %d", sender.action, sender.privacy);
     
     if(sender.action == CreateEventIconAction){
         [[self getFirstResponderInView:self.view] resignFirstResponder];

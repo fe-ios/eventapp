@@ -50,7 +50,7 @@
     UIImageView *bgImage = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"startBackground"]] autorelease];
     [self.view addSubview:bgImage];
     
-    NSMutableArray *pages = [[NSMutableArray alloc] initWithObjects:@"startLogo", nil];
+    NSMutableArray *pages = [[[NSMutableArray alloc] initWithObjects:@"startLogo", nil] autorelease];
     
     //翻页容器
     CGRect scrollFrame = CGRectMake(0, 0, 320, 255);
