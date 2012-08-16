@@ -18,7 +18,6 @@ NSString* _imagePath;
 
 - (void)dealloc
 {
-    [_imagePath release];
     [super dealloc];
 }
 

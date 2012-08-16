@@ -316,6 +316,14 @@
 		C7D39E9015B951F0009EE420 /* UIAsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D39E8F15B951F0009EE420 /* UIAsyncImageView.m */; };
 		C7D6DF9D15BF912300D29E27 /* MD5+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D6DF9C15BF912300D29E27 /* MD5+Helper.m */; };
 		C7D6DFB115BFDB3600D29E27 /* FEEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D6DFB015BFDB3600D29E27 /* FEEvent.m */; };
+		C7D9830A15DB715200CC42D8 /* FEStartAndEndDateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7D9830915DB715200CC42D8 /* FEStartAndEndDateCell.xib */; };
+		C7D9830F15DB749D00CC42D8 /* WKButtonLightGrey30px.png in Resources */ = {isa = PBXBuildFile; fileRef = C7D9830B15DB749D00CC42D8 /* WKButtonLightGrey30px.png */; };
+		C7D9831015DB749D00CC42D8 /* WKButtonLightGrey30px@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7D9830C15DB749D00CC42D8 /* WKButtonLightGrey30px@2x.png */; };
+		C7D9831115DB749D00CC42D8 /* WKButtonLightGrey30pxSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = C7D9830D15DB749D00CC42D8 /* WKButtonLightGrey30pxSelected.png */; };
+		C7D9831215DB749D00CC42D8 /* WKButtonLightGrey30pxSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7D9830E15DB749D00CC42D8 /* WKButtonLightGrey30pxSelected@2x.png */; };
+		C7D9831815DB7FBF00CC42D8 /* FEAddEventImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D9831715DB7FBF00CC42D8 /* FEAddEventImageView.m */; };
+		C7D9831B15DB83C400CC42D8 /* FECreateEventToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D9831A15DB83C400CC42D8 /* FECreateEventToolbar.m */; };
+		C7D9832A15DBA67C00CC42D8 /* FESwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D9832915DBA67B00CC42D8 /* FESwitch.m */; };
 		C7DC64E515C10E9A00801E91 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DC64E415C10E6600801E91 /* EGORefreshTableHeaderView.m */; };
 		C7DC64F015C144DF00801E91 /* EGORefreshTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DC64EF15C144DF00801E91 /* EGORefreshTableFooterView.m */; };
 		C7DCA4E815AEB7930019DCFB /* FEStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DCA4E615AEB7930019DCFB /* FEStartViewController.m */; };
@@ -349,6 +357,7 @@
 		C7DF9BFD15B417FE009A35F1 /* FEActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DF9BFC15B417FE009A35F1 /* FEActionSheet.m */; };
 		C7E259FD15BE805300496F94 /* FECreateEventController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E259FC15BE805300496F94 /* FECreateEventController.m */; };
 		C7E25A0215BE8FBF00496F94 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DE4DA315B506E600D9CA77 /* NSDate+Helper.m */; };
+		C7E276B615DA1B6600DF6B66 /* FEStartAndEndDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E276B515DA1B6600DF6B66 /* FEStartAndEndDateCell.m */; };
 		C7E2B80815CA2862005BC806 /* roundTableCellBottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E2B80515CA2862005BC806 /* roundTableCellBottom@2x.png */; };
 		C7E2B80915CA2862005BC806 /* roundTableCellMiddle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E2B80615CA2862005BC806 /* roundTableCellMiddle@2x.png */; };
 		C7E2B80A15CA2862005BC806 /* roundTableCellTop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E2B80715CA2862005BC806 /* roundTableCellTop@2x.png */; };
@@ -437,7 +446,7 @@
 		815222A715B534BB0089895F /* BOCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BOCenterViewController.xib; sourceTree = "<group>"; };
 		81AA8E6415D4E0D20019748C /* tool_bar_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tool_bar_gray.png; path = EventApp/images_toolbar/tool_bar_gray.png; sourceTree = "<group>"; };
 		81AA8E6515D4E0D20019748C /* tool_bar_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tool_bar_gray@2x.png"; path = "EventApp/images_toolbar/tool_bar_gray@2x.png"; sourceTree = "<group>"; };
-		C783E09215A1518F000B9418 /* 活动达人.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "活动达人.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C783E09215A1518F000B9418 /* EventApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EventApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C783E09615A1518F000B9418 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C783E09815A1518F000B9418 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C783E09A15A1518F000B9418 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -695,6 +704,17 @@
 		C7D6DF9C15BF912300D29E27 /* MD5+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MD5+Helper.m"; sourceTree = "<group>"; };
 		C7D6DFAF15BFDB3600D29E27 /* FEEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEEvent.h; sourceTree = "<group>"; };
 		C7D6DFB015BFDB3600D29E27 /* FEEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEEvent.m; sourceTree = "<group>"; };
+		C7D9830915DB715200CC42D8 /* FEStartAndEndDateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FEStartAndEndDateCell.xib; sourceTree = "<group>"; };
+		C7D9830B15DB749D00CC42D8 /* WKButtonLightGrey30px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WKButtonLightGrey30px.png; path = EventApp/images/WKButtonLightGrey30px.png; sourceTree = "<group>"; };
+		C7D9830C15DB749D00CC42D8 /* WKButtonLightGrey30px@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WKButtonLightGrey30px@2x.png"; path = "EventApp/images/WKButtonLightGrey30px@2x.png"; sourceTree = "<group>"; };
+		C7D9830D15DB749D00CC42D8 /* WKButtonLightGrey30pxSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WKButtonLightGrey30pxSelected.png; path = EventApp/images/WKButtonLightGrey30pxSelected.png; sourceTree = "<group>"; };
+		C7D9830E15DB749D00CC42D8 /* WKButtonLightGrey30pxSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WKButtonLightGrey30pxSelected@2x.png"; path = "EventApp/images/WKButtonLightGrey30pxSelected@2x.png"; sourceTree = "<group>"; };
+		C7D9831615DB7FBF00CC42D8 /* FEAddEventImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEAddEventImageView.h; sourceTree = "<group>"; };
+		C7D9831715DB7FBF00CC42D8 /* FEAddEventImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEAddEventImageView.m; sourceTree = "<group>"; };
+		C7D9831915DB83C400CC42D8 /* FECreateEventToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FECreateEventToolbar.h; sourceTree = "<group>"; };
+		C7D9831A15DB83C400CC42D8 /* FECreateEventToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FECreateEventToolbar.m; sourceTree = "<group>"; };
+		C7D9832815DBA67B00CC42D8 /* FESwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FESwitch.h; sourceTree = "<group>"; };
+		C7D9832915DBA67B00CC42D8 /* FESwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FESwitch.m; sourceTree = "<group>"; };
 		C7DC64E315C10E6600801E91 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EGORefreshTableHeaderView.h; path = RefreshTableHeaderView/EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		C7DC64E415C10E6600801E91 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EGORefreshTableHeaderView.m; path = RefreshTableHeaderView/EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		C7DC64EE15C144DF00801E91 /* EGORefreshTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableFooterView.h; sourceTree = "<group>"; };
@@ -754,6 +774,8 @@
 		C7DF9BFC15B417FE009A35F1 /* FEActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEActionSheet.m; sourceTree = "<group>"; };
 		C7E259FB15BE805300496F94 /* FECreateEventController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FECreateEventController.h; sourceTree = "<group>"; };
 		C7E259FC15BE805300496F94 /* FECreateEventController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FECreateEventController.m; sourceTree = "<group>"; };
+		C7E276B415DA1B6600DF6B66 /* FEStartAndEndDateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEStartAndEndDateCell.h; sourceTree = "<group>"; };
+		C7E276B515DA1B6600DF6B66 /* FEStartAndEndDateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEStartAndEndDateCell.m; sourceTree = "<group>"; };
 		C7E2B80515CA2862005BC806 /* roundTableCellBottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "roundTableCellBottom@2x.png"; path = "EventApp/images2/roundTableCellBottom@2x.png"; sourceTree = "<group>"; };
 		C7E2B80615CA2862005BC806 /* roundTableCellMiddle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "roundTableCellMiddle@2x.png"; path = "EventApp/images2/roundTableCellMiddle@2x.png"; sourceTree = "<group>"; };
 		C7E2B80715CA2862005BC806 /* roundTableCellTop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "roundTableCellTop@2x.png"; path = "EventApp/images2/roundTableCellTop@2x.png"; sourceTree = "<group>"; };
@@ -865,7 +887,7 @@
 		C783E09315A1518F000B9418 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C783E09215A1518F000B9418 /* 活动达人.app */,
+				C783E09215A1518F000B9418 /* EventApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -984,6 +1006,10 @@
 		C7DECB5015BD272300E1DCC7 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				C7D9830B15DB749D00CC42D8 /* WKButtonLightGrey30px.png */,
+				C7D9830C15DB749D00CC42D8 /* WKButtonLightGrey30px@2x.png */,
+				C7D9830D15DB749D00CC42D8 /* WKButtonLightGrey30pxSelected.png */,
+				C7D9830E15DB749D00CC42D8 /* WKButtonLightGrey30pxSelected@2x.png */,
 				810A0B1515D8E8AF00559A0A /* detail_grid.png */,
 				810A0B1615D8E8AF00559A0A /* detail_grid@2x.png */,
 				81AA8E6415D4E0D20019748C /* tool_bar_gray.png */,
@@ -1372,9 +1398,18 @@
 		C7E86C6A15B7FE03001960C2 /* event_list */ = {
 			isa = PBXGroup;
 			children = (
+				C7D9830915DB715200CC42D8 /* FEStartAndEndDateCell.xib */,
+				C7E276B415DA1B6600DF6B66 /* FEStartAndEndDateCell.h */,
+				C7E276B515DA1B6600DF6B66 /* FEStartAndEndDateCell.m */,
 				C7DECB3D15BD1F9D00E1DCC7 /* EventTableViewCell.xib */,
 				C7E259FB15BE805300496F94 /* FECreateEventController.h */,
 				C7E259FC15BE805300496F94 /* FECreateEventController.m */,
+				C7D9831915DB83C400CC42D8 /* FECreateEventToolbar.h */,
+				C7D9831A15DB83C400CC42D8 /* FECreateEventToolbar.m */,
+				C7D9832815DBA67B00CC42D8 /* FESwitch.h */,
+				C7D9832915DBA67B00CC42D8 /* FESwitch.m */,
+				C7D9831615DB7FBF00CC42D8 /* FEAddEventImageView.h */,
+				C7D9831715DB7FBF00CC42D8 /* FEAddEventImageView.m */,
 				C7E86C6E15B7FE7A001960C2 /* FEEventListController.h */,
 				C7E86C6F15B7FE7A001960C2 /* FEEventListController.m */,
 				C7E86C7D15B81A9D001960C2 /* FEEventCell.h */,
@@ -1409,7 +1444,7 @@
 			);
 			name = EventApp;
 			productName = EventApp;
-			productReference = C783E09215A1518F000B9418 /* 活动达人.app */;
+			productReference = C783E09215A1518F000B9418 /* EventApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1750,6 +1785,11 @@
 				810A0B1315D8E65900559A0A /* FEEventDetailViewController.xib in Resources */,
 				810A0B1715D8E8AF00559A0A /* detail_grid.png in Resources */,
 				810A0B1815D8E8AF00559A0A /* detail_grid@2x.png in Resources */,
+				C7D9830A15DB715200CC42D8 /* FEStartAndEndDateCell.xib in Resources */,
+				C7D9830F15DB749D00CC42D8 /* WKButtonLightGrey30px.png in Resources */,
+				C7D9831015DB749D00CC42D8 /* WKButtonLightGrey30px@2x.png in Resources */,
+				C7D9831115DB749D00CC42D8 /* WKButtonLightGrey30pxSelected.png in Resources */,
+				C7D9831215DB749D00CC42D8 /* WKButtonLightGrey30pxSelected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1804,6 +1844,10 @@
 				C7DC64F015C144DF00801E91 /* EGORefreshTableFooterView.m in Sources */,
 				C7DD3BAA15CBB410005A0588 /* FEToolTipView.m in Sources */,
 				810A0B1215D8E65900559A0A /* FEEventDetailViewController.m in Sources */,
+				C7E276B615DA1B6600DF6B66 /* FEStartAndEndDateCell.m in Sources */,
+				C7D9831815DB7FBF00CC42D8 /* FEAddEventImageView.m in Sources */,
+				C7D9831B15DB83C400CC42D8 /* FECreateEventToolbar.m in Sources */,
+				C7D9832A15DBA67C00CC42D8 /* FESwitch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1871,7 +1915,7 @@
 				GCC_PREFIX_HEADER = "EventApp/EventApp-Prefix.pch";
 				INFOPLIST_FILE = "EventApp/EventApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				PRODUCT_NAME = "活动达人";
+				PRODUCT_NAME = EventApp;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
