@@ -8,6 +8,8 @@
 
 #import "BOMenuViewController.h"
 #import "BOMenuTableViewCell.h"
+#import "BOEventQuickAddViewController.h"
+#import "IIViewDeckController.h"
 
 @interface BOMenuViewController ()
 
@@ -160,7 +162,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSLog(@"%d",indexPath.row);
+	BOEventQuickAddViewController *quickAdd = [[BOEventQuickAddViewController alloc] initWithNibName:@"BOEventQuickAddViewController" bundle:nil];
+	[self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
+		[self.viewDeckController.centerController presentModalViewController:quickAdd animated:YES];
+	}];
 }
 
 @end

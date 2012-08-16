@@ -88,7 +88,10 @@
                                       self.knobLayer.frame.size.height);
 }
 
-- (void)toggleDragged:(UIPanGestureRecognizer *)
+- (void)toggleDragged:(UIPanGestureRecognizer *)gesture
+{
+    
+}
 
 - (void)setOn:(BOOL)newOn animated:(BOOL)animated
 {

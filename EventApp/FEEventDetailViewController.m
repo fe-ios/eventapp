@@ -23,14 +23,26 @@
     return self;
 }
 
+#define MAX_HEIGHT 2000
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	NSString *foo = @"asdf setAutoresizing Mask:UIViewAutoresizing FlexibleHeight,Mask:UIViewAutoresizing,Mask:UIViewAutoresizing,Mask:UIViewAutoresizing,Mask:UIViewAutoresizing";
+
+	CGSize size = [foo sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(300, MAX_HEIGHT)
+						lineBreakMode:UILineBreakModeWordWrap];
+	
+	UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(50, 50, 260, size.height + 10)];
+	textView.text = foo;
+	
 	UIImage *gridBackgroundImage = [[UIImage imageNamed:@"detail_grid"] resizableImageWithCapInsets:UIEdgeInsetsMake(62, 0, 62, 0)];
-	UIImageView *gridBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
+	UIImageView *gridBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, size.height+100)];
 	[gridBackground setImage:gridBackgroundImage];
 	[self.view addSubview:gridBackground];
-    // Do any additional setup after loading the view from its nib.
+	
+	
+	[gridBackground addSubview:textView];
 }
 
 - (void)viewDidUnload
@@ -45,4 +57,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)dealloc {
+	[super dealloc];
+}
 @end
