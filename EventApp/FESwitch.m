@@ -20,27 +20,30 @@
 @property(nonatomic, retain) CAShapeLayer *clipLayer;
 
 @property(nonatomic, assign) BOOL ignoreTap;
+@property(nonatomic, assign) CGFloat originX;
+@property(nonatomic, assign) CGFloat originY;
+@property(nonatomic, assign) CGFloat clipWidth;
+@property(nonatomic, assign) CGFloat clipHeight;
 
 @end
 
 @implementation FESwitch
 
 @synthesize on = _on;
-@synthesize toggleImage = _toggleImage;
-@synthesize onImage = _onImage;
-@synthesize offImage = _offImage;
-@synthesize outlineLayer, toggleLayer, knobLayer, clipLayer, ignoreTap;
+@synthesize toggleImage = _toggleImage, onImage = _onImage, offImage = _offImage;
+@synthesize outlineLayer, toggleLayer, knobLayer, clipLayer;
+@synthesize ignoreTap, originX, originY, clipWidth, clipHeight;
 
 - (void)dealloc
 {
+    [_toggleImage release];
+    [_onImage release];
+    [_offImage release];
+    
 	[outlineLayer release];
 	[toggleLayer release];
 	[knobLayer release];
 	[clipLayer release];
-    
-    [_toggleImage release];
-    [_onImage release];
-    [_offImage release];
     
 	[super dealloc];
 }
@@ -87,6 +90,30 @@
         UIBezierPath *clipPath = [UIBezierPath bezierPathWithRoundedRect:clipRect cornerRadius:clipRect.size.height*0.5];
         self.clipLayer.path = clipPath.CGPath;
         self.clipLayer.position = CGPointMake(-minToggleX, 0);
+        self.clipWidth = clipRect.size.width;
+        self.clipHeight = clipRect.size.height;
+    }
+}
+
+- (void)setOnImage:(UIImage *)newImage
+{
+    if(newImage != _onImage){
+        [_onImage release];
+        _onImage = [newImage retain];
+        if(self.on){
+            [self changeSwitchImageForStatus:NO];
+        }
+    }
+}
+
+- (void)setOffImage:(UIImage *)newImage
+{
+    if(newImage != _offImage){
+        [_offImage release];
+        _offImage = [newImage retain];
+        if(!self.on){
+            [self changeSwitchImageForStatus:NO];
+        }
     }
 }
 
@@ -103,33 +130,11 @@
     if(newImage != nil){
         self.knobLayer.contents = (id)newImage.CGImage;
         self.knobLayer.frame = CGRectMake(0, 0, newImage.size.width, newImage.size.height);
-        [self positionLayersAndMask];
+        [self positionKnobAndMask];
     }
 }
 
-- (void)setOnImage:(UIImage *)newImage
-{
-    if(newImage != _onImage){
-        [_onImage release];
-        _onImage = [newImage retain];
-        if(self.on){
-            [self setToggleImageByStatus:NO];
-        }
-    }
-}
-
-- (void)setOffImage:(UIImage *)newImage
-{
-    if(newImage != _offImage){
-        [_offImage release];
-        _offImage = [newImage retain];
-        if(!self.on){
-            [self setToggleImageByStatus:NO];
-        }
-    }
-}
-
-- (void)setToggleImageByStatus:(BOOL)animationStatus
+- (void)changeSwitchImageForStatus:(BOOL)animationStatus
 {
     if(animationStatus && _toggleImage != nil){
         self.toggleLayer.contents = (id)_toggleImage.CGImage;
@@ -142,19 +147,18 @@
 
 - (void)initView
 {
+    self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.backgroundColor = [UIColor clearColor];
     
     self.toggleLayer = [[[CALayer alloc] init] autorelease];
     [self.layer addSublayer:self.toggleLayer];
-    
-    self.outlineLayer = [[[CALayer alloc] init] autorelease];
-	[self.layer addSublayer:self.outlineLayer];
-    
-    self.knobLayer = [[[CALayer alloc] init] autorelease];
-	[self.layer addSublayer:self.knobLayer];
-    
     self.clipLayer = [CAShapeLayer layer];
     self.toggleLayer.mask = self.clipLayer;
+    self.outlineLayer = [[[CALayer alloc] init] autorelease];
+	[self.layer addSublayer:self.outlineLayer];
+    self.knobLayer = [[[CALayer alloc] init] autorelease];
+	[self.layer addSublayer:self.knobLayer];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)] autorelease];
     tapGestureRecognizer.delegate = self;
@@ -165,10 +169,10 @@
 	[self addGestureRecognizer:panGestureRecognizer];
 }
 
-- (void)positionLayersAndMask
+- (void)positionKnobAndMask
 {
-    self.toggleLayer.mask.position = CGPointMake(-self.toggleLayer.frame.origin.x, 0);
-	self.knobLayer.frame = CGRectMake(self.toggleLayer.frame.origin.x + self.toggleLayer.frame.size.width*0.5 - self.knobLayer.frame.size.width*0.5+1, 0, self.knobLayer.frame.size.width, self.knobLayer.frame.size.height);
+    self.clipLayer.position = CGPointMake(self.originX-self.toggleLayer.frame.origin.x, 0);
+	self.knobLayer.frame = CGRectMake(self.toggleLayer.frame.origin.x + self.toggleLayer.frame.size.width*0.5 - self.knobLayer.frame.size.width*0.5+1, self.knobLayer.frame.origin.y, self.knobLayer.frame.size.width, self.knobLayer.frame.size.height);
 }
 
 - (void)tapped:(UITapGestureRecognizer *)gesture
@@ -181,30 +185,29 @@
 
 - (void)toggleDragged:(UIPanGestureRecognizer *)gesture
 {
-    CGFloat minToggleX = -self.toggleLayer.frame.size.width*0.5 + self.toggleLayer.frame.size.height*0.5;
-	CGFloat maxToggleX = 0;
-    
 	if (gesture.state == UIGestureRecognizerStateBegan)
 	{
-		[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
-		[self positionLayersAndMask];
+        [CATransaction setDisableActions:YES];
+		[self positionKnobAndMask];
 	}else if (gesture.state == UIGestureRecognizerStateChanged)
 	{
-		[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
-		[self setToggleImageByStatus:YES];
+        [CATransaction setDisableActions:YES];
+		[self changeSwitchImageForStatus:YES];
 
         CGPoint translation = [gesture translationInView:self];
 		CGFloat newX = self.toggleLayer.frame.origin.x + translation.x;
+        CGFloat minToggleX = self.originX-self.toggleLayer.frame.size.width*0.5 + self.toggleLayer.frame.size.height*0.5;
+        CGFloat maxToggleX = self.originX;
 		if (newX < minToggleX) newX = minToggleX;
 		else if (newX > maxToggleX) newX = maxToggleX;
+        
 		self.toggleLayer.frame = CGRectMake(newX, self.toggleLayer.frame.origin.y, self.toggleLayer.frame.size.width, self.toggleLayer.frame.size.height);
-		
-        [self positionLayersAndMask];
+        [self positionKnobAndMask];
 		[gesture setTranslation:CGPointZero inView:self];
 	}else if (gesture.state == UIGestureRecognizerStateEnded)
 	{
 		CGFloat toggleCenter = CGRectGetMidX(self.toggleLayer.frame);
-        CGFloat switchCenter = (self.toggleLayer.frame.size.width+self.toggleLayer.frame.size.height)*0.25;
+        CGFloat switchCenter = self.originX+(self.toggleLayer.frame.size.width+self.toggleLayer.frame.size.height)*0.25;
 		[self setOn:(toggleCenter > switchCenter) animated:YES];
 	}
 }
@@ -215,22 +218,21 @@
 	_on = newOn;
 	self.ignoreTap = YES;
     
-    if(animated) [self setToggleImageByStatus:YES];
-    [self positionLayersAndMask];
-	[[self allTargets] makeObjectsPerformSelector:@selector(retain)];
+    if(animated) {
+        [self changeSwitchImageForStatus:YES];
+        [self positionKnobAndMask];
+    }
     
     [CATransaction begin];
-    id animateValue = animated ? (id)kCFBooleanFalse : (id)kCFBooleanTrue;
-    [CATransaction setValue:animateValue forKey:kCATransactionDisableActions];
+    [CATransaction setDisableActions:!animated];
     [CATransaction setCompletionBlock:^{
         self.ignoreTap = NO;
-        [self setToggleImageByStatus:NO];
+        [self changeSwitchImageForStatus:NO];
         if(previousOn != _on) [self sendActionsForControlEvents:UIControlEventValueChanged];
-        [[self allTargets] makeObjectsPerformSelector:@selector(release)];
 	}];
     
-    CGFloat minToggleX = -self.toggleLayer.frame.size.width*0.5 + self.toggleLayer.frame.size.height*0.5;
-    CGFloat maxToggleX = 0;
+    CGFloat minToggleX = self.originX-self.toggleLayer.frame.size.width*0.5 + self.toggleLayer.frame.size.height*0.5;
+    CGFloat maxToggleX = self.originX;
     if (self.on)
     {
         self.toggleLayer.frame = CGRectMake(maxToggleX, self.toggleLayer.frame.origin.y, self.toggleLayer.frame.size.width, self.toggleLayer.frame.size.height);
@@ -238,7 +240,7 @@
     {
         self.toggleLayer.frame = CGRectMake(minToggleX, self.toggleLayer.frame.origin.y, self.toggleLayer.frame.size.width, self.toggleLayer.frame.size.height);
     }
-    [self positionLayersAndMask];
+    [self positionKnobAndMask];
     
     [CATransaction commit];
 }
@@ -246,6 +248,46 @@
 - (void)setOn:(BOOL)newOn
 {
     [self setOn:newOn animated:NO];
+}
+
+- (void)layoutSubviews
+{
+    BOOL needPosition = NO;
+    
+    switch (self.contentHorizontalAlignment) {
+        case UIControlContentHorizontalAlignmentCenter:
+            self.originX = (self.bounds.size.width-self.clipWidth)*0.5;
+            needPosition = YES;
+            break;
+            
+        case UIControlContentHorizontalAlignmentRight:
+            self.originX = self.bounds.size.width-self.clipWidth;
+            needPosition = YES;
+            break;
+            
+        default:
+            break;
+    }
+    
+    switch (self.contentVerticalAlignment) {
+        case UIControlContentVerticalAlignmentCenter:
+            self.originY = (self.bounds.size.height-self.clipHeight)*0.5;
+            needPosition = YES;
+            break;
+        case UIControlContentVerticalAlignmentBottom:
+            self.originY = self.bounds.size.height-self.clipHeight;
+            needPosition = YES;
+            break;
+            
+        default:
+            break;
+    }
+    
+    if(needPosition){
+        self.toggleLayer.frame = CGRectOffset(self.toggleLayer.frame, self.originX, self.originY);
+        self.outlineLayer.frame = CGRectOffset(self.outlineLayer.frame, self.originX, self.originY);
+        self.knobLayer.frame = CGRectOffset(self.knobLayer.frame, self.originX, self.originY);
+    }
 }
 
 

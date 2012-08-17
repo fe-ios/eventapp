@@ -78,15 +78,15 @@
     
 	//switch
 	FESwitch *privacySwitch = [[[FESwitch alloc] init] autorelease];
-    privacySwitch.frame = CGRectMake(320-10-5-52, 12, 52, 23);
+    privacySwitch.frame = CGRectMake(240, 5, 70, 32);
     [privacySwitch setToggleImage:[UIImage imageNamed:@"share_switch_bar"]];
     [privacySwitch setOutlineImage:[UIImage imageNamed:@"switch_inner_shadow"]];
     [privacySwitch setKnobImage:[UIImage imageNamed:@"switch_handle"]];
     [privacySwitch setOnImage:[UIImage imageNamed:@"share_switch_on"]];
     [privacySwitch setOffImage:[UIImage imageNamed:@"share_switch_off"]];
-    [self addSubview:privacySwitch];
     privacySwitch.on = YES;
     [privacySwitch addTarget:self action:@selector(privacyChanged:) forControlEvents:UIControlEventValueChanged];
+    [self addSubview:privacySwitch];
     
     _action = CreateEventNoneAction;
     _privacy = CreateEventPrivacyPrivate;

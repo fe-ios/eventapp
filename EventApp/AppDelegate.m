@@ -159,10 +159,10 @@
 	[[UINavigationBar appearance] setBackgroundImage:customNavigationBarBackground forBarMetrics:UIBarMetricsDefault];
 
 	//UIBarButtonItem BackButton
-	UIImage *buttonBack = [[UIImage imageNamed:@"navigationBarSquareButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 18, 15, 16)];
-	UIImage *buttonBackSelected = [[UIImage imageNamed:@"WKBarButtonItemBackSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 18, 15, 16)];
+	UIImage *buttonBack = [[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 10, 15, 10)];
+	//UIImage *buttonBackSelected = [[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 18, 15, 16)];
 	[[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBack forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-	[[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBackSelected forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+	//[[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBackSelected forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
 	
 	//UIBarButtonItem Button
 	UIImage *navButton = [[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 10, 15, 10)];

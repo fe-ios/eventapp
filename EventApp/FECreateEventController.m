@@ -6,6 +6,7 @@
 //  Copyright (c) 2012年 snda. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "FECreateEventController.h"
 #import "FELoginTableViewCell.h"
 #import "FEStartAndEndDateCell.h"
@@ -499,14 +500,27 @@ static bool isFirstLaunch = YES;
 {
     NSLog(@"action: %d, %d", sender.action, sender.privacy);
     
-    if(sender.action == CreateEventIconAction){
+    if (sender.action == CreateEventNoneAction) {
+        int inputTag = _lastInputTag > 0 ? _lastInputTag : 1;
+        [[self.tableView viewWithTag:inputTag] becomeFirstResponder];
+    }else if(sender.action == CreateEventIconAction){
         [[self getFirstResponderInView:self.view] resignFirstResponder];
         FEAddEventImageView *addImageView = [[[FEAddEventImageView alloc] init] autorelease];
         addImageView.frame = CGRectMake(0, 264, 320, 216);
         [self.navigationController.view addSubview:addImageView];
-    }else if (sender.action == 0) {
-        int inputTag = _lastInputTag > 0 ? _lastInputTag : 1;
-        [[self.tableView viewWithTag:inputTag] becomeFirstResponder];
+    }else if (sender.action == CreateEventTagAction) {
+        [[self getFirstResponderInView:self.view] resignFirstResponder];
+        FEAddEventImageView *addImageView = [[[FEAddEventImageView alloc] init] autorelease];
+        addImageView.frame = CGRectMake(320, 44+20, 320, 156);
+        addImageView.clipsToBounds = YES;
+        [self.navigationController.view addSubview:addImageView];
+        
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:0.4];
+        addImageView.frame = CGRectMake(0, addImageView.frame.origin.y, addImageView.frame.size.width, addImageView.frame.size.height);
+        [UIView commitAnimations];
+        
     }
 }
 
