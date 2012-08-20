@@ -321,7 +321,7 @@
 		C7D9831015DB749D00CC42D8 /* WKButtonLightGrey30px@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7D9830C15DB749D00CC42D8 /* WKButtonLightGrey30px@2x.png */; };
 		C7D9831115DB749D00CC42D8 /* WKButtonLightGrey30pxSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = C7D9830D15DB749D00CC42D8 /* WKButtonLightGrey30pxSelected.png */; };
 		C7D9831215DB749D00CC42D8 /* WKButtonLightGrey30pxSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7D9830E15DB749D00CC42D8 /* WKButtonLightGrey30pxSelected@2x.png */; };
-		C7D9831815DB7FBF00CC42D8 /* FEAddEventImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D9831715DB7FBF00CC42D8 /* FEAddEventImageView.m */; };
+		C7D9831815DB7FBF00CC42D8 /* FEAddEventIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D9831715DB7FBF00CC42D8 /* FEAddEventIconView.m */; };
 		C7D9831B15DB83C400CC42D8 /* FECreateEventToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D9831A15DB83C400CC42D8 /* FECreateEventToolbar.m */; };
 		C7D9832A15DBA67C00CC42D8 /* FESwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D9832915DBA67B00CC42D8 /* FESwitch.m */; };
 		C7DC64E515C10E9A00801E91 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DC64E415C10E6600801E91 /* EGORefreshTableHeaderView.m */; };
@@ -389,6 +389,8 @@
 		C7E6608C15A41FE8000FC01A /* FELoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7E6608B15A41FE8000FC01A /* FELoginView.xib */; };
 		C7E86C6D15B7FE41001960C2 /* FEEventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E86C6C15B7FE41001960C2 /* FEEventTableViewCell.m */; };
 		C7E86C7015B7FE7A001960C2 /* FEEventListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E86C6F15B7FE7A001960C2 /* FEEventListController.m */; };
+		C7E95C7615DE174B00B06580 /* FEAddEventTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E95C7515DE174B00B06580 /* FEAddEventTagView.m */; };
+		C7E95C7A15DE504300B06580 /* FEAddEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E95C7915DE504300B06580 /* FEAddEventView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -724,8 +726,8 @@
 		C7D9830C15DB749D00CC42D8 /* WKButtonLightGrey30px@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WKButtonLightGrey30px@2x.png"; path = "EventApp/images/WKButtonLightGrey30px@2x.png"; sourceTree = "<group>"; };
 		C7D9830D15DB749D00CC42D8 /* WKButtonLightGrey30pxSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WKButtonLightGrey30pxSelected.png; path = EventApp/images/WKButtonLightGrey30pxSelected.png; sourceTree = "<group>"; };
 		C7D9830E15DB749D00CC42D8 /* WKButtonLightGrey30pxSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WKButtonLightGrey30pxSelected@2x.png"; path = "EventApp/images/WKButtonLightGrey30pxSelected@2x.png"; sourceTree = "<group>"; };
-		C7D9831615DB7FBF00CC42D8 /* FEAddEventImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEAddEventImageView.h; sourceTree = "<group>"; };
-		C7D9831715DB7FBF00CC42D8 /* FEAddEventImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEAddEventImageView.m; sourceTree = "<group>"; };
+		C7D9831615DB7FBF00CC42D8 /* FEAddEventIconView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEAddEventIconView.h; sourceTree = "<group>"; };
+		C7D9831715DB7FBF00CC42D8 /* FEAddEventIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEAddEventIconView.m; sourceTree = "<group>"; };
 		C7D9831915DB83C400CC42D8 /* FECreateEventToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FECreateEventToolbar.h; sourceTree = "<group>"; };
 		C7D9831A15DB83C400CC42D8 /* FECreateEventToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FECreateEventToolbar.m; sourceTree = "<group>"; };
 		C7D9832815DBA67B00CC42D8 /* FESwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FESwitch.h; sourceTree = "<group>"; };
@@ -829,6 +831,10 @@
 		C7E86C6C15B7FE41001960C2 /* FEEventTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEEventTableViewCell.m; sourceTree = "<group>"; };
 		C7E86C6E15B7FE7A001960C2 /* FEEventListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEEventListController.h; sourceTree = "<group>"; };
 		C7E86C6F15B7FE7A001960C2 /* FEEventListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEEventListController.m; sourceTree = "<group>"; };
+		C7E95C7415DE174B00B06580 /* FEAddEventTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEAddEventTagView.h; sourceTree = "<group>"; };
+		C7E95C7515DE174B00B06580 /* FEAddEventTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEAddEventTagView.m; sourceTree = "<group>"; };
+		C7E95C7815DE504200B06580 /* FEAddEventView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEAddEventView.h; sourceTree = "<group>"; };
+		C7E95C7915DE504300B06580 /* FEAddEventView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEAddEventView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -941,6 +947,7 @@
 			children = (
 				C783E0A515A1518F000B9418 /* AppDelegate.h */,
 				C783E0A615A1518F000B9418 /* AppDelegate.m */,
+				C7D81DC715E2164600076DC8 /* create_event */,
 				C7D6DFB215BFDB3F00D29E27 /* data */,
 				C7E86C6A15B7FE03001960C2 /* event_list */,
 				C7DECB5015BD272300E1DCC7 /* images */,
@@ -1003,6 +1010,26 @@
 				C7DC64E415C10E6600801E91 /* EGORefreshTableHeaderView.m */,
 			);
 			name = RefreshTableHeaderView;
+			sourceTree = "<group>";
+		};
+		C7D81DC715E2164600076DC8 /* create_event */ = {
+			isa = PBXGroup;
+			children = (
+				C7D9831615DB7FBF00CC42D8 /* FEAddEventIconView.h */,
+				C7D9831715DB7FBF00CC42D8 /* FEAddEventIconView.m */,
+				C7E95C7415DE174B00B06580 /* FEAddEventTagView.h */,
+				C7E95C7515DE174B00B06580 /* FEAddEventTagView.m */,
+				C7E95C7815DE504200B06580 /* FEAddEventView.h */,
+				C7E95C7915DE504300B06580 /* FEAddEventView.m */,
+				C7E259FB15BE805300496F94 /* FECreateEventController.h */,
+				C7E259FC15BE805300496F94 /* FECreateEventController.m */,
+				C7D9831915DB83C400CC42D8 /* FECreateEventToolbar.h */,
+				C7D9831A15DB83C400CC42D8 /* FECreateEventToolbar.m */,
+				C7E276B415DA1B6600DF6B66 /* FEStartAndEndDateCell.h */,
+				C7E276B515DA1B6600DF6B66 /* FEStartAndEndDateCell.m */,
+				C7D9830915DB715200CC42D8 /* FEStartAndEndDateCell.xib */,
+			);
+			name = create_event;
 			sourceTree = "<group>";
 		};
 		C7DCA4E315AEB74F0019DCFB /* start_view */ = {
@@ -1447,12 +1474,6 @@
 		C7E86C6A15B7FE03001960C2 /* event_list */ = {
 			isa = PBXGroup;
 			children = (
-				C7D9831615DB7FBF00CC42D8 /* FEAddEventImageView.h */,
-				C7D9831715DB7FBF00CC42D8 /* FEAddEventImageView.m */,
-				C7E259FB15BE805300496F94 /* FECreateEventController.h */,
-				C7E259FC15BE805300496F94 /* FECreateEventController.m */,
-				C7D9831915DB83C400CC42D8 /* FECreateEventToolbar.h */,
-				C7D9831A15DB83C400CC42D8 /* FECreateEventToolbar.m */,
 				810A0B0F15D8E65900559A0A /* FEEventDetailViewController.h */,
 				810A0B1015D8E65900559A0A /* FEEventDetailViewController.m */,
 				810A0B1115D8E65900559A0A /* FEEventDetailViewController.xib */,
@@ -1461,9 +1482,6 @@
 				C7E86C6B15B7FE41001960C2 /* FEEventTableViewCell.h */,
 				C7E86C6C15B7FE41001960C2 /* FEEventTableViewCell.m */,
 				C7DECB3D15BD1F9D00E1DCC7 /* FEEventTableViewCell.xib */,
-				C7E276B415DA1B6600DF6B66 /* FEStartAndEndDateCell.h */,
-				C7E276B515DA1B6600DF6B66 /* FEStartAndEndDateCell.m */,
-				C7D9830915DB715200CC42D8 /* FEStartAndEndDateCell.xib */,
 				C7DECCC015BD444D00E1DCC7 /* FEUploadController.h */,
 				C7DECCC115BD444D00E1DCC7 /* FEUploadController.m */,
 			);
@@ -1903,9 +1921,11 @@
 				C7DD3BAA15CBB410005A0588 /* FEToolTipView.m in Sources */,
 				810A0B1215D8E65900559A0A /* FEEventDetailViewController.m in Sources */,
 				C7E276B615DA1B6600DF6B66 /* FEStartAndEndDateCell.m in Sources */,
-				C7D9831815DB7FBF00CC42D8 /* FEAddEventImageView.m in Sources */,
+				C7D9831815DB7FBF00CC42D8 /* FEAddEventIconView.m in Sources */,
 				C7D9831B15DB83C400CC42D8 /* FECreateEventToolbar.m in Sources */,
 				C7D9832A15DBA67C00CC42D8 /* FESwitch.m in Sources */,
+				C7E95C7615DE174B00B06580 /* FEAddEventTagView.m in Sources */,
+				C7E95C7A15DE504300B06580 /* FEAddEventView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

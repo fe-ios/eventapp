@@ -1,5 +1,5 @@
 //
-//  FEAddEventImageView.h
+//  FEAddEventIconView.h
 //  EventApp
 //
 //  Created by zhenglin li on 12-8-15.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FEAddEventImageView : UIView
+@interface FEAddEventIconView : UIView
 
 @end

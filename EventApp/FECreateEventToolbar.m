@@ -105,6 +105,13 @@
     [self sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
+- (void)privacyChanged:(FESwitch *)sender
+{
+    _action = CreateEventPrivacyAction;
+    _privacy = sender.on ? CreateEventPrivacyPublic : CreateEventPrivacyPrivate;
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
+}
+
 -(void)resetAction
 {
     if(_activeButton){
@@ -114,11 +121,11 @@
     _action = CreateEventNoneAction;
 }
 
-- (void)privacyChanged:(FESwitch *)sender
+- (void)showOrHideActions:(BOOL)hidden
 {
-    _action = CreateEventPrivacyAction;
-    _privacy = sender.on ? CreateEventPrivacyPublic : CreateEventPrivacyPrivate;
-    [self sendActionsForControlEvents:UIControlEventValueChanged];
+    for(int i = 1; i < self.subviews.count; i++){
+        [[self.subviews objectAtIndex:i] setHidden:hidden];
+    }
 }
 
 @end

@@ -27,6 +27,7 @@ typedef enum {
 @property(nonatomic, readonly) int action;
 @property(nonatomic, readonly) int privacy;
 
+- (void)showOrHideActions:(BOOL)hidden;
 -(void)resetAction;
 
 @end

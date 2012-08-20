@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FECreateEventController : UITableViewController <UITextFieldDelegate>
+@interface FECreateEventController : UIViewController
+
 
 @end

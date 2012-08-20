@@ -1,14 +1,14 @@
 //
-//  FEAddEventImageView.m
+//  FEAddEventIconView.m
 //  EventApp
 //
 //  Created by zhenglin li on 12-8-15.
 //  Copyright (c) 2012年 snda. All rights reserved.
 //
 
-#import "FEAddEventImageView.h"
+#import "FEAddEventIconView.h"
 
-@implementation FEAddEventImageView
+@implementation FEAddEventIconView
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -34,11 +34,6 @@
     UIImageView *underKeyboard = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 216)] autorelease];
     [underKeyboard setImage:[UIImage imageNamed:@"actionsheetBg2"]];
     [self addSubview:underKeyboard];
-    
-//    UIImage *actionMaskImage = [[UIImage imageNamed:@"actionsheetMask"] resizableImageWithCapInsets:UIEdgeInsetsMake(100, 0, 100, 0)];
-//    UIImageView *actionMask = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 216)] autorelease];
-//    [actionMask setImage:actionMaskImage];
-//    [self addSubview:actionMask];
     
     //photoPicker Button
     UIButton *pickFromCamera = [[[UIButton alloc] initWithFrame:CGRectMake(55, 76, 88, 60)] autorelease];
