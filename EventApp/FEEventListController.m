@@ -15,26 +15,27 @@
 #import "ASIHTTPRequest.h"
 #import "JSONKit.h"
 #import "FEEvent.h"
-#import "MBProgressHUD.h"
+#import "TKAlertCenter.h"
 #import "FEEventDetailViewController.h"
 
+#define CACHE_NAME @"cacheEvent.data"
+#define LAST_UPDATE @"lastUpdateDate"
 
 @interface FEEventListController ()
-{
-    BOOL _updating;
-    BOOL _loadingMore;
-    NSDate* _lastUpdateDate;
-}
 
 @property(nonatomic, retain) EGORefreshTableHeaderView *updateHeaderView;
 @property(nonatomic, retain) EGORefreshTableFooterView *updateFooterView;
 @property(nonatomic, retain) UIImageView *footerView;
+@property(nonatomic, retain) NSDate *lastUpdateDate;
+@property(nonatomic, assign) BOOL updating;
+@property(nonatomic, assign) BOOL loadingMore;
 
 @end
 
 @implementation FEEventListController
 
 @synthesize updateHeaderView, updateFooterView, footerView;
+@synthesize lastUpdateDate, updating, loadingMore;
 @synthesize downloadQueue = _downloadQueue;
 @synthesize eventData = _eventData;
 
@@ -42,7 +43,8 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        self.eventData = [NSMutableArray arrayWithObjects:nil];
+        self.eventData = [self getEventCache];
+        if(self.eventData == nil) self.eventData = [NSMutableArray arrayWithObjects:nil];
     }
     return self;
 }
@@ -52,6 +54,9 @@
     [updateHeaderView release];
     [updateFooterView release];
     [footerView release];
+    [lastUpdateDate release];
+    [_eventData release];
+    [_downloadQueue release];
     [super dealloc];
 }
 
@@ -85,11 +90,11 @@
     self.footerView.hidden = YES;
     [self.tableView addSubview:self.footerView];
 	
-    _lastUpdateDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastUpdateDate"];
+    self.lastUpdateDate = [[NSUserDefaults standardUserDefaults] objectForKey:LAST_UPDATE];
 	[self.updateHeaderView refreshLastUpdatedDate];
+    
     [self.updateHeaderView setState:EGOOPullRefreshLoading];
     [self.tableView setContentInset:UIEdgeInsetsMake(self.updateHeaderView.frame.size.height, 0, 0, 0)];
-    
     [self loadEvent];
 }
 
@@ -98,6 +103,7 @@
     self.updateHeaderView = nil;
     self.updateFooterView = nil;
     self.footerView = nil;
+    self.lastUpdateDate = nil;
     [super viewDidUnload];
 }
 
@@ -132,13 +138,10 @@
         cell = (FEEventTableViewCell *)[nibs objectAtIndex:0];
         cell.backgroundView = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"eventTabelCellBackground"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 120, 50, 120)]] autorelease];
         UIImage *placeholder = [UIImage imageNamed:@"pictureGridPlaceholder"];
-        cell.eventImage1.image = placeholder;
-//        cell.eventImage2.image = placeholder;
-//        cell.eventImage3.image = placeholder;
-//        cell.eventImage4.image = placeholder;
-        UIFont *font = [UIFont fontWithName:@"CuprumFFU" size:13.0f];
-        cell.peopleCountLabel.font = font;
-        cell.pictureCountLabel.font = font;
+        cell.eventIcon.image = placeholder;
+        //UIFont *font = [UIFont fontWithName:@"CuprumFFU" size:13.0f];
+        //cell.peopleCountLabel.font = font;
+        //cell.pictureCountLabel.font = font;
         
         UIButton *watchButton = [UIButton buttonWithType:UIButtonTypeCustom];
         watchButton.frame = CGRectMake(self.tableView.contentSize.width-44, (80-44)*0.5, 44, 44);
@@ -148,19 +151,16 @@
         [watchButton addTarget:self action:@selector(toggleWatchEvent:) forControlEvents:UIControlEventTouchUpInside];
         watchButton.adjustsImageWhenHighlighted = NO;
         cell.watchButton = watchButton;
-        
-        //[cell.eventImage1 setRoundBorder];
-        //[[cell.subviews objectAtIndex:1] setHidden:YES];
     }
     
     FEEvent *event = [self.eventData objectAtIndex:indexPath.row];
     
     cell.eventNameLabel.text = event.name;
     if(event.logoURL.length == 0){
-        cell.eventImage1.image = [UIImage imageNamed:@"pictureGridPlaceholder"];
-    }else if (![event.logoURL isEqualToString:cell.eventImage1.imagePath]) {
-        cell.eventImage1.image = [UIImage imageNamed:@"pictureGridPlaceholder"];
-        [cell.eventImage1 loadImageAsync:event.logoURL withQueue:self.downloadQueue];
+        cell.eventIcon.image = [UIImage imageNamed:@"pictureGridPlaceholder"];
+    }else if (![event.logoURL isEqualToString:cell.eventIcon.imagePath]) {
+        cell.eventIcon.image = [UIImage imageNamed:@"pictureGridPlaceholder"];
+        [cell.eventIcon loadImageAsync:event.logoURL withQueue:self.downloadQueue];
     }else {
         NSLog(@"logo exist: %@", event.name);
     }
@@ -213,15 +213,11 @@
 
 - (void)loadEvent
 {
-    _updating = YES;
-    
-//    MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:[AppDelegate sharedDelegate].window animated:YES];
-//    progress.mode = MBProgressHUDModeIndeterminate;
-//    progress.dimBackground = YES;
+    self.updating = YES;
     
     FEEvent *firstEvent = self.eventData.count > 0 ? (FEEvent *) [self.eventData objectAtIndex:0] : nil;
     NSString *loadURL = [NSString stringWithFormat:@"%@%@", API_BASE, API_EVENT_PUBLIC];
-    if(_loadingMore || firstEvent == nil){
+    if(self.loadingMore || firstEvent == nil){
         loadURL = [loadURL stringByAppendingFormat:@"?start=%d&count=10", self.eventData.count];
     }else {
         loadURL = [loadURL stringByAppendingFormat:@"?start=%d", firstEvent.event_id];
@@ -236,42 +232,30 @@
 
 - (void)loadEventFinished:(ASIHTTPRequest *)request
 {
-    _updating = NO;
-    [_lastUpdateDate release];
-    _lastUpdateDate = [[NSDate date] retain];
-    [[NSUserDefaults standardUserDefaults] setObject:_lastUpdateDate forKey:@"lastUpdateDate"];
+    self.updating = NO;
+    self.lastUpdateDate = [NSDate date];
+    [[NSUserDefaults standardUserDefaults] setObject:self.lastUpdateDate forKey:LAST_UPDATE];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    //[MBProgressHUD hideHUDForView:[AppDelegate sharedDelegate].window animated:YES];
-    
+    //append data
     NSDictionary *result = [request.responseString objectFromJSONString];
     NSMutableArray *events = [FEEvent translateJSONEvents:[result objectForKey:@"event"]];
     BOOL hasData = events.count > 0;
-    if(_loadingMore){
+    if(self.loadingMore){
         if(hasData){
             [self tableView:self.tableView insertDataAndRefresh:events startIndex:self.eventData.count];
-//            [self.eventData addObjectsFromArray:events];
-//            [self.tableView beginUpdates];
-//            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:10 inSection:0], [NSIndexPath indexPathForRow:11 inSection:0], [NSIndexPath indexPathForRow:12 inSection:0], [NSIndexPath indexPathForRow:13 inSection:0], [NSIndexPath indexPathForRow:14 inSection:0], nil] withRowAnimation:UITableViewRowAnimationNone];
-//            [self.tableView endUpdates];
         }
-        
-        _loadingMore = NO;
+        self.loadingMore = NO;
         [self.updateFooterView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView scrollFooterBack:!hasData];
     }else {
         if(hasData){
             [self tableView:self.tableView insertDataAndRefresh:events startIndex:0];
-//            [self.eventData insertObjects:events atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, events.count)]];
-//            [self.tableView reloadData];
         }
         [self.updateHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
     }
     
-    float contentHeight = 80*self.eventData.count;
-    self.updateFooterView.hidden = contentHeight < 300;
-    self.updateFooterView.frame = CGRectMake(10, contentHeight, self.tableView.frame.size.width-20, 40);
-    self.footerView.hidden = self.eventData.count == 0;
-    self.footerView.frame = CGRectMake(0, contentHeight, self.tableView.frame.size.width, 4);
+    [self cacheEventData];
+    [self fixFooterViews];
 }
 
 - (void)tableView:(UITableView *)tableView insertDataAndRefresh:(NSArray *)newData startIndex:(int)startIndex
@@ -291,11 +275,26 @@
     [UIView setAnimationsEnabled:YES];
 }
 
+- (void)fixFooterViews
+{
+    float contentHeight = 80*self.eventData.count;
+    self.updateFooterView.hidden = contentHeight < 300;
+    self.updateFooterView.frame = CGRectMake(10, contentHeight, self.tableView.frame.size.width-20, 40);
+    self.footerView.hidden = self.eventData.count == 0;
+    self.footerView.frame = CGRectMake(0, contentHeight, self.tableView.frame.size.width, 4);
+}
+
 - (void)loadEventFailed:(ASIHTTPRequest *)request
 {
     NSLog(@"loadEventFailed: %@", request.url);
+    self.updating = NO;
+    self.loadingMore = NO;
+    
     [self.updateHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
     [self.updateFooterView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView scrollFooterBack:YES];
+    
+    [self fixFooterViews];
+    [[TKAlertCenter defaultCenter] postAlertWithMessage:@"加载数据失败，请检查网络！"];
 }
 
 - (void)createEvent
@@ -316,25 +315,45 @@
 
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
 {
-	return _updating;
+	return self.updating;
 }
 
 - (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view
 {
-	return _lastUpdateDate;
+	return self.lastUpdateDate;
 }
 
 #pragma mark - EGORefreshTableFooterDelegate Methods
 
 - (void)egoRefreshTableFooterDidTriggerRefresh:(EGORefreshTableHeaderView*)view
 {
-    _loadingMore = YES;
+    self.loadingMore = YES;
     [self loadEvent];
 }
 
 - (BOOL)egoRefreshTableFooterDataSourceIsLoading:(EGORefreshTableHeaderView*)view
 {
-	return _loadingMore;
+	return self.loadingMore;
 }
+
+#pragma mark - cache
+
+- (void)cacheEventData
+{
+    NSData *cacheData = [NSKeyedArchiver archivedDataWithRootObject:self.eventData];
+    NSString *docDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    [cacheData writeToFile:[docDirectory stringByAppendingPathComponent:CACHE_NAME] atomically:YES];
+}
+
+- (NSMutableArray *)getEventCache
+{
+    NSString *docDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *cachePath = [docDirectory stringByAppendingPathComponent:CACHE_NAME];
+    if([[NSFileManager defaultManager] fileExistsAtPath:cachePath]){
+        return [NSKeyedUnarchiver unarchiveObjectWithFile:cachePath];
+    }
+    return nil;
+}
+
 
 @end

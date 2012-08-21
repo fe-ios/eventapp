@@ -158,7 +158,7 @@
 - (void)egoRefreshScrollViewDidScroll:(UIScrollView *)scrollView
 {
     if(_state == EGOOPullRefreshLoading){
-		scrollView.contentInset = UIEdgeInsetsMake(self.frame.size.height, 0.0f, 0.0f, 0.0f);
+        scrollView.contentInset = UIEdgeInsetsMake(self.frame.size.height, 0.0f, 0.0f, 0.0f);
 	}else if (scrollView.isDragging){
 		BOOL _loading = NO;
 		if ([_delegate respondsToSelector:@selector(egoRefreshTableHeaderDataSourceIsLoading:)]) {

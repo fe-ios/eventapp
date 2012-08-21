@@ -10,6 +10,7 @@
 #import "BOMenuTableViewCell.h"
 #import "BOEventQuickAddViewController.h"
 #import "IIViewDeckController.h"
+#import "AppDelegate.h"
 
 @interface BOMenuViewController ()
 
@@ -106,7 +107,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return 7;
+	return 8;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -152,6 +153,10 @@
 			[cell.menuIcon setImage:[UIImage imageNamed:@"19-glyphish-gear-gray"]];
 			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"19-glyphish-gear-blue"]];
 			break;
+        case 7:
+			[cell.menuLabel setText:@"退出"];
+			[cell.menuIcon setImage:[UIImage imageNamed:@"icon_logout"]];
+			break;
 	  default:
 		break;
 	}
@@ -162,7 +167,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	BOEventQuickAddViewController *quickAdd = [[BOEventQuickAddViewController alloc] initWithNibName:@"BOEventQuickAddViewController" bundle:nil];
+	switch (indexPath.row) {
+        case 7:
+            [[AppDelegate sharedDelegate] logout];
+            return;
+            
+        default:
+            break;
+    }
+    
+    BOEventQuickAddViewController *quickAdd = [[BOEventQuickAddViewController alloc] initWithNibName:@"BOEventQuickAddViewController" bundle:nil];
 	[self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
 		[self.viewDeckController.centerController presentModalViewController:quickAdd animated:YES];
 	}];

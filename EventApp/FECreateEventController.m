@@ -53,6 +53,7 @@ static bool isFirstLaunch = YES;
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [currentView release];
     [defaultView release];
     [toolbar release];
@@ -122,16 +123,16 @@ static bool isFirstLaunch = YES;
         if(currentInput.tag == 2 || currentInput.tag == 3){
             toolbarRect.origin.y = toolbarRect.origin.y + 44;
         }
+        
+        //make sure the input is visible
+        float tableHeight = self.currentView.contentSize.height;
+        CGRect cellRect = [currentInput convertRect:currentInput.superview.frame toView:self.currentView];
+        int tableInsetTop = 0;
+        if(cellRect.origin.y + cellRect.size.height + 44 > toolbarRect.origin.y){
+            tableInsetTop = tableHeight - toolbarRect.origin.y;
+        }
+        self.currentView.contentInset = UIEdgeInsetsMake(tableInsetTop, 0, 0, 0);
     }
-    
-    //make sure the input is visible
-    float tableHeight = self.currentView.contentSize.height;
-    CGRect cellRect = [currentInput convertRect:currentInput.superview.frame toView:self.currentView];
-    int tableInsetTop = 0;
-    if(cellRect.origin.y + cellRect.size.height + 44 > toolbarRect.origin.y){
-        tableInsetTop = tableHeight - toolbarRect.origin.y;
-    }
-    self.currentView.contentInset = UIEdgeInsetsMake(tableInsetTop, 0, 0, 0);
     
     double animationDuration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     [UIView beginAnimations:nil context:NULL];
@@ -237,6 +238,7 @@ static bool isFirstLaunch = YES;
             if(!self.addIconView){
                 self.addIconView = [[[FEAddEventIconView alloc] init] autorelease];
                 self.addIconView.frame = CGRectMake(0, 264, 320, 216);
+                self.addIconView.delegate = self;
             }
             [self.navigationController.view addSubview:self.addIconView];
             break;
@@ -294,6 +296,18 @@ static bool isFirstLaunch = YES;
         }
     }
     return nil;
+}
+
+#pragma mark - image picker
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    if([mediaType isEqualToString:@"public.image"]){
+        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        NSLog(@"get image: %@", image);
+        [picker dismissModalViewControllerAnimated:YES];
+    }
 }
 
 @end

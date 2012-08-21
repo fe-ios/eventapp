@@ -122,7 +122,12 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userid"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"username"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
-    //todo
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    FEStartViewController *startController = [[[FEStartViewController alloc] init] autorelease];
+    self.window.rootViewController = startController;
+    [self.navigationController removeFromParentViewController];
+    self.navigationController.view.frame = CGRectOffset(self.navigationController.view.frame, 0, 20);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

@@ -10,12 +10,11 @@
 #import <Foundation/Foundation.h>
 #import "ASIHTTPRequest.h"
 
-@interface UIImageView (Async) <ASIHTTPRequestDelegate>
+@interface UIAsyncImageView : UIView <ASIHTTPRequestDelegate>
 
+@property(nonatomic, retain) UIImage *image;
 @property(nonatomic, copy, readonly) NSString *imagePath;
 
 - (void)loadImageAsync:(NSString *)imageURL withQueue:(NSOperationQueue *)queue;
-
-- (void)setRoundBorder;
 
 @end

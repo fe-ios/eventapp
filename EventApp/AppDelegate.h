@@ -22,7 +22,7 @@
 
 
 - (void)startMainView;
-
+- (void)logout;
 
 + (AppDelegate *)sharedDelegate;
 

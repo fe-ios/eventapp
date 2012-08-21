@@ -9,13 +9,8 @@
 #import "FEEventTableViewCell.h"
 
 @implementation FEEventTableViewCell
-@synthesize eventImage1;
-@synthesize eventImage2;
-@synthesize eventImage3;
-@synthesize eventImage4;
 @synthesize eventNameLabel;
-@synthesize peopleCountLabel;
-@synthesize pictureCountLabel;
+@synthesize eventIcon;
 @synthesize watchButton;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -34,14 +29,9 @@
 
 - (void)dealloc
 {
-    [eventImage1 release];
-    [eventImage2 release];
-    [eventImage3 release];
-    [eventImage4 release];
     [eventNameLabel release];
-    [peopleCountLabel release];
-    [pictureCountLabel release];
     [watchButton release];
+    [eventIcon release];
     [super dealloc];
 }
 

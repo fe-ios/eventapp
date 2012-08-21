@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FEEvent : NSObject
+@interface FEEvent : NSObject <NSCoding>
 
 @property(nonatomic, assign) int event_id;
 @property(nonatomic, assign) int owner_id;

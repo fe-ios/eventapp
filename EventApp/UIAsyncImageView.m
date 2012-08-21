@@ -9,24 +9,45 @@
 #import "UIAsyncImageView.h"
 #import <QuartzCore/QuartzCore.h>
 
+@interface UIAsyncImageView()
 
-@implementation UIImageView (Async)
+@end
 
 
-NSString* _imagePath;
+@implementation UIAsyncImageView
 
+@synthesize image, imagePath;
+
+
+- (id)init
+{
+    self = [super init];
+    if(self){
+        self.backgroundColor = [UIColor clearColor];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if(self){
+        self.backgroundColor = [UIColor clearColor];
+    }
+    return self;
+}
 
 - (void)dealloc
 {
+    [image release];
+    [imagePath release];
     [super dealloc];
 }
 
 - (void)loadImageAsync:(NSString *)imageURL withQueue:(NSOperationQueue *)queue
 {
-    [_imagePath release];
-    _imagePath = [imageURL copy];
-    
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:_imagePath]];
+    imagePath = imageURL;
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imagePath]];
     request.delegate = self;
     request.cacheStoragePolicy = ASICachePermanentlyCacheStoragePolicy;
     request.didStartSelector = @selector(didStartDownload:);
@@ -48,7 +69,6 @@ NSString* _imagePath;
             //NSLog(@"download from cache");
         }
         self.image = [UIImage imageWithData:request.responseData];
-        //[self setNeedsLayout];
     }
 }
 
@@ -57,21 +77,26 @@ NSString* _imagePath;
     //NSLog(@"download fail: %@", request.url);
 }
 
-- (void)setRoundBorder
+- (void)drawRect:(CGRect)rect
 {
-    self.layer.cornerRadius = 6.0;
-    self.layer.masksToBounds = YES;
-    self.layer.borderColor = [UIColor colorWithRed:174.0/255 green:174.0/255 blue:174.0/255 alpha:1.0].CGColor;
-    self.layer.borderWidth = 1.0;
-    self.layer.shadowColor = [UIColor whiteColor].CGColor;
-    self.layer.shadowOffset = CGSizeMake(5.0, 5.0);
-    self.layer.shadowRadius = 3.0;
-    self.layer.shadowOpacity = 1.0;
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(context);
+    CGPathRef clipPath = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:6.0].CGPath;
+    CGContextAddPath(context, clipPath);
+    CGContextClip(context);
+    
+    [self.image drawInRect:rect];
+    
+    CGContextRestoreGState(context);
 }
 
-- (NSString *)imagePath
+- (void)setImage:(UIImage *)newImage
 {
-    return _imagePath;
+    if(image != newImage){
+        [image release];
+        image = [newImage retain];
+        [self setNeedsDisplay];
+    }
 }
 
 @end

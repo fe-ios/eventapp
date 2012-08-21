@@ -10,4 +10,6 @@
 
 @interface FEAddEventIconView : UIView
 
+@property(nonatomic, retain) UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate> *delegate;
+
 @end

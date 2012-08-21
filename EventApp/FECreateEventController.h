@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FECreateEventController : UIViewController
+@interface FECreateEventController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 
 @end

@@ -7,17 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIAsyncImageView.h"
 
 @interface FEEventTableViewCell : UITableViewCell
 
-@property (retain, nonatomic) IBOutlet UIImageView *eventImage1;
-@property (retain, nonatomic) IBOutlet UIImageView *eventImage2;
-@property (retain, nonatomic) IBOutlet UIImageView *eventImage3;
-@property (retain, nonatomic) IBOutlet UIImageView *eventImage4;
-
+@property (retain, nonatomic) IBOutlet UIAsyncImageView *eventIcon;
 @property (retain, nonatomic) IBOutlet UILabel *eventNameLabel;
-@property (retain, nonatomic) IBOutlet UILabel *peopleCountLabel;
-@property (retain, nonatomic) IBOutlet UILabel *pictureCountLabel;
 
 @property(retain, nonatomic) UIButton *watchButton;
 

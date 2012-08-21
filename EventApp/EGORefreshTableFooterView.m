@@ -189,7 +189,7 @@
 		_loading = [_delegate egoRefreshTableFooterDataSourceIsLoading:self];
 	}
     
-	if(scrollView.contentOffset.y + scrollView.frame.size.height > scrollView.contentSize.height + self.frame.size.height && !_loading){
+	if(self.frame.size.height > 0  && scrollView.contentOffset.y + scrollView.frame.size.height > scrollView.contentSize.height + self.frame.size.height && !_loading){
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:0.2];
 		scrollView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, self.frame.size.height, 0.0f);
