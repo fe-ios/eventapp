@@ -217,10 +217,10 @@
     
     //make sure the input is visible
     float tableHeight = self.contentSize.height;
-    CGRect cellRect = [textField convertRect:textField.superview.frame toView:self];
+    CGRect cellRect = textField.superview.superview.frame;
     int tableInsetTop = 0;
-    if(cellRect.origin.y + cellRect.size.height + 44 > self.toolbar.frame.origin.y){
-        tableInsetTop = tableHeight - self.toolbar.frame.origin.y;
+    if(cellRect.origin.y + cellRect.size.height > self.toolbar.frame.origin.y){
+        tableInsetTop = - tableHeight + self.toolbar.frame.origin.y - 5;
     }
     self.contentInset = UIEdgeInsetsMake(tableInsetTop, 0, 0, 0);
     

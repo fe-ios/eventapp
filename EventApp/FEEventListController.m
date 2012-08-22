@@ -45,6 +45,7 @@
     if (self) {
         self.eventData = [self getEventCache];
         if(self.eventData == nil) self.eventData = [NSMutableArray arrayWithObjects:nil];
+        self.downloadQueue = [[[NSOperationQueue alloc] init] autorelease];
     }
     return self;
 }
@@ -67,8 +68,6 @@
     self.title = NSLocalizedString(@"所有活动", @"所有活动");
     self.tableView.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dotGreyBackground"]] autorelease];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    self.downloadQueue = [[[NSOperationQueue alloc] init] autorelease];
     
     UIBarButtonItem *leftBarButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuButton"] style:UIBarButtonItemStylePlain target:self.viewDeckController action:@selector(toggleLeftView)] autorelease];
 	self.navigationItem.leftBarButtonItem = leftBarButton;
@@ -154,7 +153,6 @@
     }
     
     FEEvent *event = [self.eventData objectAtIndex:indexPath.row];
-    
     cell.eventNameLabel.text = event.name;
     if(event.logoURL.length == 0){
         cell.eventIcon.image = [UIImage imageNamed:@"pictureGridPlaceholder"];

@@ -373,7 +373,6 @@
 		C7DF13ED15A2E4AA00B73A6B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7DF13EC15A2E4AA00B73A6B /* MobileCoreServices.framework */; };
 		C7DF9BEA15B3F2D5009A35F1 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DF9BE715B3F1AF009A35F1 /* MBProgressHUD.m */; };
 		C7DF9BFD15B417FE009A35F1 /* FEActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DF9BFC15B417FE009A35F1 /* FEActionSheet.m */; };
-		C7E0A47515E36FAC00348BE4 /* FEImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E0A47415E36FAB00348BE4 /* FEImagePickerController.m */; };
 		C7E0A47815E38D8F00348BE4 /* icon_logout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E0A47715E38D8F00348BE4 /* icon_logout@2x.png */; };
 		C7E259FD15BE805300496F94 /* FECreateEventController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E259FC15BE805300496F94 /* FECreateEventController.m */; };
 		C7E25A0215BE8FBF00496F94 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DE4DA315B506E600D9CA77 /* NSDate+Helper.m */; };
@@ -813,8 +812,6 @@
 		C7DF9BE715B3F1AF009A35F1 /* MBProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		C7DF9BFB15B417FE009A35F1 /* FEActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEActionSheet.h; sourceTree = "<group>"; };
 		C7DF9BFC15B417FE009A35F1 /* FEActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEActionSheet.m; sourceTree = "<group>"; };
-		C7E0A47315E36FAB00348BE4 /* FEImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEImagePickerController.h; sourceTree = "<group>"; };
-		C7E0A47415E36FAB00348BE4 /* FEImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEImagePickerController.m; sourceTree = "<group>"; };
 		C7E0A47715E38D8F00348BE4 /* icon_logout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_logout@2x.png"; path = "EventApp/images/icon_logout@2x.png"; sourceTree = "<group>"; };
 		C7E259FB15BE805300496F94 /* FECreateEventController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FECreateEventController.h; sourceTree = "<group>"; };
 		C7E259FC15BE805300496F94 /* FECreateEventController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FECreateEventController.m; sourceTree = "<group>"; };
@@ -1028,8 +1025,6 @@
 			children = (
 				C7D9831615DB7FBF00CC42D8 /* FEAddEventIconView.h */,
 				C7D9831715DB7FBF00CC42D8 /* FEAddEventIconView.m */,
-				C7E0A47315E36FAB00348BE4 /* FEImagePickerController.h */,
-				C7E0A47415E36FAB00348BE4 /* FEImagePickerController.m */,
 				C7E95C7415DE174B00B06580 /* FEAddEventTagView.h */,
 				C7E95C7515DE174B00B06580 /* FEAddEventTagView.m */,
 				C7E95C7815DE504200B06580 /* FEAddEventView.h */,
@@ -1979,7 +1974,6 @@
 				C7D9832A15DBA67C00CC42D8 /* FESwitch.m in Sources */,
 				C7E95C7615DE174B00B06580 /* FEAddEventTagView.m in Sources */,
 				C7E95C7A15DE504300B06580 /* FEAddEventView.m in Sources */,
-				C7E0A47515E36FAC00348BE4 /* FEImagePickerController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

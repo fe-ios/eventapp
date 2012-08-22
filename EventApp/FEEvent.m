@@ -59,6 +59,7 @@
     self.venue = [object objectForKey:@"venue"];
     self.desc = [object objectForKey:@"desc"];
     self.detail = [object objectForKey:@"detail"];
+    //self.logoURL = [object objectForKey:@"logo"];
     self.logoURL = [self getStringValue:object withKey:@"logo"];
 }
 

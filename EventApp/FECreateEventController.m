@@ -53,11 +53,12 @@ static bool isFirstLaunch = YES;
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [currentView release];
     [defaultView release];
     [toolbar release];
     [addTagView release];
+    [addIconView release];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
 
@@ -68,14 +69,14 @@ static bool isFirstLaunch = YES;
     self.title = @"新活动";
     
     UIImageView *bgView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dotGreyBackground"]] autorelease];
-    bgView.frame = CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height);
+    bgView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     bgView.contentMode = UIViewContentModeTopLeft;
-    [self.navigationController.view insertSubview:bgView atIndex:0];
+    [self.view addSubview:bgView];
     
 	//toolbar
 	self.toolbar = [[[FECreateEventToolbar alloc] init] autorelease];
-    self.toolbar.frame = isFirstLaunch ? CGRectMake(0, 220, 320, 44) : CGRectMake(0, 480, 320, 44);
-    [self.navigationController.view addSubview:self.toolbar];
+    self.toolbar.frame = isFirstLaunch ? CGRectMake(0, 220-64, 320, 44) : CGRectMake(0, 480-64, 320, 44);
+    [self.view addSubview:self.toolbar];
     [self.toolbar addTarget:self action:@selector(toolbarActionChanged:) forControlEvents:UIControlEventValueChanged];
     
     //default view
@@ -83,7 +84,7 @@ static bool isFirstLaunch = YES;
     addEventView.frame = CGRectMake(0, 0, 320, 156);
     addEventView.clipsToBounds = YES;
     addEventView.toolbar = self.toolbar;
-    [self.view addSubview:addEventView];
+    [self.view insertSubview:addEventView belowSubview:self.toolbar];
     self.currentView = addEventView;
     self.defaultView = addEventView;
 	
@@ -93,7 +94,6 @@ static bool isFirstLaunch = YES;
     [leftButton setTitle:@"取消" forState:UIControlStateNormal];
     leftButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
     [leftButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
-    //[leftButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
     [leftButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:leftButton] autorelease];
     
@@ -103,7 +103,6 @@ static bool isFirstLaunch = YES;
     [rightButton setTitle:@"创建" forState:UIControlStateNormal];
     rightButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
     [rightButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
-    //[rightButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
     [rightButton addTarget:self action:@selector(createAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:rightButton] autorelease];
     
@@ -115,7 +114,7 @@ static bool isFirstLaunch = YES;
     NSDictionary *userInfo = [notification userInfo];
     CGRect keyboardRect = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGRect toolbarRect = self.toolbar.frame;
-    toolbarRect.origin.y = keyboardRect.origin.y - toolbarRect.size.height;
+    toolbarRect.origin.y = keyboardRect.origin.y - toolbarRect.size.height - 64;
     
     //fix position for date input view
     UITextField *currentInput = (UITextField *)[self getFirstResponderInView:self.currentView];
@@ -126,10 +125,10 @@ static bool isFirstLaunch = YES;
         
         //make sure the input is visible
         float tableHeight = self.currentView.contentSize.height;
-        CGRect cellRect = [currentInput convertRect:currentInput.superview.frame toView:self.currentView];
+        CGRect cellRect = currentInput.superview.superview.frame;
         int tableInsetTop = 0;
-        if(cellRect.origin.y + cellRect.size.height + 44 > toolbarRect.origin.y){
-            tableInsetTop = tableHeight - toolbarRect.origin.y;
+        if(cellRect.origin.y + cellRect.size.height > toolbarRect.origin.y){
+            tableInsetTop = - tableHeight + toolbarRect.origin.y - 5;
         }
         self.currentView.contentInset = UIEdgeInsetsMake(tableInsetTop, 0, 0, 0);
     }
@@ -147,6 +146,7 @@ static bool isFirstLaunch = YES;
     self.defaultView = nil;
     self.toolbar = nil;
     self.addTagView = nil;
+    self.addIconView = nil;
     
     [super viewDidUnload];
 }
@@ -278,7 +278,7 @@ static bool isFirstLaunch = YES;
         toView.frame = CGRectMake(0, toView.frame.origin.y, toView.frame.size.width, toView.frame.size.height);
     } completion:^(BOOL finished){
         self.currentView = toView;
-        [self.view addSubview:toView];
+        [self.view insertSubview:toView belowSubview:self.toolbar];
         toView.frame = CGRectMake(0, 0, toView.frame.size.width, toView.frame.size.height);    }];
 }
 

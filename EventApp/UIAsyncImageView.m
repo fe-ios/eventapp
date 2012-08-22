@@ -16,7 +16,7 @@
 
 @implementation UIAsyncImageView
 
-@synthesize image, imagePath;
+@synthesize image = _image, imagePath = _imagePath;
 
 
 - (id)init
@@ -39,15 +39,17 @@
 
 - (void)dealloc
 {
-    [image release];
-    [imagePath release];
+    [_image release];
+    [_imagePath release];
     [super dealloc];
 }
 
 - (void)loadImageAsync:(NSString *)imageURL withQueue:(NSOperationQueue *)queue
 {
-    imagePath = imageURL;
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imagePath]];
+    [_imagePath release];
+    _imagePath = [imageURL copy];
+    
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:_imagePath]];
     request.delegate = self;
     request.cacheStoragePolicy = ASICachePermanentlyCacheStoragePolicy;
     request.didStartSelector = @selector(didStartDownload:);
@@ -92,9 +94,9 @@
 
 - (void)setImage:(UIImage *)newImage
 {
-    if(image != newImage){
-        [image release];
-        image = [newImage retain];
+    if(_image != newImage){
+        [_image release];
+        _image = [newImage retain];
         [self setNeedsDisplay];
     }
 }
