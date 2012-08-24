@@ -34,14 +34,13 @@
 						lineBreakMode:UILineBreakModeWordWrap];
 	
 	UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(50, 50, 260, size.height + 10)];
+	textView.backgroundColor = [UIColor clearColor];
 	textView.text = foo;
 	
 	UIImage *gridBackgroundImage = [[UIImage imageNamed:@"detail_grid"] resizableImageWithCapInsets:UIEdgeInsetsMake(62, 0, 62, 0)];
-	UIImageView *gridBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, size.height+100)];
+	UIImageView *gridBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, size.height+60)];
 	[gridBackground setImage:gridBackgroundImage];
 	[self.view addSubview:gridBackground];
-	
-	
 	[gridBackground addSubview:textView];
 }
 
