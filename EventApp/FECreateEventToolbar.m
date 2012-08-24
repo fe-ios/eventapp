@@ -50,8 +50,8 @@
 	//bar items
     int start = 8, padding = 42;
     UIButton *buttonSetBasic = [[[UIButton alloc] initWithFrame:CGRectMake(start, 0, 36, 44)] autorelease];
-	[buttonSetBasic setImage:[UIImage imageNamed:@"tool_bar_icon_info"] forState:UIControlStateNormal];
-	[buttonSetBasic setImage:[UIImage imageNamed:@"tool_bar_icon_info_s"] forState:UIControlStateSelected];
+	[buttonSetBasic setImage:[UIImage imageNamed:@"tool_bar_icon_list"] forState:UIControlStateNormal];
+	[buttonSetBasic setImage:[UIImage imageNamed:@"tool_bar_icon_list_s"] forState:UIControlStateSelected];
 	[buttonSetBasic addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchDown];
     buttonSetBasic.tag = CreateEventBasicAction;
 	[self addSubview:buttonSetBasic];
