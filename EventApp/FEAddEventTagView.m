@@ -8,18 +8,20 @@
 
 #import "FEAddEventTagView.h"
 #import "FELoginTableViewCell.h"
+#import "FEEventTag.h"
 
 
 @interface FEAddEventTagView()
 
 @property(nonatomic, retain) JSTokenField *tagInput;
 @property(nonatomic, retain) UIImageView *tagInputBg;
+@property(nonatomic, retain) UITableView *searchList;
 
 @end
 
 @implementation FEAddEventTagView
 
-@synthesize tagInput = _tagInput, tagInputBg = _tagInputBg, tags = _tags, tagDelegate = _tagDelegate;
+@synthesize tagInput = _tagInput, tagInputBg = _tagInputBg, tags = _tags, tagDelegate = _tagDelegate, searchTagData = _searchTagData, searchList = _searchList;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -35,6 +37,8 @@
     [_tagInput release];
     [_tagInputBg release];
     [_tags release];
+    [_searchTagData release];
+    [_searchList release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
@@ -55,6 +59,26 @@
     //self.tagInput.textField.borderStyle = UITextBorderStyleLine;
     [self addSubview:self.tagInput];
     
+    //test data
+    FEEventTag *eTag1 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
+    FEEventTag *eTag2 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
+    FEEventTag *eTag3 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
+    FEEventTag *eTag4 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
+    FEEventTag *eTag5 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
+    FEEventTag *eTag6 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
+    FEEventTag *eTag7 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
+    FEEventTag *eTag8 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
+    FEEventTag *eTag9 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
+    FEEventTag *eTag10 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
+    
+    //self.searchTagData = [NSMutableArray alloc] initWithObjects:<#(id), ...#>, nil
+    
+    self.searchList = [[UITableView alloc] init];
+    self.searchList.frame = CGRectMake(10, 55, 290, 44);
+    self.searchList.delegate = self;
+    self.searchList.dataSource = self;
+    [self addSubview:self.searchList];
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTokenFieldFrameDidChange:) name:JSTokenFieldFrameDidChangeNotification object:nil];
 }
 
@@ -105,6 +129,33 @@
 - (void)handleTokenFieldFrameDidChange:(NSNotification *)note
 {
     [self setNeedsLayout];
+}
+
+#pragma mark - search list
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+{
+    static NSString *CellIdentifier = @"TagSearchListCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if(cell == nil){
+        cell = [[[UITableViewCell alloc] init] autorelease];
+        
+    }
+    
+    FEEventTag *eTag = [self.searchTagData objectAtIndex:indexPath.row];
+    cell.textLabel.text = eTag.value;
+    
+    return cell;
 }
 
 - (void)layoutSubviews

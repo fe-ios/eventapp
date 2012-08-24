@@ -360,6 +360,7 @@
 		C7DE2EE415DCE6EF002CF50B /* button_photo_library2.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DE2EDA15DCE6EF002CF50B /* button_photo_library2.png */; };
 		C7DE2EE515DCE6EF002CF50B /* button_photo_library2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DE2EDB15DCE6EF002CF50B /* button_photo_library2@2x.png */; };
 		C7DE4D9D15B5068900D9CA77 /* FELoginTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7DE4D9C15B5068900D9CA77 /* FELoginTableViewCell.xib */; };
+		C7DE825515E7303C007D3479 /* FEEventTag.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DE825415E7303C007D3479 /* FEEventTag.m */; };
 		C7DE9D2615AFFF3500859A32 /* FELoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DE9D2515AFFF3500859A32 /* FELoginViewController.m */; };
 		C7DE9D3315B00A5400859A32 /* FELoginTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DE9D3215B00A5400859A32 /* FELoginTableViewCell.m */; };
 		C7DE9D3615B01B9700859A32 /* FERegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DE9D3515B01B9700859A32 /* FERegisterViewController.m */; };
@@ -793,6 +794,8 @@
 		C7DE4D9C15B5068900D9CA77 /* FELoginTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FELoginTableViewCell.xib; sourceTree = "<group>"; };
 		C7DE4DA215B506E600D9CA77 /* NSDate+Helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
 		C7DE4DA315B506E600D9CA77 /* NSDate+Helper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
+		C7DE825315E7303C007D3479 /* FEEventTag.h */ = {isa = PBXFileReference; fileEncoding = 4; path = FEEventTag.h; sourceTree = "<group>"; };
+		C7DE825415E7303C007D3479 /* FEEventTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEEventTag.m; sourceTree = "<group>"; };
 		C7DE9D2415AFFF3400859A32 /* FELoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FELoginViewController.h; sourceTree = "<group>"; };
 		C7DE9D2515AFFF3500859A32 /* FELoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FELoginViewController.m; sourceTree = "<group>"; };
 		C7DE9D3115B00A5400859A32 /* FELoginTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FELoginTableViewCell.h; sourceTree = "<group>"; };
@@ -1029,6 +1032,8 @@
 				C7D6DFB015BFDB3600D29E27 /* FEEvent.m */,
 				C7E6609315A431F5000FC01A /* FEServerAPI.h */,
 				C7E6609415A431F5000FC01A /* FEServerAPI.m */,
+				C7DE825315E7303C007D3479 /* FEEventTag.h */,
+				C7DE825415E7303C007D3479 /* FEEventTag.m */,
 			);
 			name = data;
 			sourceTree = "<group>";
@@ -2030,6 +2035,7 @@
 				C7E95C7A15DE504300B06580 /* FEAddEventView.m in Sources */,
 				C7CF942115E5CE4C00829376 /* FEAddEventDetailView.m in Sources */,
 				C747F94C15E5FAC20002E086 /* FEAddEventMemberView.m in Sources */,
+				C7DE825515E7303C007D3479 /* FEEventTag.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
