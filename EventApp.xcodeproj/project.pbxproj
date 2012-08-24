@@ -65,12 +65,15 @@
 		815222AD15B534BB0089895F /* BOCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 815222A715B534BB0089895F /* BOCenterViewController.xib */; };
 		81AA8E6615D4E0D20019748C /* tool_bar_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 81AA8E6415D4E0D20019748C /* tool_bar_gray.png */; };
 		81AA8E6715D4E0D20019748C /* tool_bar_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 81AA8E6515D4E0D20019748C /* tool_bar_gray@2x.png */; };
+		C747F94815E5E3170002E086 /* icon_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C747F94715E5E3170002E086 /* icon_bg@2x.png */; };
+		C747F94C15E5FAC20002E086 /* FEAddEventMemberView.m in Sources */ = {isa = PBXBuildFile; fileRef = C747F94B15E5FAC20002E086 /* FEAddEventMemberView.m */; };
 		C783E09715A1518F000B9418 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C783E09615A1518F000B9418 /* UIKit.framework */; };
 		C783E09915A1518F000B9418 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C783E09815A1518F000B9418 /* Foundation.framework */; };
 		C783E09B15A1518F000B9418 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C783E09A15A1518F000B9418 /* CoreGraphics.framework */; };
 		C783E0A115A1518F000B9418 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C783E09F15A1518F000B9418 /* InfoPlist.strings */; };
 		C783E0A315A1518F000B9418 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C783E0A215A1518F000B9418 /* main.m */; };
 		C783E0A715A1518F000B9418 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C783E0A615A1518F000B9418 /* AppDelegate.m */; };
+		C7CF942115E5CE4C00829376 /* FEAddEventDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CF942015E5CE4C00829376 /* FEAddEventDetailView.m */; };
 		C7D34CD015C8E398003CDD76 /* 7-glyphish-map-marker-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = C7D34BEA15C8E397003CDD76 /* 7-glyphish-map-marker-blue.png */; };
 		C7D34CD115C8E398003CDD76 /* 7-glyphish-map-marker-blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7D34BEB15C8E397003CDD76 /* 7-glyphish-map-marker-blue@2x.png */; };
 		C7D34CD215C8E398003CDD76 /* 7-glyphish-map-marker-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = C7D34BEC15C8E397003CDD76 /* 7-glyphish-map-marker-gray.png */; };
@@ -326,6 +329,13 @@
 		C7D9831815DB7FBF00CC42D8 /* FEAddEventIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D9831715DB7FBF00CC42D8 /* FEAddEventIconView.m */; };
 		C7D9831B15DB83C400CC42D8 /* FECreateEventToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D9831A15DB83C400CC42D8 /* FECreateEventToolbar.m */; };
 		C7D9832A15DBA67C00CC42D8 /* FESwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D9832915DBA67B00CC42D8 /* FESwitch.m */; };
+		C7DA677215E4C5A900E2C3F6 /* roundTableCellSingle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DA677115E4C5A900E2C3F6 /* roundTableCellSingle@2x.png */; };
+		C7DA691015E4E1AF00E2C3F6 /* tokenHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DA690C15E4E1AF00E2C3F6 /* tokenHighlighted.png */; };
+		C7DA691115E4E1AF00E2C3F6 /* tokenHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DA690D15E4E1AF00E2C3F6 /* tokenHighlighted@2x.png */; };
+		C7DA691215E4E1AF00E2C3F6 /* tokenNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DA690E15E4E1AF00E2C3F6 /* tokenNormal.png */; };
+		C7DA691315E4E1AF00E2C3F6 /* tokenNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DA690F15E4E1AF00E2C3F6 /* tokenNormal@2x.png */; };
+		C7DA691415E4E34500E2C3F6 /* JSTokenButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DA690915E4E18B00E2C3F6 /* JSTokenButton.m */; };
+		C7DA691515E4E34500E2C3F6 /* JSTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DA690B15E4E18B00E2C3F6 /* JSTokenField.m */; };
 		C7DC64E515C10E9A00801E91 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DC64E415C10E6600801E91 /* EGORefreshTableHeaderView.m */; };
 		C7DC64F015C144DF00801E91 /* EGORefreshTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DC64EF15C144DF00801E91 /* EGORefreshTableFooterView.m */; };
 		C7DCA4E815AEB7930019DCFB /* FEStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DCA4E615AEB7930019DCFB /* FEStartViewController.m */; };
@@ -466,6 +476,9 @@
 		815222A715B534BB0089895F /* BOCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BOCenterViewController.xib; sourceTree = "<group>"; };
 		81AA8E6415D4E0D20019748C /* tool_bar_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tool_bar_gray.png; path = EventApp/images_toolbar/tool_bar_gray.png; sourceTree = "<group>"; };
 		81AA8E6515D4E0D20019748C /* tool_bar_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tool_bar_gray@2x.png"; path = "EventApp/images_toolbar/tool_bar_gray@2x.png"; sourceTree = "<group>"; };
+		C747F94715E5E3170002E086 /* icon_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_bg@2x.png"; path = "EventApp/images_toolbar/icon_bg@2x.png"; sourceTree = "<group>"; };
+		C747F94A15E5FAC20002E086 /* FEAddEventMemberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEAddEventMemberView.h; sourceTree = "<group>"; };
+		C747F94B15E5FAC20002E086 /* FEAddEventMemberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEAddEventMemberView.m; sourceTree = "<group>"; };
 		C783E09215A1518F000B9418 /* EventApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EventApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C783E09615A1518F000B9418 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C783E09815A1518F000B9418 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -476,6 +489,8 @@
 		C783E0A415A1518F000B9418 /* EventApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EventApp-Prefix.pch"; sourceTree = "<group>"; };
 		C783E0A515A1518F000B9418 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C783E0A615A1518F000B9418 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C7CF941F15E5CE4C00829376 /* FEAddEventDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEAddEventDetailView.h; sourceTree = "<group>"; };
+		C7CF942015E5CE4C00829376 /* FEAddEventDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEAddEventDetailView.m; sourceTree = "<group>"; };
 		C7D34BEA15C8E397003CDD76 /* 7-glyphish-map-marker-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "7-glyphish-map-marker-blue.png"; path = "EventApp/images/7-glyphish-map-marker-blue.png"; sourceTree = "<group>"; };
 		C7D34BEB15C8E397003CDD76 /* 7-glyphish-map-marker-blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "7-glyphish-map-marker-blue@2x.png"; path = "EventApp/images/7-glyphish-map-marker-blue@2x.png"; sourceTree = "<group>"; };
 		C7D34BEC15C8E397003CDD76 /* 7-glyphish-map-marker-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "7-glyphish-map-marker-gray.png"; path = "EventApp/images/7-glyphish-map-marker-gray.png"; sourceTree = "<group>"; };
@@ -739,6 +754,15 @@
 		C7D9831A15DB83C400CC42D8 /* FECreateEventToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FECreateEventToolbar.m; sourceTree = "<group>"; };
 		C7D9832815DBA67B00CC42D8 /* FESwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FESwitch.h; sourceTree = "<group>"; };
 		C7D9832915DBA67B00CC42D8 /* FESwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FESwitch.m; sourceTree = "<group>"; };
+		C7DA677115E4C5A900E2C3F6 /* roundTableCellSingle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "roundTableCellSingle@2x.png"; path = "EventApp/images2/roundTableCellSingle@2x.png"; sourceTree = "<group>"; };
+		C7DA690815E4E18B00E2C3F6 /* JSTokenButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JSTokenButton.h; path = JSTokenField/JSTokenButton.h; sourceTree = "<group>"; };
+		C7DA690915E4E18B00E2C3F6 /* JSTokenButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = JSTokenButton.m; path = JSTokenField/JSTokenButton.m; sourceTree = "<group>"; };
+		C7DA690A15E4E18B00E2C3F6 /* JSTokenField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JSTokenField.h; path = JSTokenField/JSTokenField.h; sourceTree = "<group>"; };
+		C7DA690B15E4E18B00E2C3F6 /* JSTokenField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = JSTokenField.m; path = JSTokenField/JSTokenField.m; sourceTree = "<group>"; };
+		C7DA690C15E4E1AF00E2C3F6 /* tokenHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tokenHighlighted.png; path = EventApp/images2/tokenHighlighted.png; sourceTree = "<group>"; };
+		C7DA690D15E4E1AF00E2C3F6 /* tokenHighlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tokenHighlighted@2x.png"; path = "EventApp/images2/tokenHighlighted@2x.png"; sourceTree = "<group>"; };
+		C7DA690E15E4E1AF00E2C3F6 /* tokenNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tokenNormal.png; path = EventApp/images2/tokenNormal.png; sourceTree = "<group>"; };
+		C7DA690F15E4E1AF00E2C3F6 /* tokenNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tokenNormal@2x.png"; path = "EventApp/images2/tokenNormal@2x.png"; sourceTree = "<group>"; };
 		C7DC64E315C10E6600801E91 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EGORefreshTableHeaderView.h; path = RefreshTableHeaderView/EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		C7DC64E415C10E6600801E91 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EGORefreshTableHeaderView.m; path = RefreshTableHeaderView/EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		C7DC64EE15C144DF00801E91 /* EGORefreshTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableFooterView.h; sourceTree = "<group>"; };
@@ -1023,8 +1047,12 @@
 		C7D81DC715E2164600076DC8 /* create_event */ = {
 			isa = PBXGroup;
 			children = (
+				C7CF941F15E5CE4C00829376 /* FEAddEventDetailView.h */,
+				C7CF942015E5CE4C00829376 /* FEAddEventDetailView.m */,
 				C7D9831615DB7FBF00CC42D8 /* FEAddEventIconView.h */,
 				C7D9831715DB7FBF00CC42D8 /* FEAddEventIconView.m */,
+				C747F94A15E5FAC20002E086 /* FEAddEventMemberView.h */,
+				C747F94B15E5FAC20002E086 /* FEAddEventMemberView.m */,
 				C7E95C7415DE174B00B06580 /* FEAddEventTagView.h */,
 				C7E95C7515DE174B00B06580 /* FEAddEventTagView.m */,
 				C7E95C7815DE504200B06580 /* FEAddEventView.h */,
@@ -1078,6 +1106,17 @@
 			name = UIAsyncImageView;
 			sourceTree = "<group>";
 		};
+		C7DA690715E4E17900E2C3F6 /* JSTokenField */ = {
+			isa = PBXGroup;
+			children = (
+				C7DA690815E4E18B00E2C3F6 /* JSTokenButton.h */,
+				C7DA690915E4E18B00E2C3F6 /* JSTokenButton.m */,
+				C7DA690A15E4E18B00E2C3F6 /* JSTokenField.h */,
+				C7DA690B15E4E18B00E2C3F6 /* JSTokenField.m */,
+			);
+			name = JSTokenField;
+			sourceTree = "<group>";
+		};
 		C7DCA4E315AEB74F0019DCFB /* start_view */ = {
 			isa = PBXGroup;
 			children = (
@@ -1108,6 +1147,12 @@
 		C7DECB5015BD272300E1DCC7 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				C747F94715E5E3170002E086 /* icon_bg@2x.png */,
+				C7DA690C15E4E1AF00E2C3F6 /* tokenHighlighted.png */,
+				C7DA690D15E4E1AF00E2C3F6 /* tokenHighlighted@2x.png */,
+				C7DA690E15E4E1AF00E2C3F6 /* tokenNormal.png */,
+				C7DA690F15E4E1AF00E2C3F6 /* tokenNormal@2x.png */,
+				C7DA677115E4C5A900E2C3F6 /* roundTableCellSingle@2x.png */,
 				C7E0A47715E38D8F00348BE4 /* icon_logout@2x.png */,
 				C7DE2ED215DCE6EF002CF50B /* actionsheetBg2.png */,
 				C7DE2ED315DCE6EF002CF50B /* actionsheetBg2@2x.png */,
@@ -1490,6 +1535,7 @@
 		C7DF13DD15A2E11000B73A6B /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				C7DA690715E4E17900E2C3F6 /* JSTokenField */,
 				C7DE4D9B15B5063200D9CA77 /* ActionSheet */,
 				C7DF13D515A2DF3C00B73A6B /* ASIHttpRequest */,
 				8113879715B514900033D455 /* DAKeyboardControl */,
@@ -1913,6 +1959,12 @@
 				C7DE2EE415DCE6EF002CF50B /* button_photo_library2.png in Resources */,
 				C7DE2EE515DCE6EF002CF50B /* button_photo_library2@2x.png in Resources */,
 				C7E0A47815E38D8F00348BE4 /* icon_logout@2x.png in Resources */,
+				C7DA677215E4C5A900E2C3F6 /* roundTableCellSingle@2x.png in Resources */,
+				C7DA691015E4E1AF00E2C3F6 /* tokenHighlighted.png in Resources */,
+				C7DA691115E4E1AF00E2C3F6 /* tokenHighlighted@2x.png in Resources */,
+				C7DA691215E4E1AF00E2C3F6 /* tokenNormal.png in Resources */,
+				C7DA691315E4E1AF00E2C3F6 /* tokenNormal@2x.png in Resources */,
+				C747F94815E5E3170002E086 /* icon_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1923,6 +1975,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7DA691415E4E34500E2C3F6 /* JSTokenButton.m in Sources */,
+				C7DA691515E4E34500E2C3F6 /* JSTokenField.m in Sources */,
 				C7D81DF415E2309600076DC8 /* UIView+TKCategory.m in Sources */,
 				C7D81DF515E2309600076DC8 /* TKAlertCenter.m in Sources */,
 				C7DC64E515C10E9A00801E91 /* EGORefreshTableHeaderView.m in Sources */,
@@ -1974,6 +2028,8 @@
 				C7D9832A15DBA67C00CC42D8 /* FESwitch.m in Sources */,
 				C7E95C7615DE174B00B06580 /* FEAddEventTagView.m in Sources */,
 				C7E95C7A15DE504300B06580 /* FEAddEventView.m in Sources */,
+				C7CF942115E5CE4C00829376 /* FEAddEventDetailView.m in Sources */,
+				C747F94C15E5FAC20002E086 /* FEAddEventMemberView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

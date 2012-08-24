@@ -21,22 +21,27 @@
 #import "FECreateEventToolbar.h"
 #import "FEAddEventTagView.h"
 #import "FEAddEventView.h"
+#import "FEAddEventDetailView.h"
+#import "FEAddEventMemberView.h"
  
 
 @interface FECreateEventController ()
 
-@property(nonatomic, retain) UITableView *currentView;
-@property(nonatomic, retain) FEAddEventView *defaultView;
 @property(nonatomic, retain) FECreateEventToolbar *toolbar;
-@property(nonatomic, retain) UITableView *addTagView;
+
+@property(nonatomic, retain) UIView *currentView;
+@property(nonatomic, retain) FEAddEventView *addBasicView;
+@property(nonatomic, retain) FEAddEventTagView *addTagView;
 @property(nonatomic, retain) FEAddEventIconView *addIconView;
+@property(nonatomic, retain) FEAddEventDetailView *addDetailView;
+@property(nonatomic, retain) FEAddEventMemberView *addMemberView;
 
 @end
 
 @implementation FECreateEventController
 
-@synthesize currentView, defaultView, toolbar;
-@synthesize addTagView, addIconView;
+@synthesize currentView, toolbar;
+@synthesize addBasicView, addIconView, addTagView, addDetailView, addMemberView;
 
 
 static bool isFirstLaunch = YES;
@@ -54,10 +59,11 @@ static bool isFirstLaunch = YES;
 - (void)dealloc
 {
     [currentView release];
-    [defaultView release];
     [toolbar release];
+    [addBasicView release];
     [addTagView release];
     [addIconView release];
+    [addMemberView release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
@@ -65,8 +71,6 @@ static bool isFirstLaunch = YES;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.title = @"新活动";
     
     UIImageView *bgView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dotGreyBackground"]] autorelease];
     bgView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
@@ -80,13 +84,14 @@ static bool isFirstLaunch = YES;
     [self.toolbar addTarget:self action:@selector(toolbarActionChanged:) forControlEvents:UIControlEventValueChanged];
     
     //default view
-    FEAddEventView *addEventView = [[[FEAddEventView alloc] init] autorelease];
-    addEventView.frame = CGRectMake(0, 0, 320, 156);
-    addEventView.clipsToBounds = YES;
-    addEventView.toolbar = self.toolbar;
-    [self.view insertSubview:addEventView belowSubview:self.toolbar];
-    self.currentView = addEventView;
-    self.defaultView = addEventView;
+    self.addBasicView = [[[FEAddEventView alloc] init] autorelease];
+    self.addBasicView.frame = CGRectMake(0, 0, 320, 156);
+    self.addBasicView.clipsToBounds = YES;
+    self.addBasicView.basicDelegate = self;
+    self.addBasicView.toolbar = self.toolbar;
+    [self.view insertSubview:self.addBasicView belowSubview:self.toolbar];
+    self.currentView = self.addBasicView;
+    self.title = @"基本信息";
 	
     //left button
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -99,12 +104,14 @@ static bool isFirstLaunch = YES;
     
     //right button
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightButton.frame = CGRectMake(0, 0, 50, 31);
-    [rightButton setTitle:@"创建" forState:UIControlStateNormal];
+    rightButton.frame = CGRectMake(0, 0, 75, 31);
+    [rightButton setTitle:@"创建活动" forState:UIControlStateNormal];
     rightButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
     [rightButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
+    [rightButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
     [rightButton addTarget:self action:@selector(createAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:rightButton] autorelease];
+    rightButton.enabled = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
 }
@@ -117,20 +124,22 @@ static bool isFirstLaunch = YES;
     toolbarRect.origin.y = keyboardRect.origin.y - toolbarRect.size.height - 64;
     
     //fix position for date input view
-    UITextField *currentInput = (UITextField *)[self getFirstResponderInView:self.currentView];
-    if(currentInput != nil){
-        if(currentInput.tag == 2 || currentInput.tag == 3){
-            toolbarRect.origin.y = toolbarRect.origin.y + 44;
+    if(self.currentView == self.addBasicView){
+        UITextField *currentInput = (UITextField *)[self getFirstResponderInView:self.currentView];
+        if(currentInput != nil){
+            if(currentInput.tag == 2 || currentInput.tag == 3){
+                toolbarRect.origin.y = toolbarRect.origin.y + 44;
+            }
+            
+            //make sure the input is visible
+            float tableHeight = self.addBasicView.contentSize.height;
+            CGRect cellRect = currentInput.superview.superview.frame;
+            int tableInsetTop = 0;
+            if(cellRect.origin.y + cellRect.size.height > toolbarRect.origin.y){
+                tableInsetTop = - tableHeight + toolbarRect.origin.y - 5;
+            }
+            self.addBasicView.contentInset = UIEdgeInsetsMake(tableInsetTop, 0, 0, 0);
         }
-        
-        //make sure the input is visible
-        float tableHeight = self.currentView.contentSize.height;
-        CGRect cellRect = currentInput.superview.superview.frame;
-        int tableInsetTop = 0;
-        if(cellRect.origin.y + cellRect.size.height > toolbarRect.origin.y){
-            tableInsetTop = - tableHeight + toolbarRect.origin.y - 5;
-        }
-        self.currentView.contentInset = UIEdgeInsetsMake(tableInsetTop, 0, 0, 0);
     }
     
     double animationDuration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
@@ -143,10 +152,12 @@ static bool isFirstLaunch = YES;
 - (void)viewDidUnload
 {
     self.currentView = nil;
-    self.defaultView = nil;
     self.toolbar = nil;
+    self.addBasicView = nil;
     self.addTagView = nil;
     self.addIconView = nil;
+    self.addDetailView = nil;
+    self.addMemberView = nil;
     
     [super viewDidUnload];
 }
@@ -182,15 +193,9 @@ static bool isFirstLaunch = YES;
 
 - (void)createAction
 {
-    if([self.currentView respondsToSelector:@selector(validateInput:text:showTip:)]){
-        objc_msgSend(self.currentView, @selector(validateInput:text:showTip:), 0, nil, YES);
-    }
-    
-    return;
-    
     int user_id = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userid"] intValue];
     NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:@"password"];
-    NSMutableDictionary *eventData = [self.defaultView getInputData];
+    NSMutableDictionary *eventData = [self.addBasicView getInputData];
     NSString *eventURL = [NSString stringWithFormat:@"%@%@", API_BASE, API_EVENT_CREATE];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:eventURL]];
     [request setRequestMethod:@"POST"];
@@ -219,17 +224,19 @@ static bool isFirstLaunch = YES;
 
 - (void)toolbarActionChanged:(FECreateEventToolbar *)sender
 {
-    NSLog(@"action: %d, %d", sender.action, sender.privacy);
+    NSLog(@"action: %d, %d, %d", sender.lastAction, sender.action, sender.privacy);
+    BOOL fromRight = sender.action >= sender.lastAction;
     
     switch (sender.action) {
-        case CreateEventNoneAction:
-            if([self.defaultView respondsToSelector:@selector(recoverLastInputAsFirstResponder)]){
-                [self.defaultView performSelector:@selector(recoverLastInputAsFirstResponder)];
+        case CreateEventBasicAction:
+            if([self.addBasicView respondsToSelector:@selector(recoverLastInputAsFirstResponder)]){
+                [self.addBasicView performSelector:@selector(recoverLastInputAsFirstResponder)];
             }
             
-            if(self.currentView != self.defaultView){
-                [self transitionView:self.currentView toView:self.defaultView fromRight:NO];
+            if(self.currentView != self.addBasicView){
+                [self transitionView:self.currentView toView:self.addBasicView fromRight:NO];
             }
+            self.title = @"基本信息";
             break;
             
         case CreateEventIconAction:
@@ -237,10 +244,17 @@ static bool isFirstLaunch = YES;
             
             if(!self.addIconView){
                 self.addIconView = [[[FEAddEventIconView alloc] init] autorelease];
-                self.addIconView.frame = CGRectMake(0, 264, 320, 216);
-                self.addIconView.delegate = self;
+                self.addIconView.frame = CGRectMake(320, 20+44, 320, 156);
+                self.addIconView.clipsToBounds = YES;
+                self.addIconView.pickerDelegate = self;
             }
-            [self.navigationController.view addSubview:self.addIconView];
+            
+            if(self.currentView != self.addIconView){
+                [self transitionView:self.currentView toView:self.addIconView fromRight:fromRight];
+            }
+            
+            [self.addIconView becomeFirstResponder];
+            self.title = @"图片";
             break;
             
         case CreateEventTagAction:
@@ -250,15 +264,54 @@ static bool isFirstLaunch = YES;
                 self.addTagView = [[[FEAddEventTagView alloc] init] autorelease];
                 self.addTagView.frame = CGRectMake(320, 20+44, 320, 156);
                 self.addTagView.clipsToBounds = YES;
+                self.addTagView.tagDelegate = self;
             }
             
             if(self.currentView != self.addTagView){
-                [self transitionView:self.currentView toView:self.addTagView fromRight:YES];
+                [self transitionView:self.currentView toView:self.addTagView fromRight:fromRight];
             }
             
             if([self.addTagView respondsToSelector:@selector(recoverLastInputAsFirstResponder)]){
                 [self.addTagView performSelector:@selector(recoverLastInputAsFirstResponder)];
             }
+            self.title = @"标签";
+            break;
+            
+        case CreateEventDetailAction:
+            [[self getFirstResponderInView:self.view] resignFirstResponder];
+            
+            if(!self.addDetailView){
+                self.addDetailView = [[[FEAddEventDetailView alloc] init] autorelease];
+                self.addDetailView.frame = CGRectMake(320, 20+44, 320, 156);
+                self.addDetailView.clipsToBounds = YES;
+                self.addDetailView.detailDelegate = self;
+            }
+            
+            if(self.currentView != self.addDetailView){
+                [self transitionView:self.currentView toView:self.addDetailView fromRight:fromRight];
+            }
+            
+            if([self.addDetailView respondsToSelector:@selector(recoverLastInputAsFirstResponder)]){
+                [self.addDetailView performSelector:@selector(recoverLastInputAsFirstResponder)];
+            }
+            self.title = @"详情";
+            break;
+            
+        case CreateEventMemberAction:
+            [[self getFirstResponderInView:self.view] resignFirstResponder];
+            
+            if(!self.addMemberView){
+                self.addMemberView = [[[FEAddEventMemberView alloc] init] autorelease];
+                self.addMemberView.frame = CGRectMake(320, 20+44, 320, 156);
+                self.addMemberView.clipsToBounds = YES;
+            }
+            
+            if(self.currentView != self.addMemberView){
+                [self transitionView:self.currentView toView:self.addMemberView fromRight:YES];
+            }
+            
+            [self.addMemberView becomeFirstResponder];
+            self.title = @"邀请";
             break;
             
         default:
@@ -266,20 +319,19 @@ static bool isFirstLaunch = YES;
     }
 }
 
-- (void)transitionView:(UITableView *)fromView toView:(UITableView *)toView fromRight:(BOOL)fromRight
+- (void)transitionView:(UIView *)fromView toView:(UIView *)toView fromRight:(BOOL)fromRight
 {
     CGFloat startX = fromRight ? 320 : -320;
     CGFloat endX = fromRight ? -320 : 320;
-    [self.view.window addSubview:toView];
-    toView.frame = CGRectMake(startX, 20+44, toView.frame.size.width, toView.frame.size.height);
+    [self.view insertSubview:toView belowSubview:self.toolbar];
+    toView.frame = CGRectMake(startX, 0, toView.frame.size.width, toView.frame.size.height);
     
     [UIView animateWithDuration:0.3 animations:^{
         fromView.frame = CGRectMake(endX, fromView.frame.origin.y, fromView.frame.size.width, fromView.frame.size.height);
         toView.frame = CGRectMake(0, toView.frame.origin.y, toView.frame.size.width, toView.frame.size.height);
     } completion:^(BOOL finished){
         self.currentView = toView;
-        [self.view insertSubview:toView belowSubview:self.toolbar];
-        toView.frame = CGRectMake(0, 0, toView.frame.size.width, toView.frame.size.height);    }];
+    }];
 }
 
 -(UIView *)getFirstResponderInView:(UIView *)view
@@ -298,7 +350,23 @@ static bool isFirstLaunch = YES;
     return nil;
 }
 
-#pragma mark - image picker
+#pragma mark - basic delegate
+
+- (void)handleBasicDataDidChange:(NSMutableDictionary *)basicData completed:(BOOL)completed
+{
+    UIButton *rightButton = (UIButton *) self.navigationItem.rightBarButtonItem.customView;
+    rightButton.enabled = completed;
+    [self.toolbar completeAction:CreateEventBasicAction completed:completed];
+}
+
+- (void)handleBasicViewDidReturn
+{
+    self.toolbar.lastAction = CreateEventBasicAction;
+    self.toolbar.action = CreateEventIconAction;
+    [self toolbarActionChanged:self.toolbar];
+}
+
+#pragma mark - image picker delegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
@@ -306,8 +374,27 @@ static bool isFirstLaunch = YES;
     if([mediaType isEqualToString:@"public.image"]){
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
         NSLog(@"get image: %@", image);
+        self.addIconView.previewImage = image;
+        [self.toolbar completeAction:CreateEventIconAction completed:YES];
         [picker dismissModalViewControllerAnimated:YES];
     }
+}
+
+#pragma mark - tag view delegate
+
+- (void)handleTagDidChange:(NSMutableArray *)tags
+{
+    NSLog(@"tag change: %@", tags);
+    int count = tags.count;
+    [self.toolbar completeAction:CreateEventTagAction completed:(count>0)];
+}
+
+#pragma mark - detail delegete
+
+- (void)handleDetailDidChange:(NSString *)detail
+{
+    NSLog(@"detail: %@", detail);
+    [self.toolbar completeAction:CreateEventDetailAction completed:(detail.length>0)];
 }
 
 @end

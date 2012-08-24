@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FEAddEventIconView : UIView
+@interface FEAddEventIconView : UIScrollView <UIKeyInput>
 
-@property(nonatomic, retain) UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate> *delegate;
+@property(nonatomic, assign) UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate> *pickerDelegate;
+
+- (void)setPreviewImage:(UIImage *)newImage;
 
 @end

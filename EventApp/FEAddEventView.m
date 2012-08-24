@@ -22,13 +22,18 @@
 @property(nonatomic, retain) FEActionSheet *dateSheet;
 @property(nonatomic, retain) FEToolTipView *tooltip;
 @property(nonatomic, assign) int lastInputTag;
+@property(nonatomic, assign) BOOL nameValid;
+@property(nonatomic, assign) BOOL startDateValid;
+@property(nonatomic, assign) BOOL venueValid;
 
 @end
 
 @implementation FEAddEventView
 
-@synthesize toolbar, autoFocusFirstInput;
+@synthesize toolbar, autoFocusFirstInput, basicDelegate;
 @synthesize dateSheet, tooltip, lastInputTag;
+@synthesize nameValid, startDateValid, venueValid;
+
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -37,6 +42,14 @@
         [self setup];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [toolbar release];
+    [dateSheet release];
+    [tooltip release];
+    [super dealloc];
 }
 
 - (void)setup
@@ -112,7 +125,7 @@
             ((FELoginTableViewCell *)cell).fieldLabel.text = @"地点";
             ((FELoginTableViewCell *)cell).fieldInput.placeholder = @"必填";
             ((FELoginTableViewCell *)cell).fieldInput.delegate = self;
-            ((FELoginTableViewCell *)cell).fieldInput.returnKeyType = UIReturnKeyGo;
+            ((FELoginTableViewCell *)cell).fieldInput.returnKeyType = UIReturnKeyDone;
             ((FELoginTableViewCell *)cell).fieldInput.tag = indexPath.row+2;
             break;
             
@@ -188,6 +201,9 @@
         }
         textField.text = [datePicker.date stringWithFormat:@"YY-MM-dd HH:mm"];
         [self validateInput:textField.tag text:textField.text showTip:NO];
+        BOOL completed = self.nameValid && self.startDateValid && self.venueValid;
+        NSMutableDictionary *data = completed ? [self getInputData] : nil;
+        [self.basicDelegate handleBasicDataDidChange:data completed:completed];
         [[self viewWithTag:nextTag] becomeFirstResponder];
     }
 }
@@ -202,6 +218,9 @@
             nextTag = 4;
         }
         [self validateInput:textField.tag text:textField.text showTip:NO];
+        BOOL completed = self.nameValid && self.startDateValid && self.venueValid;
+        NSMutableDictionary *data = completed ? [self getInputData] : nil;
+        [self.basicDelegate handleBasicDataDidChange:data completed:completed];
         [[self viewWithTag:nextTag] becomeFirstResponder];
     }
 }
@@ -213,7 +232,6 @@
     //hide all actions when date picker popups
     BOOL hideToolbar = textField.tag == 2 || textField.tag == 3;
     [self.toolbar showOrHideActions:hideToolbar];
-    [self.toolbar resetAction];
     
     //make sure the input is visible
     float tableHeight = self.contentSize.height;
@@ -234,8 +252,13 @@
         UITextField *nextTextField = (UITextField *)[self viewWithTag:(textField.tag+1)];
         [nextTextField becomeFirstResponder];
     }else {
-        [textField resignFirstResponder];
-        //[self createAction];
+        //[textField resignFirstResponder];
+        BOOL completed = self.nameValid && self.startDateValid && self.venueValid;
+        if(completed){
+            [self.basicDelegate handleBasicViewDidReturn];
+        }else {
+            [self validateInput:0 text:nil showTip:YES];
+        }
     }
     return NO;
 }
@@ -248,6 +271,9 @@
     
     NSString *futureString = [textField.text stringByReplacingCharactersInRange:range withString:string];    
     [self validateInput:textField.tag text:futureString showTip:NO];
+    BOOL completed = self.nameValid && self.startDateValid && self.venueValid;
+    NSMutableDictionary *data = completed ? [self getInputData] : nil;
+    [self.basicDelegate handleBasicDataDidChange:data completed:completed];
     return YES;
 }
 
@@ -270,8 +296,10 @@
                 [self.tooltip showAtPoint:point inView:self];
                 [textField becomeFirstResponder];
             }
+            self.nameValid = NO;
             return NO;
         }else {
+            self.nameValid = YES;
             [self.tooltip removeFromSuperview];
         }
     }
@@ -289,8 +317,10 @@
                 [self.tooltip showAtPoint:point inView:self];
                 [textField becomeFirstResponder]; 
             }
+            startDateValid = NO;
             return NO;
         }else {
+            self.startDateValid = YES;
             [self.tooltip removeFromSuperview];
         }
     }
@@ -308,8 +338,10 @@
                 [self.tooltip showAtPoint:point inView:self];
                 [textField becomeFirstResponder]; 
             }
+            self.venueValid = NO;
             return NO;
         }else {
+            self.venueValid = YES;
             [self.tooltip removeFromSuperview];
         }
     }

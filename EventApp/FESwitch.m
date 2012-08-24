@@ -179,7 +179,7 @@
 {
     if (self.ignoreTap) return;
     if(gesture.state == UIGestureRecognizerStateEnded){
-        [self setOn:!self.on animated:YES];
+        [self setOn:!self.on animated:YES sendAction:YES];
     }
 }
 
@@ -208,11 +208,11 @@
 	{
 		CGFloat toggleCenter = CGRectGetMidX(self.toggleLayer.frame);
         CGFloat switchCenter = self.originX+(self.toggleLayer.frame.size.width+self.toggleLayer.frame.size.height)*0.25;
-		[self setOn:(toggleCenter > switchCenter) animated:YES];
+		[self setOn:(toggleCenter > switchCenter) animated:YES sendAction:YES];
 	}
 }
 
-- (void)setOn:(BOOL)newOn animated:(BOOL)animated
+- (void)setOn:(BOOL)newOn animated:(BOOL)animated sendAction:(BOOL)sendAction
 {
     BOOL previousOn = _on;
 	_on = newOn;
@@ -228,7 +228,7 @@
     [CATransaction setCompletionBlock:^{
         self.ignoreTap = NO;
         [self changeSwitchImageForStatus:NO];
-        if(previousOn != _on) [self sendActionsForControlEvents:UIControlEventValueChanged];
+        if(previousOn != _on && sendAction) [self sendActionsForControlEvents:UIControlEventValueChanged];
 	}];
     
     CGFloat minToggleX = self.originX-self.toggleLayer.frame.size.width*0.5 + self.toggleLayer.frame.size.height*0.5;
@@ -247,7 +247,7 @@
 
 - (void)setOn:(BOOL)newOn
 {
-    [self setOn:newOn animated:NO];
+    [self setOn:newOn animated:NO sendAction:NO];
 }
 
 - (void)layoutSubviews

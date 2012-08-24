@@ -10,11 +10,12 @@
 
 typedef enum {
     CreateEventNoneAction = 0,
-    CreateEventIconAction = 1,
-    CreateEventTagAction = 2,
-    CreateEventDetailAction = 3,
-    CreateEventMemberAction = 4,
-    CreateEventPrivacyAction = 5
+    CreateEventBasicAction = 1,
+    CreateEventIconAction = 2,
+    CreateEventTagAction = 3,
+    CreateEventDetailAction = 4,
+    CreateEventMemberAction = 5,
+    CreateEventPrivacyAction = 6
 } CreateEventAction;
 
 typedef enum {
@@ -24,10 +25,11 @@ typedef enum {
 
 @interface FECreateEventToolbar : UIControl
 
-@property(nonatomic, readonly) int action;
+@property(nonatomic, assign) int lastAction;
+@property(nonatomic, assign) int action;
 @property(nonatomic, readonly) int privacy;
 
 - (void)showOrHideActions:(BOOL)hidden;
--(void)resetAction;
+- (void)completeAction:(int)action completed:(BOOL)complete;
 
 @end

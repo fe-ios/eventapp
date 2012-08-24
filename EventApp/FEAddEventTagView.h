@@ -7,8 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JSTokenField.h"
 
-@interface FEAddEventTagView : UITableView <UITableViewDataSource, UITableViewDelegate>
+@protocol FEAddEventTagViewDelegate <NSObject>
+
+@optional
+- (void)handleTagDidChange:(NSMutableArray *)tags;
+
+@end
+
+@interface FEAddEventTagView : UIScrollView <JSTokenFieldDelegate>
+
+@property(nonatomic, retain) NSMutableArray *tags;
+@property(nonatomic, assign) NSObject <FEAddEventTagViewDelegate> *tagDelegate;
 
 - (void)recoverLastInputAsFirstResponder;
 

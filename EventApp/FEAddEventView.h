@@ -9,11 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "FECreateEventToolbar.h"
 
-@interface FEAddEventView : UITableView <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+@protocol FEAddEventViewDelegate <NSObject>
 
+@optional
+- (void)handleBasicDataDidChange:(NSMutableDictionary *)basicData completed:(BOOL)completed;
+- (void)handleBasicViewDidReturn;
+
+@end
+
+@interface FEAddEventView : UITableView <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
 @property(nonatomic, retain) FECreateEventToolbar *toolbar;
 @property(nonatomic, assign) BOOL autoFocusFirstInput;
+@property(nonatomic, assign) NSObject<FEAddEventViewDelegate> *basicDelegate;
 
 - (void)recoverLastInputAsFirstResponder;
 

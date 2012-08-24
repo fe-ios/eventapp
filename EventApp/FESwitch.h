@@ -13,7 +13,7 @@
 
 @property (nonatomic, getter=isOn) BOOL on;
 
-- (void)setOn:(BOOL)newOn animated:(BOOL)animated;
+- (void)setOn:(BOOL)newOn animated:(BOOL)animated sendAction:(BOOL)sendAction;
 
 - (void)setToggleImage:(UIImage *)newImage;
 - (void)setOnImage:(UIImage *)newImage;

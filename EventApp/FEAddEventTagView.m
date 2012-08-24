@@ -9,15 +9,17 @@
 #import "FEAddEventTagView.h"
 #import "FELoginTableViewCell.h"
 
+
 @interface FEAddEventTagView()
 
-@property(nonatomic, assign) int lastInputTag;
+@property(nonatomic, retain) JSTokenField *tagInput;
+@property(nonatomic, retain) UIImageView *tagInputBg;
 
 @end
 
 @implementation FEAddEventTagView
 
-@synthesize lastInputTag;
+@synthesize tagInput = _tagInput, tagInputBg = _tagInputBg, tags = _tags, tagDelegate = _tagDelegate;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -28,77 +30,92 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [_tagInput release];
+    [_tagInputBg release];
+    [_tags release];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super dealloc];
+}
+
 - (void)setup
 {
     self.backgroundColor = [UIColor clearColor];
-	self.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 10)] autorelease];
-    self.delegate = self;
-    self.dataSource = self;
+    self.alwaysBounceVertical = YES;
+    self.tags = [[[NSMutableArray alloc] init] autorelease];
+	
+    self.tagInputBg = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"roundTableCellSingle"] resizableImageWithCapInsets:UIEdgeInsetsMake(23, 15, 23, 15)]] autorelease];
+    [self addSubview:self.tagInputBg];
     
-    self.lastInputTag = 1;
+    self.tagInput = [[[JSTokenField alloc] init] autorelease];
+    self.tagInput.frame = CGRectMake(15, 18, 290, 21);
+    self.tagInput.delegate = self;
+    self.tagInput.backgroundColor = [UIColor clearColor];
+    //self.tagInput.textField.borderStyle = UITextBorderStyleLine;
+    [self addSubview:self.tagInput];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTokenFieldFrameDidChange:) name:JSTokenFieldFrameDidChangeNotification object:nil];
 }
 
-#pragma mark - Table view data source
+#pragma mark - JSTokenFieldDelegate
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (void)tokenField:(JSTokenField *)tokenField didAddToken:(NSString *)title representedObject:(id)obj
 {
-    return 1;
+	NSDictionary *aTag = [NSDictionary dictionaryWithObject:obj forKey:title];
+	[self.tags addObject:aTag];
+    [self.tagDelegate handleTagDidChange:self.tags];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (void)tokenField:(JSTokenField *)tokenField didRemoveToken:(NSString *)title representedObject:(id)obj
 {
-    return 2;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return indexPath.row == 1 ? 47 : 44;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"CreateEventTableViewCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if(cell == nil){
-        
-        NSString *nibName = @"FELoginTableViewCell";
-        NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
-        cell = (UITableViewCell *)[nibs objectAtIndex:0];
+    for (int i = 0; i < self.tags.count; i++) {
+        NSDictionary *aTag = [self.tags objectAtIndex:i];
+        if([aTag objectForKey:title]){
+            [self.tags removeObject:aTag];
+            break;
+        }
     }
+    [self.tagDelegate handleTagDidChange:self.tags];
+}
+
+- (BOOL)tokenFieldShouldReturn:(JSTokenField *)tokenField {
+    NSMutableString *aTag = [NSMutableString string];
+	
+	NSMutableCharacterSet *charSet = [[[NSCharacterSet whitespaceCharacterSet] mutableCopy] autorelease];
+	[charSet formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
+	
+    NSString *rawStr = [[tokenField textField] text];
+	for (int i = 0; i < [rawStr length]; i++)
+	{
+		if (![charSet characterIsMember:[rawStr characterAtIndex:i]])
+		{
+			[aTag appendFormat:@"%@",[NSString stringWithFormat:@"%c", [rawStr characterAtIndex:i]]];
+		}
+	}
     
-    NSString *cellBgName = indexPath.row == 0 ? @"roundTableCellTop" : indexPath.row == 1 ? @"roundTableCellBottom" : @"roundTableCellMiddle";
-    cell.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:cellBgName]] autorelease];
+    if ([rawStr length])
+	{
+		[tokenField addTokenWithTitle:rawStr representedObject:aTag];
+	}
     
-    switch (indexPath.row) {
-        case 0:
-            ((FELoginTableViewCell *)cell).fieldLabel.text = @"名称";
-            ((FELoginTableViewCell *)cell).fieldInput.placeholder = @"必填";
-            ((FELoginTableViewCell *)cell).fieldInput.delegate = self;
-            ((FELoginTableViewCell *)cell).fieldInput.returnKeyType = UIReturnKeyNext;
-            ((FELoginTableViewCell *)cell).fieldInput.tag = indexPath.row+1;
-            break;
-            
-        case 1:
-            ((FELoginTableViewCell *)cell).fieldLabel.text = @"地点";
-            ((FELoginTableViewCell *)cell).fieldInput.placeholder = @"必填";
-            ((FELoginTableViewCell *)cell).fieldInput.delegate = self;
-            ((FELoginTableViewCell *)cell).fieldInput.returnKeyType = UIReturnKeyGo;
-            ((FELoginTableViewCell *)cell).fieldInput.tag = indexPath.row+1;
-            break;
-            
-        default:
-            break;
-    }
-    
-    return cell;
+    return NO;
+}
+
+- (void)handleTokenFieldFrameDidChange:(NSNotification *)note
+{
+    [self setNeedsLayout];
+}
+
+- (void)layoutSubviews
+{
+    CGRect rect = self.bounds;
+    self.tagInputBg.frame = CGRectMake(0, 10, rect.size.width, self.tagInput.frame.size.height+18);
 }
 
 - (void)recoverLastInputAsFirstResponder
 {
-    if(self.lastInputTag > 0){
-        [[self viewWithTag:self.lastInputTag] becomeFirstResponder];
-    }
+    [self.tagInput.textField becomeFirstResponder];
 }
 
 @end

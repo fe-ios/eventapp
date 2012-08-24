@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FEAddEventTagView.h"
+#import "FEAddEventDetailView.h"
+#import "FEAddEventView.h"
 
-@interface FECreateEventController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
-
+@interface FECreateEventController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, FEAddEventTagViewDelegate, FEAddEventDetailViewDelegate, FEAddEventViewDelegate>
 
 @end
