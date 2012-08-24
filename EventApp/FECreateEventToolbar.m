@@ -48,7 +48,7 @@
 	[self addSubview:toolbarBg];
 	
 	//bar items
-    int start = 8, padding = 42;
+    int start = 10, padding = 46;
     UIButton *buttonSetBasic = [[[UIButton alloc] initWithFrame:CGRectMake(start, 0, 36, 44)] autorelease];
 	[buttonSetBasic setImage:[UIImage imageNamed:@"tool_bar_icon_list"] forState:UIControlStateNormal];
 	[buttonSetBasic setImage:[UIImage imageNamed:@"tool_bar_icon_list_s"] forState:UIControlStateSelected];
