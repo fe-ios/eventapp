@@ -325,12 +325,14 @@ static bool isFirstLaunch = YES;
     CGFloat endX = fromRight ? -320 : 320;
     [self.view insertSubview:toView belowSubview:self.toolbar];
     toView.frame = CGRectMake(startX, 0, toView.frame.size.width, toView.frame.size.height);
+    self.toolbar.userInteractionEnabled = NO;
     
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.3 animations:^(void){
         fromView.frame = CGRectMake(endX, fromView.frame.origin.y, fromView.frame.size.width, fromView.frame.size.height);
         toView.frame = CGRectMake(0, toView.frame.origin.y, toView.frame.size.width, toView.frame.size.height);
     } completion:^(BOOL finished){
         self.currentView = toView;
+        self.toolbar.userInteractionEnabled = YES;
     }];
 }
 
@@ -361,9 +363,7 @@ static bool isFirstLaunch = YES;
 
 - (void)handleBasicViewDidReturn
 {
-    self.toolbar.lastAction = CreateEventBasicAction;
-    self.toolbar.action = CreateEventIconAction;
-    [self toolbarActionChanged:self.toolbar];
+    [self.toolbar switchToAction:CreateEventIconAction];
 }
 
 #pragma mark - image picker delegate

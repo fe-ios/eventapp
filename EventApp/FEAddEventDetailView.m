@@ -46,13 +46,13 @@
     
     self.detailInput = [[[UITextView alloc] init] autorelease];
     self.detailInput.backgroundColor = [UIColor clearColor];
-    self.detailInput.font = [UIFont systemFontOfSize:14.0];
+    self.detailInput.font = [UIFont systemFontOfSize:16.0];
     self.detailInput.delegate = self;
     [self addSubview:self.detailInput];
     
     self.detailPlaceholder = [[[UILabel alloc] init] autorelease];
     self.detailPlaceholder.backgroundColor = [UIColor clearColor];
-    self.detailPlaceholder.font = [UIFont systemFontOfSize:14.0];
+    self.detailPlaceholder.font = [UIFont systemFontOfSize:16.0];
     self.detailPlaceholder.textColor = [UIColor lightGrayColor];
     self.detailPlaceholder.text = @"请输入活动详细信息 ...";
     [self addSubview:self.detailPlaceholder];
@@ -82,7 +82,7 @@
     
     self.detailInputBg.frame = CGRectMake(0, 10, rect.size.width, rect.size.height-16);
     self.detailInput.frame = CGRectMake(self.detailInputBg.frame.origin.x+10, self.detailInputBg.frame.origin.y+5, self.detailInputBg.frame.size.width-10*2, self.detailInputBg.frame.size.height-5);
-    self.detailPlaceholder.frame = CGRectMake(self.detailInput.frame.origin.x+10, self.detailInput.frame.origin.y+6, self.detailInput.frame.size.width-10*2, 21);
+    self.detailPlaceholder.frame = CGRectMake(self.detailInput.frame.origin.x+10, self.detailInput.frame.origin.y+7, self.detailInput.frame.size.width-10*2, 21);
 }
 
 @end

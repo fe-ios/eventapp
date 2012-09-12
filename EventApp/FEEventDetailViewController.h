@@ -7,6 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FEEvent.h"
+#import "UIAsyncImageView.h"
 
-@interface FEEventDetailViewController : UIViewController
+@interface FEEventDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+
+@property(nonatomic, retain) FEEvent *event;
+
+
 @end

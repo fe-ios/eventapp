@@ -14,6 +14,7 @@
 
 @property(nonatomic, retain) UIImage *image;
 @property(nonatomic, copy, readonly) NSString *imagePath;
+@property(nonatomic, assign) CGFloat cornerRadius;
 
 - (void)loadImageAsync:(NSString *)imageURL withQueue:(NSOperationQueue *)queue;
 

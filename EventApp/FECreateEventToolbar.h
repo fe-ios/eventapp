@@ -31,5 +31,6 @@ typedef enum {
 
 - (void)showOrHideActions:(BOOL)hidden;
 - (void)completeAction:(int)action completed:(BOOL)complete;
+- (void)switchToAction:(int)action;
 
 @end

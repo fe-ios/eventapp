@@ -164,9 +164,11 @@
 	[[UINavigationBar appearance] setBackgroundImage:customNavigationBarBackground forBarMetrics:UIBarMetricsDefault];
 
 	//UIBarButtonItem BackButton
-	UIImage *buttonBack = [[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 10, 15, 10)];
+	UIImage *buttonBack = [[UIImage imageNamed:@"navBackButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 10)];
 	//UIImage *buttonBackSelected = [[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 18, 15, 16)];
 	[[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBack forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:14.0], UITextAttributeFont, nil] forState:UIControlStateNormal];
+    
 	//[[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBackSelected forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
 	
 	//UIBarButtonItem Button

@@ -18,7 +18,7 @@
 #import "TKAlertCenter.h"
 #import "FEEventDetailViewController.h"
 
-#define CACHE_NAME @"cacheEvent.data"
+#define CACHE_NAME @"public_event.dat"
 #define LAST_UPDATE @"lastUpdateDate"
 
 @interface FEEventListController ()
@@ -43,8 +43,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        self.eventData = [self getEventCache];
-        if(self.eventData == nil) self.eventData = [NSMutableArray arrayWithObjects:nil];
+        self.eventData = [NSMutableArray arrayWithObjects:nil];
         self.downloadQueue = [[[NSOperationQueue alloc] init] autorelease];
     }
     return self;
@@ -138,6 +137,7 @@
         cell.backgroundView = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"eventTabelCellBackground"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 120, 50, 120)]] autorelease];
         UIImage *placeholder = [UIImage imageNamed:@"pictureGridPlaceholder"];
         cell.eventIcon.image = placeholder;
+        cell.eventIcon.cornerRadius = 6.0;
         //UIFont *font = [UIFont fontWithName:@"CuprumFFU" size:13.0f];
         //cell.peopleCountLabel.font = font;
         //cell.pictureCountLabel.font = font;
@@ -178,9 +178,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //todo
-	//example
+    FEEvent *event = [self.eventData objectAtIndex:indexPath.row];
 	FEEventDetailViewController *detailView = [[[FEEventDetailViewController alloc] init] autorelease];
+    detailView.event = event;
 	[self.navigationController pushViewController:detailView animated:YES];
 }
 
@@ -293,6 +293,11 @@
     
     [self fixFooterViews];
     [[TKAlertCenter defaultCenter] postAlertWithMessage:@"加载数据失败，请检查网络！"];
+    
+    if(self.eventData.count == 0){
+        self.eventData = [self getEventCache];
+        [self.tableView reloadData];
+    }
 }
 
 - (void)createEvent

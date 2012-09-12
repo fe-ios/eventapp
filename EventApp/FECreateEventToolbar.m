@@ -10,16 +10,16 @@
 #import "FECreateEventToolbar.h"
 #import "FESwitch.h"
 
-@interface FECreateEventToolbar(){
-    UIButton* _activeButton;
-}
+@interface FECreateEventToolbar()
+
+@property(nonatomic, retain) UIButton *activeButton;
 
 @end
 
 @implementation FECreateEventToolbar
 
 @synthesize action = _action, lastAction = _lastAction;
-@synthesize privacy = _privacy;
+@synthesize privacy = _privacy, activeButton = _activeButton;
 
 
 - (id)initWithFrame:(CGRect)frame
@@ -40,6 +40,12 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [_activeButton release];
+    [super dealloc];
+}
+
 - (void)initView
 {
     //bg
@@ -48,39 +54,44 @@
 	[self addSubview:toolbarBg];
 	
 	//bar items
-    int start = 8, padding = 42;
-    UIButton *buttonSetBasic = [[[UIButton alloc] initWithFrame:CGRectMake(start, 0, 36, 44)] autorelease];
-	[buttonSetBasic setImage:[UIImage imageNamed:@"tool_bar_icon_info"] forState:UIControlStateNormal];
-	[buttonSetBasic setImage:[UIImage imageNamed:@"tool_bar_icon_info_s"] forState:UIControlStateSelected];
+    int start = 10, padding = 42, top = 1, w = 42, h = 42;
+    UIButton *buttonSetBasic = [[[UIButton alloc] initWithFrame:CGRectMake(start, top, w, h)] autorelease];
+	[buttonSetBasic setImage:[UIImage imageNamed:@"tool_bar_icon_list"] forState:UIControlStateNormal];
+	[buttonSetBasic setImage:[UIImage imageNamed:@"tool_bar_icon_list_s"] forState:UIControlStateSelected];
 	[buttonSetBasic addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchDown];
+    buttonSetBasic.adjustsImageWhenHighlighted = NO;
     buttonSetBasic.tag = CreateEventBasicAction;
 	[self addSubview:buttonSetBasic];
     
-	UIButton *buttonSetIcon = [[[UIButton alloc] initWithFrame:CGRectMake(start+padding, 0, 36, 44)] autorelease];
+	UIButton *buttonSetIcon = [[[UIButton alloc] initWithFrame:CGRectMake(start+padding, top, w, h)] autorelease];
 	[buttonSetIcon setImage:[UIImage imageNamed:@"tool_bar_icon_gallery"] forState:UIControlStateNormal];
 	[buttonSetIcon setImage:[UIImage imageNamed:@"tool_bar_icon_gallery_s"] forState:UIControlStateSelected];
 	[buttonSetIcon addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchDown];
+    buttonSetIcon.adjustsImageWhenHighlighted = NO;
     buttonSetIcon.tag = CreateEventIconAction;
 	[self addSubview:buttonSetIcon];
     
-	UIButton *buttonSetTag = [[[UIButton alloc] initWithFrame:CGRectMake(start+padding*2, 0, 36, 44)] autorelease];
+	UIButton *buttonSetTag = [[[UIButton alloc] initWithFrame:CGRectMake(start+padding*2, top, w, h)] autorelease];
 	[buttonSetTag setImage:[UIImage imageNamed:@"tool_bar_icon_tag"] forState:UIControlStateNormal];
 	[buttonSetTag setImage:[UIImage imageNamed:@"tool_bar_icon_tag_s"] forState:UIControlStateSelected];
 	[buttonSetTag addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchDown];
+    buttonSetTag.adjustsImageWhenHighlighted = NO;
     buttonSetTag.tag = CreateEventTagAction;
 	[self addSubview:buttonSetTag];
     
-	UIButton *buttonSetDetail = [[[UIButton alloc] initWithFrame:CGRectMake(start+padding*3, 0, 36, 44)] autorelease];
+	UIButton *buttonSetDetail = [[[UIButton alloc] initWithFrame:CGRectMake(start+padding*3, top, w, h)] autorelease];
 	[buttonSetDetail setImage:[UIImage imageNamed:@"tool_bar_icon_info"] forState:UIControlStateNormal];
 	[buttonSetDetail setImage:[UIImage imageNamed:@"tool_bar_icon_info_s"] forState:UIControlStateSelected];
 	[buttonSetDetail addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchDown];
+    buttonSetDetail.adjustsImageWhenHighlighted = NO;
     buttonSetDetail.tag = CreateEventDetailAction;
 	[self addSubview:buttonSetDetail];
     
-	UIButton *buttonSetMember = [[[UIButton alloc] initWithFrame:CGRectMake(start+padding*4, 0, 36, 44)] autorelease];
+	UIButton *buttonSetMember = [[[UIButton alloc] initWithFrame:CGRectMake(start+padding*4, top, w, h)] autorelease];
 	[buttonSetMember setImage:[UIImage imageNamed:@"tool_bar_icon_people"] forState:UIControlStateNormal];
 	[buttonSetMember setImage:[UIImage imageNamed:@"tool_bar_icon_people_s"] forState:UIControlStateSelected];
 	[buttonSetMember addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchDown];
+    buttonSetMember.adjustsImageWhenHighlighted = NO;
     buttonSetMember.tag = CreateEventMemberAction;
 	[self addSubview:buttonSetMember];
     
@@ -96,15 +107,23 @@
     [privacySwitch addTarget:self action:@selector(privacyChanged:) forControlEvents:UIControlEventValueChanged];
     [self addSubview:privacySwitch];
     
-    _lastAction = CreateEventNoneAction;
-    _action = CreateEventBasicAction;
     _privacy = CreateEventPrivacyPublic;
+    [self toggleButton:buttonSetBasic];
 }
 
 - (void)toggleButton:(UIButton *)sender
 {
     _lastAction = _action;
     _action = sender.tag;
+    
+    if(self.activeButton != sender){
+        if(self.activeButton){
+            [self.activeButton setBackgroundImage:nil forState:UIControlStateNormal];
+        }
+        self.activeButton = sender;
+        [self.activeButton setBackgroundImage:[UIImage imageNamed:@"toolbar_selected_bg"] forState:UIControlStateNormal];
+    }
+    
     [self sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
@@ -127,6 +146,14 @@
     UIButton *actionButton = (UIButton *)[self viewWithTag:action];
     if(actionButton){
         actionButton.selected = complete;
+    }
+}
+
+- (void)switchToAction:(int)action
+{
+    UIButton *actionButton = (UIButton *)[self viewWithTag:action];
+    if(actionButton){
+        [self toggleButton:actionButton];
     }
 }
 

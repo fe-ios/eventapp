@@ -6,9 +6,10 @@
 //  Copyright (c) 2012年 snda. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "FEAddEventTagView.h"
 #import "FELoginTableViewCell.h"
-#import "FEEventTag.h"
+#import "FETag.h"
 
 
 @interface FEAddEventTagView()
@@ -16,12 +17,13 @@
 @property(nonatomic, retain) JSTokenField *tagInput;
 @property(nonatomic, retain) UIImageView *tagInputBg;
 @property(nonatomic, retain) UITableView *searchList;
+@property(nonatomic, retain) NSMutableArray *searchResult;
 
 @end
 
 @implementation FEAddEventTagView
 
-@synthesize tagInput = _tagInput, tagInputBg = _tagInputBg, tags = _tags, tagDelegate = _tagDelegate, searchTagData = _searchTagData, searchList = _searchList;
+@synthesize tagInput = _tagInput, tagInputBg = _tagInputBg, tags = _tags, tagDelegate = _tagDelegate, searchTagData = _searchTagData, searchList = _searchList, searchResult = _searchResult;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -60,21 +62,16 @@
     [self addSubview:self.tagInput];
     
     //test data
-    FEEventTag *eTag1 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
-    FEEventTag *eTag2 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
-    FEEventTag *eTag3 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
-    FEEventTag *eTag4 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
-    FEEventTag *eTag5 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
-    FEEventTag *eTag6 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
-    FEEventTag *eTag7 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
-    FEEventTag *eTag8 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
-    FEEventTag *eTag9 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
-    FEEventTag *eTag10 = [[[FEEventTag alloc] initWithData:1 value:@"html5"] autorelease];
+    FETag *eTag1 = [[[FETag alloc] initWithData:1 name:@"html5"] autorelease];
+    FETag *eTag2 = [[[FETag alloc] initWithData:1 name:@"ios"] autorelease];
+    FETag *eTag3 = [[[FETag alloc] initWithData:1 name:@"xcode"] autorelease];
+    FETag *eTag4 = [[[FETag alloc] initWithData:1 name:@"flash"] autorelease];
+    FETag *eTag5 = [[[FETag alloc] initWithData:1 name:@"android"] autorelease];
+    self.searchTagData = [[NSMutableArray alloc] initWithObjects:eTag1, eTag2, eTag3, eTag4, eTag5, nil];
     
-    //self.searchTagData = [NSMutableArray alloc] initWithObjects:<#(id), ...#>, nil
-    
-    self.searchList = [[UITableView alloc] init];
-    self.searchList.frame = CGRectMake(10, 55, 290, 44);
+    self.searchList = [[[UITableView alloc] init] autorelease];
+    //self.searchList.frame = CGRectMake(10, 60, 300, 44);
+    self.searchList.layer.cornerRadius = 6;
     self.searchList.delegate = self;
     self.searchList.dataSource = self;
     [self addSubview:self.searchList];
@@ -103,14 +100,15 @@
     [self.tagDelegate handleTagDidChange:self.tags];
 }
 
-- (BOOL)tokenFieldShouldReturn:(JSTokenField *)tokenField {
+- (BOOL)tokenFieldShouldReturn:(JSTokenField *)tokenField
+{
     NSMutableString *aTag = [NSMutableString string];
 	
 	NSMutableCharacterSet *charSet = [[[NSCharacterSet whitespaceCharacterSet] mutableCopy] autorelease];
 	[charSet formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
 	
-    NSString *rawStr = [[tokenField textField] text];
-	for (int i = 0; i < [rawStr length]; i++)
+    NSString *rawStr = tokenField.rawText;
+	for (int i = 0; i < rawStr.length; i++)
 	{
 		if (![charSet characterIsMember:[rawStr characterAtIndex:i]])
 		{
@@ -118,12 +116,21 @@
 		}
 	}
     
-    if ([rawStr length])
+    if (rawStr.length)
 	{
 		[tokenField addTokenWithTitle:rawStr representedObject:aTag];
 	}
     
     return NO;
+}
+
+- (void)tokenFieldTextDidChange:(JSTokenField *)tokenField
+{
+    self.searchResult = [self search:tokenField.rawText];
+    int count = self.searchResult.count;
+    CGFloat rectHeight = count == 0 ? 0 : count == 1 ? 44 : 88;
+    self.searchList.frame = CGRectMake(10, 60, 300, rectHeight);
+    [self.searchList reloadData];
 }
 
 - (void)handleTokenFieldFrameDidChange:(NSNotification *)note
@@ -133,9 +140,14 @@
 
 #pragma mark - search list
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.searchResult.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -149,13 +161,35 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil){
         cell = [[[UITableViewCell alloc] init] autorelease];
-        
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:16.0];
     }
     
-    FEEventTag *eTag = [self.searchTagData objectAtIndex:indexPath.row];
-    cell.textLabel.text = eTag.value;
+    FETag *eTag = [self.searchResult objectAtIndex:indexPath.row];
+    cell.textLabel.text = eTag.name;
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *eTagValue = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+    [self.tagInput addTokenWithTitle:eTagValue representedObject:eTagValue];
+}
+
+- (NSMutableArray *)search:(NSString *)text
+{
+    NSMutableArray *result = [NSMutableArray array];
+    FETag *eTag = nil;
+    NSRange range;
+    for (int i = 0; i < self.searchTagData.count; i++) {
+        eTag = [self.searchTagData objectAtIndex:i];
+        range = [eTag.name.lowercaseString rangeOfString:text.lowercaseString];
+        if(range.location != NSNotFound){
+            [result addObject:eTag];
+        }
+    }
+    
+    return result;
 }
 
 - (void)layoutSubviews

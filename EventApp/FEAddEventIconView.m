@@ -55,24 +55,24 @@
     self.alwaysBounceVertical = YES;
     
     UIImageView *iconBg = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_bg"]] autorelease];
-    iconBg.frame = CGRectMake(30, 20, 120, 120);
+    iconBg.frame = CGRectMake(30, 19, 120, 120);
     [self addSubview:iconBg];
     
     self.previewImageView = [[[UIImageView alloc] init] autorelease];
-    self.previewImageView.frame = CGRectMake(31, 21, 118, 118);
+    self.previewImageView.frame = CGRectMake(31, 20, 118, 118);
     [self addSubview:self.previewImageView];
     
     //photoPicker Button
-    UIButton *pickFromCamera = [[[UIButton alloc] initWithFrame:CGRectMake(195, 18, 88, 60)] autorelease];
-    [pickFromCamera setImage:[UIImage imageNamed:@"button_photo_camera2"] forState:UIControlStateNormal];
-    [pickFromCamera setImage:[UIImage imageNamed:@"button_photo_camera2_pressed"] forState:UIControlStateHighlighted];
+    UIButton *pickFromCamera = [[[UIButton alloc] initWithFrame:CGRectMake(200, 18, 79, 54)] autorelease];
+    [pickFromCamera setImage:[UIImage imageNamed:@"button_photo_camera"] forState:UIControlStateNormal];
+    [pickFromCamera setImage:[UIImage imageNamed:@"button_photo_camera_pressed"] forState:UIControlStateHighlighted];
     pickFromCamera.tag = 1;
     [self addSubview:pickFromCamera];
     [pickFromCamera addTarget:self action:@selector(selectImage:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *pickFromLibrary = [[[UIButton alloc] initWithFrame:CGRectMake(195, 80, 88, 60)] autorelease];
-    [pickFromLibrary setImage:[UIImage imageNamed:@"button_photo_library2"] forState:UIControlStateNormal];
-    [pickFromLibrary setImage:[UIImage imageNamed:@"button_photo_library2_pressed"] forState:UIControlStateHighlighted];
+    UIButton *pickFromLibrary = [[[UIButton alloc] initWithFrame:CGRectMake(200, 86, 79, 54)] autorelease];
+    [pickFromLibrary setImage:[UIImage imageNamed:@"button_photo_library"] forState:UIControlStateNormal];
+    [pickFromLibrary setImage:[UIImage imageNamed:@"button_photo_library_pressed"] forState:UIControlStateHighlighted];
     pickFromLibrary.tag = 2;
     [self addSubview:pickFromLibrary];
     [pickFromLibrary addTarget:self action:@selector(selectImage:) forControlEvents:UIControlEventTouchUpInside];

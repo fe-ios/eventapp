@@ -334,6 +334,10 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
 		[text insertString:ZERO_WIDTH_SPACE_STRING atIndex:0];
 		[_textField setText:text];
 	}
+    
+    if ([self.delegate respondsToSelector:@selector(tokenFieldTextDidChange:)]) {
+        [self.delegate tokenFieldTextDidChange:self];
+    }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -371,6 +375,11 @@ NSString *const JSDeletedTokenKey = @"JSDeletedTokenKey";
         [self addTokenWithTitle:[textField text] representedObject:[textField text]];
         [textField setText:ZERO_WIDTH_SPACE_STRING];
     }
+}
+
+- (NSString *)rawText
+{
+    return [_textField.text substringFromIndex:1];
 }
 
 @end

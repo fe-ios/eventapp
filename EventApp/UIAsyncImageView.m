@@ -16,7 +16,7 @@
 
 @implementation UIAsyncImageView
 
-@synthesize image = _image, imagePath = _imagePath;
+@synthesize image = _image, imagePath = _imagePath, cornerRadius = _cornerRadius;
 
 
 - (id)init
@@ -69,6 +69,7 @@
     if(request.responseStatusCode == 200 || request.responseStatusCode == 304){
         if(request.didUseCachedResponse){
             //NSLog(@"download from cache");
+            [request setResponseEncoding:0];
         }
         self.image = [UIImage imageWithData:request.responseData];
     }
@@ -81,15 +82,19 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSaveGState(context);
-    CGPathRef clipPath = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:6.0].CGPath;
-    CGContextAddPath(context, clipPath);
-    CGContextClip(context);
-    
-    [self.image drawInRect:rect];
-    
-    CGContextRestoreGState(context);
+    if(self.cornerRadius){
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        CGContextSaveGState(context);
+        CGPathRef clipPath = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:6.0].CGPath;
+        CGContextAddPath(context, clipPath);
+        CGContextClip(context);
+        
+        [self.image drawInRect:rect];
+        
+        CGContextRestoreGState(context);
+    }else {
+        [self.image drawInRect:rect];
+    }
 }
 
 - (void)setImage:(UIImage *)newImage

@@ -53,6 +53,7 @@ extern NSString *const JSDeletedTokenKey;
 @property (nonatomic, retain) UILabel *label;
 @property (nonatomic, readonly, copy) NSMutableArray *tokens;
 @property (nonatomic, assign) id <JSTokenFieldDelegate> delegate;
+@property (nonatomic, readonly) NSString *rawText;
 
 - (void)addTokenWithTitle:(NSString *)string representedObject:(id)obj;
 - (void)removeTokenForString:(NSString *)string;
@@ -69,5 +70,6 @@ extern NSString *const JSDeletedTokenKey;
 
 - (BOOL)tokenFieldShouldReturn:(JSTokenField *)tokenField;
 - (void)tokenFieldDidEndEditing:(JSTokenField *)tokenField;
+- (void)tokenFieldTextDidChange:(JSTokenField *)tokenField;
 
 @end
