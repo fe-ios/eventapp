@@ -25,6 +25,13 @@
 @property(nonatomic, assign) BOOL nameValid;
 @property(nonatomic, assign) BOOL startDateValid;
 @property(nonatomic, assign) BOOL venueValid;
+@property(nonatomic, assign) BOOL cityValid;
+
+@property(nonatomic, retain) NSString *eventName;
+@property(nonatomic, retain) NSString *eventCity;
+@property(nonatomic, retain) NSString *eventVenue;
+@property(nonatomic, retain) NSString *eventStartDateStr;
+@property(nonatomic, retain) NSString *eventEndDateStr;
 
 @end
 
@@ -32,7 +39,8 @@
 
 @synthesize toolbar, autoFocusFirstInput, basicDelegate;
 @synthesize dateSheet, tooltip, lastInputTag;
-@synthesize nameValid, startDateValid, venueValid;
+@synthesize nameValid, startDateValid, venueValid, cityValid;
+@synthesize eventName, eventCity, eventVenue, eventStartDateStr, eventEndDateStr;
 
 
 - (id)initWithFrame:(CGRect)frame
@@ -49,6 +57,11 @@
     [toolbar release];
     [dateSheet release];
     [tooltip release];
+    [eventName release];
+    [eventCity release];
+    [eventVenue release];
+    [eventStartDateStr release];
+    [eventEndDateStr release];
     [super dealloc];
 }
 
@@ -77,12 +90,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return indexPath.row == 2 ? 47 : indexPath.row == 1 ? 50 : 44;
+    return indexPath.row == 3 ? 47 : indexPath.row == 1 ? 50 : 44;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -90,39 +103,51 @@
     static NSString *CellIdentifier = @"CreateEventTableViewCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil){
-        
         NSString *nibName = indexPath.row == 1 ? @"FEStartAndEndDateCell" : @"FELoginTableViewCell";
         NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil];
         cell = (UITableViewCell *)[nibs objectAtIndex:0];
     }
     
-    NSString *cellBgName = indexPath.row == 0 ? @"roundTableCellTop" : indexPath.row == 2 ? @"roundTableCellBottom" : @"roundTableCellMiddle";
+    NSString *cellBgName = indexPath.row == 0 ? @"roundTableCellTop" : indexPath.row == 3 ? @"roundTableCellBottom" : @"roundTableCellMiddle";
     cell.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:cellBgName]] autorelease];
     
     switch (indexPath.row) {
         case 0:
             ((FELoginTableViewCell *)cell).fieldLabel.text = @"名称";
+            ((FELoginTableViewCell *)cell).fieldInput.text = self.eventName;
             ((FELoginTableViewCell *)cell).fieldInput.placeholder = @"必填";
             ((FELoginTableViewCell *)cell).fieldInput.delegate = self;
             ((FELoginTableViewCell *)cell).fieldInput.returnKeyType = UIReturnKeyNext;
             ((FELoginTableViewCell *)cell).fieldInput.tag = indexPath.row+1;
-            if(self.autoFocusFirstInput) [((FELoginTableViewCell *)cell).fieldInput becomeFirstResponder];
+            //if(self.autoFocusFirstInput) [((FELoginTableViewCell *)cell).fieldInput becomeFirstResponder];
             break;
             
         case 1:
             ((FEStartAndEndDateCell *)cell).startInput.delegate = self;
+            ((FEStartAndEndDateCell *)cell).startInput.text = self.eventStartDateStr;
             ((FEStartAndEndDateCell *)cell).startInput.returnKeyType = UIReturnKeyNext;
             ((FEStartAndEndDateCell *)cell).startInput.tag = indexPath.row+1;
             ((FEStartAndEndDateCell *)cell).startInput.inputView = [self getDateAction];
             
             ((FEStartAndEndDateCell *)cell).endInput.delegate = self;
+            ((FEStartAndEndDateCell *)cell).endInput.text = self.eventEndDateStr;
             ((FEStartAndEndDateCell *)cell).endInput.returnKeyType = UIReturnKeyNext;
             ((FEStartAndEndDateCell *)cell).endInput.tag = indexPath.row+2;
             ((FEStartAndEndDateCell *)cell).endInput.inputView = [self getDateAction];
             break;
             
         case 2:
+            ((FELoginTableViewCell *)cell).fieldLabel.text = @"城市";
+            ((FELoginTableViewCell *)cell).fieldInput.text = self.eventCity;
+            ((FELoginTableViewCell *)cell).fieldInput.placeholder = @"必填";
+            ((FELoginTableViewCell *)cell).fieldInput.delegate = self;
+            ((FELoginTableViewCell *)cell).fieldInput.returnKeyType = UIReturnKeyNext;
+            ((FELoginTableViewCell *)cell).fieldInput.tag = indexPath.row+2;
+            break;
+            
+        case 3:
             ((FELoginTableViewCell *)cell).fieldLabel.text = @"地点";
+            ((FELoginTableViewCell *)cell).fieldInput.text = self.eventVenue;
             ((FELoginTableViewCell *)cell).fieldInput.placeholder = @"必填";
             ((FELoginTableViewCell *)cell).fieldInput.delegate = self;
             ((FELoginTableViewCell *)cell).fieldInput.returnKeyType = UIReturnKeyDone;
@@ -200,6 +225,11 @@
             nextTag = 4;
         }
         textField.text = [datePicker.date stringWithFormat:@"YY-MM-dd HH:mm"];
+        if(nextTag == 3){
+            self.eventStartDateStr = textField.text;
+        }else {
+            self.eventEndDateStr = textField.text;
+        }
         [self validateInput:textField.tag text:textField.text showTip:NO];
         BOOL completed = self.nameValid && self.startDateValid && self.venueValid;
         NSMutableDictionary *data = completed ? [self getInputData] : nil;
@@ -239,6 +269,8 @@
     int tableInsetTop = 0;
     if(cellRect.origin.y + cellRect.size.height > self.toolbar.frame.origin.y){
         tableInsetTop = - tableHeight + self.toolbar.frame.origin.y - 5;
+    }else {
+        self.contentOffset = CGPointZero;
     }
     self.contentInset = UIEdgeInsetsMake(tableInsetTop, 0, 0, 0);
     
@@ -248,7 +280,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if(textField.tag < 4){
+    if(textField.tag < 5){
         UITextField *nextTextField = (UITextField *)[self viewWithTag:(textField.tag+1)];
         [nextTextField becomeFirstResponder];
     }else {
@@ -269,11 +301,20 @@
         return NO;
     }
     
-    NSString *futureString = [textField.text stringByReplacingCharactersInRange:range withString:string];    
+    NSString *futureString = [textField.text stringByReplacingCharactersInRange:range withString:string]; 
     [self validateInput:textField.tag text:futureString showTip:NO];
-    BOOL completed = self.nameValid && self.startDateValid && self.venueValid;
+    BOOL completed = self.nameValid && self.startDateValid && self.cityValid && self.venueValid;
     NSMutableDictionary *data = completed ? [self getInputData] : nil;
     [self.basicDelegate handleBasicDataDidChange:data completed:completed];
+    
+    if (textField.tag == 1) {
+        self.eventName = futureString;
+    }else if (textField.tag == 4) {
+        self.eventCity = futureString;
+    }else if (textField.tag == 5) {
+        self.eventVenue = futureString;
+    }
+    
     return YES;
 }
 
@@ -332,6 +373,27 @@
             if(showTip){
                 self.tooltip.backgroundView.transform = CGAffineTransformMakeScale(1.0f, -1.0f);
                 self.tooltip.edgeInsets = UIEdgeInsetsMake(8, 10, 14, 10);
+                self.tooltip.text = @"请输入活动城市。";
+                point.x = self.frame.size.width - self.tooltip.frame.size.width - 8;
+                point.y = self.frame.origin.y + textField.superview.superview.frame.origin.y - self.tooltip.frame.size.height + 10;
+                [self.tooltip showAtPoint:point inView:self];
+                [textField becomeFirstResponder];
+            }
+            self.cityValid = NO;
+            return NO;
+        }else {
+            self.cityValid = YES;
+            [self.tooltip removeFromSuperview];
+        }
+    }
+    
+    if(textFieldTag == 0 || textFieldTag == 5){
+        textField = (UITextField *)[self viewWithTag:5];
+        contentText = textFieldTag == 0 ? textField.text : text;
+        if (contentText.length == 0) {
+            if(showTip){
+                self.tooltip.backgroundView.transform = CGAffineTransformMakeScale(1.0f, -1.0f);
+                self.tooltip.edgeInsets = UIEdgeInsetsMake(8, 10, 14, 10);
                 self.tooltip.text = @"请输入活动地点。";
                 point.x = self.frame.size.width - self.tooltip.frame.size.width - 8;
                 point.y = self.frame.origin.y + textField.superview.superview.frame.origin.y - self.tooltip.frame.size.height + 10;
@@ -358,15 +420,17 @@
 
 - (NSMutableDictionary *)getInputData
 {
-    NSString *eventName = ((UITextField *)[self viewWithTag:1]).text;
+    NSString *name = ((UITextField *)[self viewWithTag:1]).text;
     NSString *startDate = [[NSDate dateFromString:((UITextField *)[self viewWithTag:2]).text withFormat:@"YY-MM-dd HH:mm"] string];
     NSString *endDate = [[NSDate dateFromString:((UITextField *)[self viewWithTag:3]).text withFormat:@"YY-MM-dd HH:mm"] string];
-    NSString *venue = ((UITextField *)[self viewWithTag:4]).text;
+    NSString *city = ((UITextField *)[self viewWithTag:4]).text;
+    NSString *venue = ((UITextField *)[self viewWithTag:5]).text;
     
     return [NSMutableDictionary dictionaryWithObjectsAndKeys:
-            eventName, @"event_name",
+            name, @"event_name",
             startDate, @"start_date",
             endDate, @"end_date",
+            city, @"city",
             venue, @"venue",
             nil];
 }

@@ -1,13 +1,13 @@
 //
-//  FEEventDetailViewController.m
+//  FEMyEventDetailController.m
 //  EventApp
 //
-//  Created by Yin Zhengbo on 8/13/12.
-//  Copyright (c) 2012 snda. All rights reserved.
+//  Created by zhenglin li on 12-9-14.
+//  Copyright (c) 2012年 snda. All rights reserved.
 //
 
+#import "FEMyEventDetailController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "FEEventDetailViewController.h"
 #import "NSDate+Helper.h"
 #import "UIAsyncImageView.h"
 #import "FEDetailViewCell.h"
@@ -16,7 +16,7 @@
 
 #define MAX_HEIGHT 2000
 
-@interface FEEventDetailViewController ()
+@interface FEMyEventDetailController ()
 
 @property (retain, nonatomic) UIScrollView *scrollView;
 @property (retain, nonatomic) UIAsyncImageView *bannerImage;
@@ -35,8 +35,9 @@
 
 @end
 
-@implementation FEEventDetailViewController
+@implementation FEMyEventDetailController
 
+@synthesize event;
 @synthesize scrollView;
 @synthesize startDateLabel;
 @synthesize endDateLabel;
@@ -46,12 +47,10 @@
 @synthesize detailField;
 @synthesize bannerImage;
 @synthesize eventNameLabel;
-@synthesize event;
 @synthesize downloadQueue;
 @synthesize detailTable;
 @synthesize statusView;
 @synthesize detailCellHeight;
-
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -77,7 +76,7 @@
     [detailTable release];
     [statusView release];
     [scrollView release];
-	[super dealloc];
+    [super dealloc];
 }
 
 - (void)loadView
@@ -124,7 +123,7 @@
     self.startDateLabel.backgroundColor = [UIColor clearColor];
     self.startDateLabel.font = [UIFont systemFontOfSize:16.0];
     self.startDateLabel.textColor = [UIColor lightGrayColor];
-    self.startDateLabel.text = @"2012年8月31日";
+    //self.startDateLabel.text = @"2012年8月31日";
     self.startDateLabel.textAlignment = UITextAlignmentRight;
     [self.scrollView addSubview:self.startDateLabel];
     
@@ -133,7 +132,7 @@
     self.startTimeLabel.backgroundColor = [UIColor clearColor];
     self.startTimeLabel.font = [UIFont systemFontOfSize:24.0];
     self.startTimeLabel.textColor = [UIColor darkGrayColor];
-    self.startTimeLabel.text = @"09:45";
+    //self.startTimeLabel.text = @"09:45";
     self.startTimeLabel.textAlignment = UITextAlignmentRight;
     [self.scrollView addSubview:self.startTimeLabel];
     
@@ -142,7 +141,7 @@
     self.endDateLabel.backgroundColor = [UIColor clearColor];
     self.endDateLabel.font = [UIFont systemFontOfSize:16.0];
     self.endDateLabel.textColor = [UIColor lightGrayColor];
-    self.endDateLabel.text = @"2012年12月15日";
+    //self.endDateLabel.text = @"2012年12月15日";
     self.endDateLabel.textAlignment = UITextAlignmentRight;
     [scrollView addSubview:self.endDateLabel];
     
@@ -151,7 +150,7 @@
     self.endTimeLabel.backgroundColor = [UIColor clearColor];
     self.endTimeLabel.font = [UIFont systemFontOfSize:24.0];
     self.endTimeLabel.textColor = [UIColor darkGrayColor];
-    self.endTimeLabel.text = @"17:30";
+    //self.endTimeLabel.text = @"17:30";
     self.endTimeLabel.textAlignment = UITextAlignmentRight;
     [self.scrollView addSubview:self.endTimeLabel];
     
@@ -171,8 +170,6 @@
 {
     [super viewDidLoad];
     
-    //self.title = @"活动详情";
-    
     //back button
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     backButton.frame = CGRectMake(0, 0, 50, 31);
@@ -183,14 +180,14 @@
     [backButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:backButton] autorelease];
     
-    //join button
-    UIButton *joinButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    joinButton.frame = CGRectMake(0, 0, 50, 31);
-    [joinButton setTitle:@"报名" forState:UIControlStateNormal];
-    joinButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
-    [joinButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 10, 15, 10)] forState:UIControlStateNormal];
-    [joinButton addTarget:self action:@selector(joinAction) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:joinButton] autorelease];
+    //edit button
+    UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    editButton.frame = CGRectMake(0, 0, 50, 31);
+    [editButton setTitle:@"编辑" forState:UIControlStateNormal];
+    editButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
+    [editButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 10, 15, 10)] forState:UIControlStateNormal];
+    [editButton addTarget:self action:@selector(editAction) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:editButton] autorelease];
     
     self.title = self.event.name;
     if(self.event.logoURL){
@@ -237,7 +234,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)joinAction
+- (void)editAction
 {
     
 }
@@ -255,7 +252,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"DetailViewCellIdentifier";
+    static NSString *cellIdentifier = @"MyEventDetailViewCellIdentifier";
     FEDetailViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if(!cell){
         cell = [[[FEDetailViewCell alloc] init] autorelease];
@@ -314,11 +311,6 @@
     }
     
     return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    //UITableViewCell *cell = (UITableViewCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 - (CGFloat)getDetailTextHeight

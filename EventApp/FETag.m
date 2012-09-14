@@ -38,5 +38,10 @@
     [aCoder encodeObject:self.name forKey:@"name"];
 }
 
+- (NSString *)description
+{
+    return self.name;
+}
+
 
 @end

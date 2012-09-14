@@ -13,5 +13,6 @@
 @property(nonatomic, assign) UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate> *pickerDelegate;
 
 - (void)setPreviewImage:(UIImage *)newImage;
+- (UIImage *)getPreviewImage;
 
 @end

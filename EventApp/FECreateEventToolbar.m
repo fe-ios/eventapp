@@ -54,7 +54,7 @@
 	[self addSubview:toolbarBg];
 	
 	//bar items
-    int start = 10, padding = 42, top = 1, w = 42, h = 42;
+    int start = 9, padding = 50, top = 1, w = 45, h = 42;
     UIButton *buttonSetBasic = [[[UIButton alloc] initWithFrame:CGRectMake(start, top, w, h)] autorelease];
 	[buttonSetBasic setImage:[UIImage imageNamed:@"tool_bar_icon_list"] forState:UIControlStateNormal];
 	[buttonSetBasic setImage:[UIImage imageNamed:@"tool_bar_icon_list_s"] forState:UIControlStateSelected];
@@ -87,13 +87,13 @@
     buttonSetDetail.tag = CreateEventDetailAction;
 	[self addSubview:buttonSetDetail];
     
-	UIButton *buttonSetMember = [[[UIButton alloc] initWithFrame:CGRectMake(start+padding*4, top, w, h)] autorelease];
-	[buttonSetMember setImage:[UIImage imageNamed:@"tool_bar_icon_people"] forState:UIControlStateNormal];
-	[buttonSetMember setImage:[UIImage imageNamed:@"tool_bar_icon_people_s"] forState:UIControlStateSelected];
-	[buttonSetMember addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchDown];
-    buttonSetMember.adjustsImageWhenHighlighted = NO;
-    buttonSetMember.tag = CreateEventMemberAction;
-	[self addSubview:buttonSetMember];
+//	UIButton *buttonSetMember = [[[UIButton alloc] initWithFrame:CGRectMake(start+padding*4, top, w, h)] autorelease];
+//	[buttonSetMember setImage:[UIImage imageNamed:@"tool_bar_icon_people"] forState:UIControlStateNormal];
+//	[buttonSetMember setImage:[UIImage imageNamed:@"tool_bar_icon_people_s"] forState:UIControlStateSelected];
+//	[buttonSetMember addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchDown];
+//    buttonSetMember.adjustsImageWhenHighlighted = NO;
+//    buttonSetMember.tag = CreateEventMemberAction;
+//	[self addSubview:buttonSetMember];
     
 	//switch
 	FESwitch *privacySwitch = [[[FESwitch alloc] init] autorelease];

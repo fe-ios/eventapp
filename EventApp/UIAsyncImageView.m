@@ -11,13 +11,15 @@
 
 @interface UIAsyncImageView()
 
+@property(nonatomic, retain) ASIHTTPRequest *dataRequest;
+
 @end
 
 
 @implementation UIAsyncImageView
 
 @synthesize image = _image, imagePath = _imagePath, cornerRadius = _cornerRadius;
-
+@synthesize dataRequest;
 
 - (id)init
 {
@@ -41,6 +43,8 @@
 {
     [_image release];
     [_imagePath release];
+    [dataRequest clearDelegatesAndCancel];
+    [dataRequest release];
     [super dealloc];
 }
 
@@ -49,13 +53,13 @@
     [_imagePath release];
     _imagePath = [imageURL copy];
     
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:_imagePath]];
-    request.delegate = self;
-    request.cacheStoragePolicy = ASICachePermanentlyCacheStoragePolicy;
-    request.didStartSelector = @selector(didStartDownload:);
-    request.didFinishSelector = @selector(didFinishDownload:);
-    request.didFailSelector = @selector(didFailDownload:);
-    [queue addOperation:request];
+    self.dataRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:_imagePath]];
+    self.dataRequest.delegate = self;
+    self.dataRequest.cacheStoragePolicy = ASICachePermanentlyCacheStoragePolicy;
+    self.dataRequest.didStartSelector = @selector(didStartDownload:);
+    self.dataRequest.didFinishSelector = @selector(didFinishDownload:);
+    self.dataRequest.didFailSelector = @selector(didFailDownload:);
+    [queue addOperation:self.dataRequest];
 }
 
 - (void)didStartDownload:(ASIHTTPRequest *)request
@@ -72,6 +76,7 @@
             [request setResponseEncoding:0];
         }
         self.image = [UIImage imageWithData:request.responseData];
+        self.dataRequest = nil;
     }
 }
 
