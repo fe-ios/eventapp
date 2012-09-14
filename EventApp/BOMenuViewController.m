@@ -43,10 +43,62 @@
 	[self.menuTableView setBackgroundColor:[UIColor clearColor]];
 	
 	//account cell
-	UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 88)];
-	UIImageView *logo = [[UIImageView alloc] initWithFrame:CGRectMake(49, 20, 102, 56)];
-	logo.image = [UIImage imageNamed:@"tmp_logo"];
-	[tableHeaderView addSubview:logo];
+	UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+	UIImageView *headerViewBg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+	[headerViewBg setImage:[UIImage imageNamed:@"menu_user_bg"]];
+	[tableHeaderView addSubview:headerViewBg];
+	UIImageView *headerViewSeparator = [[UIImageView alloc] initWithFrame:CGRectMake(150, 3, 1, 36)];
+	[headerViewSeparator setImage:[UIImage imageNamed:@"menu_user_bg_line"]];
+	[tableHeaderView addSubview:headerViewSeparator];
+	
+	//User
+	userAvatar = [[UIButton alloc] initWithFrame:CGRectMake(10, 6, 32, 32)];
+	[userAvatar setImage:[UIImage imageNamed:@"menu_user_avatar"] forState:UIControlStateNormal];
+	[tableHeaderView addSubview:userAvatar];
+
+	userName = [[UILabel alloc] initWithFrame:CGRectMake(50, 14, 90, 18)];
+	[userName setText:@"aUserName"];
+	[userName setFont:[UIFont systemFontOfSize:14.0f]];
+	[userName setTextColor:[UIColor whiteColor]];
+	[userName setBackgroundColor:[UIColor clearColor]];
+	[tableHeaderView addSubview:userName];
+
+	btnAddEvent = [[UIButton alloc] initWithFrame:CGRectMake(160, 6, 74, 32)];
+	[btnAddEvent setBackgroundImage:[UIImage imageNamed:@"menu_user_addEvent"] forState:UIControlStateNormal];
+	[btnAddEvent setBackgroundImage:[UIImage imageNamed:@"menu_user_addEvent_pressed"] forState:UIControlStateHighlighted];
+	[btnAddEvent setTitle:@"新活动" forState:UIControlStateNormal];
+	[btnAddEvent.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
+	[btnAddEvent.titleLabel setShadowColor:[UIColor blackColor]];
+	[btnAddEvent.titleLabel setShadowOffset:CGSizeMake(0, 1)];
+	[btnAddEvent setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+
+	[tableHeaderView addSubview:btnAddEvent];
+	
+	//guest
+//	[headerViewSeparator setFrame:CGRectMake(120, 3, 1, 36)];
+//
+//	btnSignup = [[UIButton alloc] initWithFrame:CGRectMake(127, 6, 104, 32)];
+//	[btnSignup setBackgroundImage:[UIImage imageNamed:@"menu_user_btn_dark"] forState:UIControlStateNormal];
+//	[btnSignup setBackgroundImage:[UIImage imageNamed:@"menu_user_btn_dark_pressed"] forState:UIControlStateHighlighted];
+//	[btnSignup setTitle:@"注册" forState:UIControlStateNormal];
+//	[btnSignup.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
+//	[btnSignup.titleLabel setShadowColor:[UIColor blackColor]];
+//	[btnSignup.titleLabel setShadowOffset:CGSizeMake(0, 1)];
+//	[btnSignup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//
+//	[tableHeaderView addSubview:btnSignup];
+//
+//	btnLogin = [[UIButton alloc] initWithFrame:CGRectMake(10, 6, 104, 32)];
+//	[btnLogin setBackgroundImage:[UIImage imageNamed:@"menu_user_btn"] forState:UIControlStateNormal];
+//	[btnLogin setBackgroundImage:[UIImage imageNamed:@"menu_user_btn_pressed"] forState:UIControlStateHighlighted];
+//	[btnLogin setTitle:@"登录" forState:UIControlStateNormal];
+//	[btnLogin.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
+//	[btnLogin.titleLabel setShadowColor:[UIColor blackColor]];
+//	[btnLogin.titleLabel setShadowOffset:CGSizeMake(0, 1)];
+//	[btnLogin setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//
+//	[tableHeaderView addSubview:btnLogin];
+
 	self.menuTableView.tableHeaderView = tableHeaderView;
 }
 
@@ -69,39 +121,6 @@
 }
 
 #pragma mark - Table view data source
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section;
-//{
-//	if (section==0) {
-//	  return 0;
-//	}
-//	return 25;
-//}
-
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//	UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
-////	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
-////	[backgroundImage setImage:[UIImage imageNamed:@"menuSectionHeader"]];
-////	[sectionView addSubview:backgroundImage];
-//	
-//	UILabel *sectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 200, 14)];
-//	sectionLabel.textColor = [UIColor colorWithRed:53.0/255.0 green:42.0/255.0 blue:62.0/255.0 alpha:1.0];
-//	sectionLabel.font = [UIFont boldSystemFontOfSize:12.0f];
-//	sectionLabel.shadowColor = [UIColor colorWithRed:112.0/255.0 green:95.0/255.0 blue:126.0/255.0 alpha:1.0];
-//	[sectionLabel setShadowOffset:CGSizeMake(0, 1)];
-//	sectionLabel.backgroundColor = [UIColor clearColor];
-//	if (section == 0) {
-//		sectionView.frame = CGRectMake(0, 0, 0, 0);
-//	} else if (section == 1) {
-//		sectionLabel.text = @"EVERYBODY";
-//	} else if(section == 2){
-//		sectionLabel.text = @"ME & MY FRIENDS";
-//	} else if(section == 3){
-//		sectionLabel.text = @"ABOUT";
-//	}
-//	[sectionView addSubview:sectionLabel];
-//	return sectionView;
-//}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -122,41 +141,26 @@
 	}
 	switch (indexPath.row) {
 		case 0:
-			[cell.menuLabel setText:@"热门"];
-			[cell.menuIcon setImage:[UIImage imageNamed:@"122-glyphish-stats-gray"]];
-			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"122-glyphish-stats-blue"]];
-			break;
-		case 1:
-			[cell.menuLabel setText:@"附近"];
-			[cell.menuIcon setImage:[UIImage imageNamed:@"7-glyphish-map-marker-gray"]];
-			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"7-glyphish-map-marker-blue"]];
-			break;
-		case 2:
 			[cell.menuLabel setText:@"最新"];
 			[cell.menuIcon setImage:[UIImage imageNamed:@"11-glyphish-clock-gray"]];
 			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"11-glyphish-clock-blue"]];
 			break;
-		case 3:
-			[cell.menuLabel setText:@"关注"];
+		case 1:
+			[cell.menuLabel setText:@"参与活动"];
+			[cell.menuIcon setImage:[UIImage imageNamed:@"7-glyphish-map-marker-gray"]];
+			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"7-glyphish-map-marker-blue"]];
+			break;
+		case 2:
+			[cell.menuLabel setText:@"我的活动"];
 			[cell.menuIcon setImage:[UIImage imageNamed:@"44-glyphish-shoebox-gray"]];
 			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"44-glyphish-shoebox-blue"]];
 			break;
-		case 4:
-			[cell.menuLabel setText:@"我的活动"];
-			[cell.menuIcon setImage:[UIImage imageNamed:@"29-glyphish-heart-gray"]];
-			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"29-glyphish-heart-blue"]];
-			break;
-		case 5:
-			[cell.menuLabel setText:@"朋友圈"];
-			[cell.menuIcon setImage:[UIImage imageNamed:@"112-glyphish-group-gray"]];
-			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"112-glyphish-group-blue"]];
-			break;
-		case 6:
+		case 3:
 			[cell.menuLabel setText:@"设置"];
 			[cell.menuIcon setImage:[UIImage imageNamed:@"19-glyphish-gear-gray"]];
 			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"19-glyphish-gear-blue"]];
 			break;
-        case 7:
+        case 4:
 			[cell.menuLabel setText:@"退出"];
 			[cell.menuIcon setImage:[UIImage imageNamed:@"icon_logout"]];
 			break;
@@ -170,18 +174,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row == 7){
+    if(indexPath.row == 4){
         [[AppDelegate sharedDelegate] logout];
-    }else if (indexPath.row == 4) {
+    }else if (indexPath.row == 2) {
         FEMyEventListController *myEventController = [[[FEMyEventListController alloc] init] autorelease];
         [self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
             [[AppDelegate sharedDelegate].navigationController pushViewController:myEventController animated:NO];
         }];
     }else {
-        BOEventQuickAddViewController *quickAdd = [[BOEventQuickAddViewController alloc] initWithNibName:@"BOEventQuickAddViewController" bundle:nil];
-        [self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
-            [self.viewDeckController.centerController presentModalViewController:quickAdd animated:YES];
-        }];
+//        BOEventQuickAddViewController *quickAdd = [[BOEventQuickAddViewController alloc] initWithNibName:@"BOEventQuickAddViewController" bundle:nil];
+//        [self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
+//            [self.viewDeckController.centerController presentModalViewController:quickAdd animated:YES];
+//        }];
     }
 }
 
