@@ -10,6 +10,8 @@
 
 @implementation FEEventTableViewCell
 @synthesize eventNameLabel;
+@synthesize eventDateLabel;
+@synthesize eventTagLabel;
 @synthesize eventIcon;
 @synthesize watchButton;
 
@@ -32,6 +34,8 @@
     [eventNameLabel release];
     [watchButton release];
     [eventIcon release];
+    [eventDateLabel release];
+    [eventTagLabel release];
     [super dealloc];
 }
 

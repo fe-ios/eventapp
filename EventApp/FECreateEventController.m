@@ -23,6 +23,7 @@
 #import "FEAddEventView.h"
 #import "FEAddEventDetailView.h"
 #import "FEAddEventMemberView.h"
+#import "MBProgressHUD.h"
  
 
 @interface FECreateEventController ()
@@ -40,6 +41,7 @@
 
 @implementation FECreateEventController
 
+@synthesize listController;
 @synthesize currentView, toolbar;
 @synthesize addBasicView, addIconView, addTagView, addDetailView, addMemberView;
 
@@ -64,6 +66,7 @@ static bool isFirstLaunch = YES;
     [addTagView release];
     [addIconView release];
     [addMemberView release];
+    [listController release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
@@ -177,7 +180,7 @@ static bool isFirstLaunch = YES;
         if([self.currentView respondsToSelector:@selector(recoverLastInputAsFirstResponder)]){
             [self.currentView performSelector:@selector(recoverLastInputAsFirstResponder)];
         }
-        isFirstLaunch = NO;
+        //isFirstLaunch = NO;
     }
 }
 
@@ -189,37 +192,6 @@ static bool isFirstLaunch = YES;
 - (void)backAction
 {
     [self dismissModalViewControllerAnimated:YES];
-}
-
-- (void)createAction
-{
-    int user_id = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userid"] intValue];
-    NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:@"password"];
-    NSMutableDictionary *eventData = [self.addBasicView getInputData];
-    NSString *eventURL = [NSString stringWithFormat:@"%@%@", API_BASE, API_EVENT_CREATE];
-    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:eventURL]];
-    [request setRequestMethod:@"POST"];
-    [request setPostValue:[NSNumber numberWithInt:user_id] forKey:@"user_id"];
-    [request setPostValue:password forKey:@"password"];
-    [request setPostValue:[eventData objectForKey:@"event_name"]forKey:@"event_name"];
-    [request setPostValue:[eventData objectForKey:@"start_date"] forKey:@"start_date"];
-    [request setPostValue:[eventData objectForKey:@"end_date"] forKey:@"end_date"];
-    [request setPostValue:[eventData objectForKey:@"venue"] forKey:@"venue"];
-    request.delegate = self;
-    [request startAsynchronous];
-    [request release];
-}
-
-- (void)requestFinished:(ASIHTTPRequest *)request
-{
-    NSLog(@"%d, %@", request.responseStatusCode, request.responseString);
-    
-    NSDictionary *result = [request.responseString objectFromJSONString];
-    NSString *status = [result objectForKey:@"status"];
-    
-    if([status isEqualToString:@"success"]){
-        [self dismissModalViewControllerAnimated:YES];
-    }
 }
 
 - (void)toolbarActionChanged:(FECreateEventToolbar *)sender
@@ -395,6 +367,72 @@ static bool isFirstLaunch = YES;
 {
     NSLog(@"detail: %@", detail);
     [self.toolbar completeAction:CreateEventDetailAction completed:(detail.length>0)];
+}
+
+- (void)createAction
+{
+    int user_id = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userid"] intValue];
+    NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:@"password"];
+    NSMutableDictionary *eventData = [self.addBasicView getInputData];
+    NSString *eventURL = [NSString stringWithFormat:@"%@%@", API_BASE, API_EVENT_CREATE];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:eventURL]];
+    [request setRequestMethod:@"POST"];
+    [request setPostValue:[NSNumber numberWithInt:user_id] forKey:@"user_id"];
+    [request setPostValue:password forKey:@"password"];
+    [request setPostValue:[eventData objectForKey:@"event_name"]forKey:@"event_name"];
+    [request setPostValue:[eventData objectForKey:@"start_date"] forKey:@"start_date"];
+    [request setPostValue:[eventData objectForKey:@"end_date"] forKey:@"end_date"];
+    [request setPostValue:[eventData objectForKey:@"city"] forKey:@"city"];
+    [request setPostValue:[eventData objectForKey:@"venue"] forKey:@"venue"];
+    [request setPostValue:self.addDetailView.detailInput.text forKey:@"detail"];
+    
+    //tag
+    NSMutableString *tagStr = [NSMutableString string];
+    for (int i = 0; i < self.addTagView.tags.count; i++) {
+        NSDictionary *tag = [self.addTagView.tags objectAtIndex:i];
+        NSString *tagValue = nil;
+        for(NSString *key in tag){
+            tagValue = [tag objectForKey:key];
+            break;
+        }
+        if(i == 0) [tagStr appendString:tagValue];
+        else [tagStr appendFormat:@",%@", tagValue];
+    }
+    NSString *eventTag = [NSString stringWithString:tagStr];
+    [request setPostValue:eventTag forKey:@"tags"];
+    
+    //icon
+    UIImage *iconImage = [self.addIconView getPreviewImage];
+    if(iconImage){
+        NSData *iconImageData = UIImageJPEGRepresentation(iconImage, 1.0f);
+        [request setPostValue:@"1" forKey:@"has_icon"];
+        [request setData:iconImageData withFileName:@"upload.jpg" andContentType:@"image/jpeg" forKey:@"userfile"];
+    }else {
+        [request setPostValue:@"0" forKey:@"has_icon"];
+    }
+    
+    request.delegate = self;
+    [request startAsynchronous];
+    [request release];
+    
+    self.navigationController.navigationBar.userInteractionEnabled = NO;
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    NSLog(@"%d, %@", request.responseStatusCode, request.responseString);
+    
+    self.navigationController.navigationBar.userInteractionEnabled = YES;
+    
+    NSDictionary *result = [request.responseString objectFromJSONString];
+    NSString *status = [result objectForKey:@"status"];
+    
+    if([status isEqualToString:@"success"]){
+        [self dismissModalViewControllerAnimated:YES];
+        if(self.listController){
+            [self.listController loadEvent];
+        }
+    }
 }
 
 @end

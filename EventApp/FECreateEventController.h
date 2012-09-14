@@ -10,7 +10,10 @@
 #import "FEAddEventTagView.h"
 #import "FEAddEventDetailView.h"
 #import "FEAddEventView.h"
+#import "FEEventListController.h"
 
 @interface FECreateEventController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, FEAddEventTagViewDelegate, FEAddEventDetailViewDelegate, FEAddEventViewDelegate>
+
+@property(nonatomic, retain) FEEventListController *listController;
 
 @end

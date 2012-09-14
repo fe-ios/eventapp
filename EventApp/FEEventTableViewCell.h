@@ -13,6 +13,8 @@
 
 @property (retain, nonatomic) IBOutlet UIAsyncImageView *eventIcon;
 @property (retain, nonatomic) IBOutlet UILabel *eventNameLabel;
+@property (retain, nonatomic) IBOutlet UILabel *eventDateLabel;
+@property (retain, nonatomic) IBOutlet UILabel *eventTagLabel;
 
 @property(retain, nonatomic) UIButton *watchButton;
 

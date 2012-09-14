@@ -103,6 +103,11 @@
     self.previewImageView.image = newImage;
 }
 
+- (UIImage *)getPreviewImage
+{
+    return self.previewImageView.image;
+}
+
 #pragma mark - UIKeyInput
 
 - (void)deleteBackward

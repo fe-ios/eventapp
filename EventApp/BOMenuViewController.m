@@ -11,6 +11,7 @@
 #import "BOEventQuickAddViewController.h"
 #import "IIViewDeckController.h"
 #import "AppDelegate.h"
+#import "FEMyEventListController.h"
 
 @interface BOMenuViewController ()
 
@@ -167,19 +168,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	switch (indexPath.row) {
-        case 7:
-            [[AppDelegate sharedDelegate] logout];
-            return;
-            
-        default:
-            break;
+    if(indexPath.row == 7){
+        [[AppDelegate sharedDelegate] logout];
+    }else if (indexPath.row == 4) {
+        FEMyEventListController *myEventController = [[[FEMyEventListController alloc] init] autorelease];
+        [self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
+            [[AppDelegate sharedDelegate].navigationController pushViewController:myEventController animated:NO];
+        }];
+    }else {
+        BOEventQuickAddViewController *quickAdd = [[BOEventQuickAddViewController alloc] initWithNibName:@"BOEventQuickAddViewController" bundle:nil];
+        [self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
+            [self.viewDeckController.centerController presentModalViewController:quickAdd animated:YES];
+        }];
     }
-    
-    BOEventQuickAddViewController *quickAdd = [[BOEventQuickAddViewController alloc] initWithNibName:@"BOEventQuickAddViewController" bundle:nil];
-	[self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
-		[self.viewDeckController.centerController presentModalViewController:quickAdd animated:YES];
-	}];
 }
 
 @end

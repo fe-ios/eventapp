@@ -17,6 +17,7 @@
 #import "FEEvent.h"
 #import "TKAlertCenter.h"
 #import "FEEventDetailViewController.h"
+#import "NSDate+Helper.h"
 
 #define CACHE_NAME @"public_event.dat"
 #define LAST_UPDATE @"lastUpdateDate"
@@ -29,6 +30,7 @@
 @property(nonatomic, retain) NSDate *lastUpdateDate;
 @property(nonatomic, assign) BOOL updating;
 @property(nonatomic, assign) BOOL loadingMore;
+@property(nonatomic, retain) ASIHTTPRequest *dataRequest;
 
 @end
 
@@ -38,6 +40,7 @@
 @synthesize lastUpdateDate, updating, loadingMore;
 @synthesize downloadQueue = _downloadQueue;
 @synthesize eventData = _eventData;
+@synthesize dataRequest;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -56,7 +59,10 @@
     [footerView release];
     [lastUpdateDate release];
     [_eventData release];
+    [_downloadQueue cancelAllOperations];
     [_downloadQueue release];
+    [dataRequest clearDelegatesAndCancel];
+    [dataRequest release];
     [super dealloc];
 }
 
@@ -93,6 +99,8 @@
     
     [self.updateHeaderView setState:EGOOPullRefreshLoading];
     [self.tableView setContentInset:UIEdgeInsetsMake(self.updateHeaderView.frame.size.height, 0, 0, 0)];
+    [self.dataRequest clearDelegatesAndCancel];
+    [self.eventData removeAllObjects];
     [self loadEvent];
 }
 
@@ -163,6 +171,21 @@
         NSLog(@"logo exist: %@", event.name);
     }
     
+    NSString *dateLabel = nil;
+    NSString *startDate = [event.start_date stringWithFormat:@"MM月dd日"];
+    NSString *endDate = [event.end_date stringWithFormat:@"MM月dd日"];
+    if([startDate isEqualToString:endDate]){
+        dateLabel = [NSString stringWithFormat:@"%@ - %@", [event.start_date stringWithFormat:@"MM月dd日 HH:mm"], [event.end_date stringWithFormat:@"HH:mm"]];
+    }else if(endDate){
+        dateLabel = [NSString stringWithFormat:@"%@ - %@", startDate, endDate];
+    }else {
+        dateLabel = [NSString stringWithFormat:@"%@", startDate];
+    }
+    cell.eventDateLabel.text = dateLabel;
+    
+    NSString *tagLabel = [event.tags componentsJoinedByString:@", "];
+    cell.eventTagLabel.text = tagLabel;
+    
     cell.watchButton.tag = indexPath.row;
     cell.watchButton.selected = indexPath.row%2 == 0;
     
@@ -220,12 +243,13 @@
     }else {
         loadURL = [loadURL stringByAppendingFormat:@"?start=%d", firstEvent.event_id];
     }
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:loadURL]];
-    request.delegate = self;
-    request.cachePolicy = ASIDoNotWriteToCacheCachePolicy;
-    request.didFinishSelector = @selector(loadEventFinished:);
-    request.didFailSelector = @selector(loadEventFailed:);
-    [request startAsynchronous];
+    
+    self.dataRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:loadURL]];
+    self.dataRequest.delegate = self;
+    self.dataRequest.cachePolicy = ASIDoNotWriteToCacheCachePolicy;
+    self.dataRequest.didFinishSelector = @selector(loadEventFinished:);
+    self.dataRequest.didFailSelector = @selector(loadEventFailed:);
+    [self.dataRequest startAsynchronous];
 }
 
 - (void)loadEventFinished:(ASIHTTPRequest *)request
@@ -302,10 +326,10 @@
 
 - (void)createEvent
 {
-    FECreateEventController *createEventController = [[FECreateEventController alloc] init];
+    FECreateEventController *createEventController = [[[FECreateEventController alloc] init] autorelease];
+    createEventController.listController = self;
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:createEventController];
     [self.navigationController presentModalViewController:navController animated:YES];
-    [createEventController release];
     [navController release];
 }
 

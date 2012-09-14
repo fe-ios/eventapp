@@ -18,5 +18,6 @@
 @property(nonatomic, retain) NSOperationQueue *downloadQueue;
 @property(nonatomic, retain) NSMutableArray *eventData;
 
+- (void)loadEvent;
 
 @end
