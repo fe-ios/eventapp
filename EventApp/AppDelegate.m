@@ -72,7 +72,7 @@
     BOMenuViewController *menuViewController = [[[BOMenuViewController alloc] initWithNibName:@"BOMenuViewController" bundle:nil] autorelease];
     IIViewDeckController *deckController = [[[IIViewDeckController alloc] initWithCenterViewController:self.navigationController leftViewController: menuViewController rightViewController:nil] autorelease];
     deckController.navigationControllerBehavior = IIViewDeckNavigationControllerIntegrated;
-    deckController.leftLedge = 120;
+    deckController.leftLedge = 80;
     
     self.viewDeckController = deckController;
     self.window.rootViewController = self.viewDeckController;
@@ -164,19 +164,16 @@
 	[[UINavigationBar appearance] setBackgroundImage:customNavigationBarBackground forBarMetrics:UIBarMetricsDefault];
 
 	//UIBarButtonItem BackButton
-	UIImage *buttonBack = [[UIImage imageNamed:@"navBackButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 10)];
-	//UIImage *buttonBackSelected = [[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 18, 15, 16)];
+	UIImage *buttonBack = [[UIImage imageNamed:@"btn_title_bar_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 10, 15, 8)];
+	UIImage *buttonBackPressed = [[UIImage imageNamed:@"btn_title_bar_back_pressed"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 10, 15, 8)];
 	[[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBack forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+	[[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBackPressed forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:14.0], UITextAttributeFont, nil] forState:UIControlStateNormal];
-    
-	//[[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBackSelected forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-	
+    	
 	//UIBarButtonItem Button
-	UIImage *navButton = [[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 10, 15, 10)];
-	//UIImage *navButtonSelected = [[UIImage imageNamed:@"WKButtonDarkGrey30pxSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 5, 15, 5)];
+	UIImage *navButton = [[UIImage imageNamed:@"btn_title_bar"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 6, 15, 6)];
 	
 	[[UIBarButtonItem appearance] setBackgroundImage:navButton forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-	//[[UIBarButtonItem appearance] setBackgroundImage:navButtonSelected forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
 }
 
 + (AppDelegate *)sharedDelegate

@@ -18,7 +18,11 @@
 
 @implementation BOMenuViewController
 @synthesize menuTableView;
-@synthesize navigationBar;
+@synthesize userName;
+@synthesize userAvatar;
+@synthesize btnLogin;
+@synthesize btnAddEvent;
+@synthesize btnSignup;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,7 +52,6 @@
 - (void)viewDidUnload
 {
 	[self setMenuTableView:nil];
-	[self setNavigationBar:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -61,7 +64,6 @@
 
 - (void)dealloc {
 	[menuTableView release];
-	[navigationBar release];
 	[super dealloc];
 }
 

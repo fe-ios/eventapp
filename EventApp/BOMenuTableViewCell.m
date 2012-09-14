@@ -16,11 +16,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-//      UIImage *backgroundImage = [UIImage imageNamed:@"menuCellBackground"];
-//		backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
-//		[backgroundImageView setFrame:CGRectMake(0, 0, 320, 44)];
-//		self.backgroundView = backgroundImageView;
-		menuLabel = [[UILabel alloc] initWithFrame:CGRectMake(72, 10, 100, 24)];
+		menuLabel = [[UILabel alloc] initWithFrame:CGRectMake(72, 13, 100, 24)];
 		[menuLabel setFont:[UIFont boldSystemFontOfSize:14.0f]];
 		menuLabel.backgroundColor = [UIColor clearColor];
 		menuLabel.shadowColor = [UIColor blackColor];
@@ -28,12 +24,12 @@
 		menuLabel.textColor = [UIColor colorWithRed:120.0/255.0 green:120.0/255.0 blue:120.0/255.0 alpha:1.0];
 		menuLabel.highlightedTextColor = [UIColor whiteColor];
 		
-		menuIcon = [[UIImageView alloc] initWithFrame:CGRectMake(25, 6, 30, 30)];
-		menuIconHighlighted = [[UIImageView alloc] initWithFrame:CGRectMake(25, 6, 30, 30)];
+		menuIcon = [[UIImageView alloc] initWithFrame:CGRectMake(25, 9, 30, 30)];
+		menuIconHighlighted = [[UIImageView alloc] initWithFrame:CGRectMake(25, 9, 30, 30)];
 		menuIconHighlighted.hidden = YES;
 		
 		menuSeparator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"menu-separator"]];
-		[menuSeparator setFrame:CGRectMake(15, 41, 170, 3)];
+		[menuSeparator setFrame:CGRectMake(15, 47, 210, 3)];
 
 		[self setSelectionStyle:UITableViewCellEditingStyleNone];
 		[self.contentView addSubview:menuSeparator];
