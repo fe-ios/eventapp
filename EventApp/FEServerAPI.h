@@ -17,3 +17,4 @@ static NSString *const API_UPLOAD = @"/upload";
 static NSString *const API_EVENT_CREATE = @"/event/create_event";
 static NSString *const API_EVENT_PUBLIC = @"/event/public_event";
 static NSString *const API_EVENT_OWNER = @"/event/owner_event";
+static NSString *const API_EVENT_ATTEND = @"/event/user_event";

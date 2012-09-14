@@ -11,7 +11,10 @@
 #import "BOEventQuickAddViewController.h"
 #import "IIViewDeckController.h"
 #import "AppDelegate.h"
+#import "FEEventListController.h"
 #import "FEMyEventListController.h"
+#import "FEAttendEventListController.h"
+#import "FECreateEventController.h"
 
 @interface BOMenuViewController ()
 
@@ -24,12 +27,13 @@
 @synthesize btnLogin;
 @synthesize btnAddEvent;
 @synthesize btnSignup;
+@synthesize selectedMenu;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        self.selectedMenu = 0;
     }
     return self;
 }
@@ -62,6 +66,7 @@
 	[userName setTextColor:[UIColor whiteColor]];
 	[userName setBackgroundColor:[UIColor clearColor]];
 	[tableHeaderView addSubview:userName];
+    userName.text = (NSString *) [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
 
 	btnAddEvent = [[UIButton alloc] initWithFrame:CGRectMake(160, 6, 74, 32)];
 	[btnAddEvent setBackgroundImage:[UIImage imageNamed:@"menu_user_addEvent"] forState:UIControlStateNormal];
@@ -71,6 +76,7 @@
 	[btnAddEvent.titleLabel setShadowColor:[UIColor blackColor]];
 	[btnAddEvent.titleLabel setShadowOffset:CGSizeMake(0, 1)];
 	[btnAddEvent setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [btnAddEvent addTarget:self action:@selector(createEvent) forControlEvents:UIControlEventTouchUpInside];
 
 	[tableHeaderView addSubview:btnAddEvent];
 	
@@ -108,6 +114,12 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    BOMenuTableViewCell *selectedCell = (BOMenuTableViewCell *)[menuTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.selectedMenu inSection:0]];
+    [selectedCell setHighlighted:YES];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -174,6 +186,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(self.selectedMenu >= 0 && self.selectedMenu != indexPath.row){
+        BOMenuTableViewCell *lastCell = (BOMenuTableViewCell *)[menuTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.selectedMenu inSection:0]];
+        [lastCell setHighlighted:NO];
+    }
+    self.selectedMenu = indexPath.row;
+    
     if(indexPath.row == 4){
         [[AppDelegate sharedDelegate] logout];
     }else if (indexPath.row == 2) {
@@ -181,12 +199,31 @@
         [self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
             [[AppDelegate sharedDelegate].navigationController pushViewController:myEventController animated:NO];
         }];
+    }else if (indexPath.row == 1) {
+        FEAttendEventListController *attendEventController = [[[FEAttendEventListController alloc] init] autorelease];
+        [self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
+            [[AppDelegate sharedDelegate].navigationController pushViewController:attendEventController animated:NO];
+        }];
+    }else if (indexPath.row == 0) {
+        FEEventListController *eventController = [[[FEEventListController alloc] init] autorelease];
+        [self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
+            [[AppDelegate sharedDelegate].navigationController pushViewController:eventController animated:NO];
+        }];
     }else {
 //        BOEventQuickAddViewController *quickAdd = [[BOEventQuickAddViewController alloc] initWithNibName:@"BOEventQuickAddViewController" bundle:nil];
 //        [self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
 //            [self.viewDeckController.centerController presentModalViewController:quickAdd animated:YES];
 //        }];
     }
+}
+
+- (void)createEvent
+{
+    FECreateEventController *createEventController = [[[FECreateEventController alloc] init] autorelease];
+    //createEventController.listController = self;
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:createEventController];
+    [[AppDelegate sharedDelegate].navigationController presentModalViewController:navController animated:YES];
+    [navController release];
 }
 
 @end

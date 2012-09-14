@@ -1,12 +1,12 @@
 //
-//  FEMyEventDetailController.m
+//  FEAttendEventDetailController.m
 //  EventApp
 //
 //  Created by zhenglin li on 12-9-14.
 //  Copyright (c) 2012年 snda. All rights reserved.
 //
 
-#import "FEMyEventDetailController.h"
+#import "FEAttendEventDetailController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "NSDate+Helper.h"
 #import "UIAsyncImageView.h"
@@ -16,7 +16,7 @@
 
 #define MAX_HEIGHT 2000
 
-@interface FEMyEventDetailController ()
+@interface FEAttendEventDetailController ()
 
 @property (retain, nonatomic) UIScrollView *scrollView;
 @property (retain, nonatomic) UIAsyncImageView *bannerImage;
@@ -35,7 +35,7 @@
 
 @end
 
-@implementation FEMyEventDetailController
+@implementation FEAttendEventDetailController
 
 @synthesize event;
 @synthesize scrollView;
@@ -51,6 +51,7 @@
 @synthesize detailTable;
 @synthesize statusView;
 @synthesize detailCellHeight;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

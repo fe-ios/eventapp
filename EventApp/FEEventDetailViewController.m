@@ -193,7 +193,7 @@
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:joinButton] autorelease];
     
     self.title = self.event.name;
-    if(self.event.logoURL){
+    if(self.event.logoURL && ![self.event.logoURL isEqualToString:@""]){
         [self.bannerImage loadImageAsync:self.event.logoURL withQueue:self.downloadQueue];
     }else {
         self.bannerImage.image = [UIImage imageNamed:@"pictureGridPlaceholder"];

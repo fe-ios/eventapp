@@ -77,8 +77,8 @@
     UIBarButtonItem *leftBarButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuButton"] style:UIBarButtonItemStylePlain target:self.viewDeckController action:@selector(toggleLeftView)] autorelease];
 	self.navigationItem.leftBarButtonItem = leftBarButton;
     
-    UIBarButtonItem *rightBarButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"addButton"] style:UIBarButtonItemStylePlain target:self action:@selector(createEvent)] autorelease];
-	self.navigationItem.rightBarButtonItem = rightBarButton;
+//    UIBarButtonItem *rightBarButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"addButton"] style:UIBarButtonItemStylePlain target:self action:@selector(createEvent)] autorelease];
+//	self.navigationItem.rightBarButtonItem = rightBarButton;
     
     self.updateHeaderView = [[[EGORefreshTableHeaderView alloc] init] autorelease];
     self.updateHeaderView.frame = CGRectMake(10, -50, 320-20, 50);

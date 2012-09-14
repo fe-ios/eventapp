@@ -79,6 +79,8 @@
 		81D756491603111D009D0A8E /* btn_title_bar_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 81D756431603111D009D0A8E /* btn_title_bar_pressed@2x.png */; };
 		81D7564A1603111D009D0A8E /* btn_title_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 81D756441603111D009D0A8E /* btn_title_bar@2x.png */; };
 		C71272701602FE980083B9DA /* FEMyEventDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = C712726F1602FE980083B9DA /* FEMyEventDetailController.m */; };
+		C712727E160317190083B9DA /* FEAttendEventListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C712727D160317190083B9DA /* FEAttendEventListController.m */; };
+		C7127281160317770083B9DA /* FEAttendEventDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7127280160317770083B9DA /* FEAttendEventDetailController.m */; };
 		C747F94815E5E3170002E086 /* icon_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C747F94715E5E3170002E086 /* icon_bg@2x.png */; };
 		C747F94C15E5FAC20002E086 /* FEAddEventMemberView.m in Sources */ = {isa = PBXBuildFile; fileRef = C747F94B15E5FAC20002E086 /* FEAddEventMemberView.m */; };
 		C783E09715A1518F000B9418 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C783E09615A1518F000B9418 /* UIKit.framework */; };
@@ -538,6 +540,10 @@
 		81D756441603111D009D0A8E /* btn_title_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_title_bar@2x.png"; path = "EventApp/Resource/navigation/btn_title_bar@2x.png"; sourceTree = "<group>"; };
 		C712726E1602FE980083B9DA /* FEMyEventDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEMyEventDetailController.h; sourceTree = "<group>"; };
 		C712726F1602FE980083B9DA /* FEMyEventDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEMyEventDetailController.m; sourceTree = "<group>"; };
+		C712727C160317190083B9DA /* FEAttendEventListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEAttendEventListController.h; sourceTree = "<group>"; };
+		C712727D160317190083B9DA /* FEAttendEventListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEAttendEventListController.m; sourceTree = "<group>"; };
+		C712727F160317770083B9DA /* FEAttendEventDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEAttendEventDetailController.h; sourceTree = "<group>"; };
+		C7127280160317770083B9DA /* FEAttendEventDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEAttendEventDetailController.m; sourceTree = "<group>"; };
 		C747F94715E5E3170002E086 /* icon_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_bg@2x.png"; path = "EventApp/images_toolbar/icon_bg@2x.png"; sourceTree = "<group>"; };
 		C747F94A15E5FAC20002E086 /* FEAddEventMemberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEAddEventMemberView.h; sourceTree = "<group>"; };
 		C747F94B15E5FAC20002E086 /* FEAddEventMemberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEAddEventMemberView.m; sourceTree = "<group>"; };
@@ -1041,6 +1047,17 @@
 			name = viewdeck;
 			sourceTree = "<group>";
 		};
+		C712727A160316850083B9DA /* attend_event */ = {
+			isa = PBXGroup;
+			children = (
+				C712727F160317770083B9DA /* FEAttendEventDetailController.h */,
+				C7127280160317770083B9DA /* FEAttendEventDetailController.m */,
+				C712727C160317190083B9DA /* FEAttendEventListController.h */,
+				C712727D160317190083B9DA /* FEAttendEventListController.m */,
+			);
+			name = attend_event;
+			sourceTree = "<group>";
+		};
 		C783E08715A1518F000B9418 = {
 			isa = PBXGroup;
 			children = (
@@ -1078,6 +1095,7 @@
 			children = (
 				C783E0A515A1518F000B9418 /* AppDelegate.h */,
 				C783E0A615A1518F000B9418 /* AppDelegate.m */,
+				C712727A160316850083B9DA /* attend_event */,
 				C7D81DC715E2164600076DC8 /* create_event */,
 				C7D6DFB215BFDB3F00D29E27 /* data */,
 				C7E86C6A15B7FE03001960C2 /* event_list */,
@@ -2236,6 +2254,8 @@
 				C7DFF71315F9B8C600834B83 /* FEUser.m in Sources */,
 				C7E3B1441602C60F00891B7D /* FEMyEventListController.m in Sources */,
 				C71272701602FE980083B9DA /* FEMyEventDetailController.m in Sources */,
+				C712727E160317190083B9DA /* FEAttendEventListController.m in Sources */,
+				C7127281160317770083B9DA /* FEAttendEventDetailController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
