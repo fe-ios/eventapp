@@ -10,9 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "FEStartViewController.h"
 #import "IIViewDeckController.h"
-#import "BOCenterViewController.h"
 #import "BOMenuViewController.h"
-#import "BOEventsViewController.h"
 #import "FEEventListController.h"
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
@@ -67,8 +65,6 @@
     
     FEEventListController *centerController = [[[FEEventListController alloc] init] autorelease];
     
-    //BOCenterViewController *centerController = [[[BOCenterViewController alloc] initWithNibName:@"BOCenterViewController" bundle:nil] autorelease];
-    //BOEventsViewController *eventsViewController = [[[BOEventsViewController alloc] initWithNibName:@"BOEventsViewController" bundle:nil] autorelease];
     BOMenuViewController *menuViewController = [[[BOMenuViewController alloc] initWithNibName:@"BOMenuViewController" bundle:nil] autorelease];
     IIViewDeckController *deckController = [[[IIViewDeckController alloc] initWithCenterViewController:self.navigationController leftViewController: menuViewController rightViewController:nil] autorelease];
     deckController.navigationControllerBehavior = IIViewDeckNavigationControllerIntegrated;
