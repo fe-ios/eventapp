@@ -41,6 +41,7 @@
 @synthesize dateSheet, tooltip, lastInputTag;
 @synthesize nameValid, startDateValid, venueValid, cityValid;
 @synthesize eventName, eventCity, eventVenue, eventStartDateStr, eventEndDateStr;
+@synthesize changed = _changed;
 
 
 - (id)initWithFrame:(CGRect)frame
@@ -48,6 +49,20 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setup];
+    }
+    return self;
+}
+
+- (id)initWithEvent:(FEEvent *)event
+{
+    self = [super init];
+    if(self){
+        self.eventName = event.name;
+        self.eventStartDateStr = [event.start_date stringWithFormat:@"YY-MM-dd HH:mm"];
+        self.eventEndDateStr = [event.end_date stringWithFormat:@"YY-MM-dd HH:mm"];
+        self.eventCity = event.city;
+        self.eventVenue = event.venue;
+        self.nameValid = self.startDateValid = self.venueValid = self.cityValid = YES;
     }
     return self;
 }
@@ -227,8 +242,10 @@
         textField.text = [datePicker.date stringWithFormat:@"YY-MM-dd HH:mm"];
         if(nextTag == 3){
             self.eventStartDateStr = textField.text;
+            _changed = YES;
         }else {
             self.eventEndDateStr = textField.text;
+            _changed = YES;
         }
         [self validateInput:textField.tag text:textField.text showTip:NO];
         BOOL completed = self.nameValid && self.startDateValid && self.venueValid;
@@ -314,6 +331,7 @@
     }else if (textField.tag == 5) {
         self.eventVenue = futureString;
     }
+    _changed = YES;
     
     return YES;
 }

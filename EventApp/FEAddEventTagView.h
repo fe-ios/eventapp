@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JSTokenField.h"
+#import "FEEvent.h"
 
 @protocol FEAddEventTagViewDelegate <NSObject>
 
@@ -21,7 +22,10 @@
 @property(nonatomic, retain) NSMutableArray *tags;
 @property(nonatomic, retain) NSMutableArray *searchTagData;
 @property(nonatomic, assign) NSObject <FEAddEventTagViewDelegate> *tagDelegate;
+@property(nonatomic, assign) BOOL changed;
 
 - (void)recoverLastInputAsFirstResponder;
+
+- (id)initWithEvent:(FEEvent *)aEvent;
 
 @end

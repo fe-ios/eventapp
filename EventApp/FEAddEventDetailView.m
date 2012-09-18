@@ -17,13 +17,26 @@
 
 @implementation FEAddEventDetailView
 
-@synthesize detailInput = _detailInput, detailInputBg = _detailInputBg, detailPlaceholder = _detailPlaceholder, detailDelegate = _detailDelegate;
+@synthesize detailInput = _detailInput, detailInputBg = _detailInputBg, detailPlaceholder = _detailPlaceholder, detailDelegate = _detailDelegate, changed = _changed;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         [self setup];
+    }
+    return self;
+}
+
+- (id)initWithEvent:(FEEvent *)event
+{
+    self = [super init];
+    if(self){
+        if(event.detail){
+            self.detailInput.text = event.detail;
+            self.detailPlaceholder.hidden = YES;
+            self.detailInput.scrollsToTop = YES;
+        }
     }
     return self;
 }
@@ -67,7 +80,7 @@
     }else {
         self.detailPlaceholder.hidden = YES;
     }
-    
+    _changed = YES;
     [self.detailDelegate handleDetailDidChange:textView.text];
 }
 

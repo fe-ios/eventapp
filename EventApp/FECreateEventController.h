@@ -11,9 +11,19 @@
 #import "FEAddEventDetailView.h"
 #import "FEAddEventView.h"
 #import "FEEventListController.h"
+#import "FEEvent.h"
+
+typedef enum{
+    EventEditorTypeCreate = 0,
+    EventEditorTypeModify = 1
+} EventEditorType;
+
 
 @interface FECreateEventController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, FEAddEventTagViewDelegate, FEAddEventDetailViewDelegate, FEAddEventViewDelegate>
 
-@property(nonatomic, retain) FEEventListController *listController;
+@property(nonatomic, assign) EventEditorType type;
+@property(nonatomic, retain) FEEvent *event;
+
+@property(nonatomic, retain) UIViewController *parentController;
 
 @end

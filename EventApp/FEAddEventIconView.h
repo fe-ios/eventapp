@@ -7,12 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FEEvent.h"
 
 @interface FEAddEventIconView : UIScrollView <UIKeyInput>
 
 @property(nonatomic, assign) UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate> *pickerDelegate;
+@property(nonatomic, assign) BOOL changed;
 
 - (void)setPreviewImage:(UIImage *)newImage;
 - (UIImage *)getPreviewImage;
+
+- (id)initWithEvent:(FEEvent *)aEvent;
+
 
 @end

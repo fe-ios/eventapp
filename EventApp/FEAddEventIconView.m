@@ -8,10 +8,11 @@
 
 #import "FEAddEventIconView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UIAsyncImageView.h"
 
 @interface FEAddEventIconView()
 
-@property(nonatomic, retain) UIImageView *previewImageView;
+@property(nonatomic, retain) UIAsyncImageView *previewImageView;
 
 @end
 
@@ -19,6 +20,7 @@
 
 @synthesize pickerDelegate = _pickerDelegate;
 @synthesize previewImageView = _previewImageView;
+@synthesize changed = _changed;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -34,6 +36,17 @@
     self = [super initWithCoder:aDecoder];
     if(self){
         [self initView];
+    }
+    return self;
+}
+
+- (id)initWithEvent:(FEEvent *)event
+{
+    self = [super init];
+    if(self){
+        if(event.logoURL && ![event.logoURL isEqualToString:@""]){
+            [self.previewImageView loadImageAsync:event.logoURL withQueue:nil];
+        }
     }
     return self;
 }
@@ -58,7 +71,7 @@
     iconBg.frame = CGRectMake(30, 19, 120, 120);
     [self addSubview:iconBg];
     
-    self.previewImageView = [[[UIImageView alloc] init] autorelease];
+    self.previewImageView = [[[UIAsyncImageView alloc] init] autorelease];
     self.previewImageView.frame = CGRectMake(31, 20, 118, 118);
     [self addSubview:self.previewImageView];
     
@@ -101,6 +114,7 @@
 - (void)setPreviewImage:(UIImage *)newImage
 {
     self.previewImageView.image = newImage;
+    _changed = YES;
 }
 
 - (UIImage *)getPreviewImage

@@ -182,13 +182,13 @@
     self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:backButton] autorelease];
     
     //edit button
-    UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    editButton.frame = CGRectMake(0, 0, 50, 31);
-    [editButton setTitle:@"编辑" forState:UIControlStateNormal];
-    editButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
-    [editButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 10, 15, 10)] forState:UIControlStateNormal];
-    [editButton addTarget:self action:@selector(editAction) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:editButton] autorelease];
+//    UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    editButton.frame = CGRectMake(0, 0, 50, 31);
+//    [editButton setTitle:@"编辑" forState:UIControlStateNormal];
+//    editButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
+//    [editButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 10, 15, 10)] forState:UIControlStateNormal];
+//    [editButton addTarget:self action:@selector(editAction) forControlEvents:UIControlEventTouchUpInside];
+//    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:editButton] autorelease];
     
     self.title = self.event.name;
     if(self.event.logoURL && ![self.event.logoURL isEqualToString:@""]){
@@ -211,6 +211,8 @@
     self.detailTable.frame = CGRectMake(10, 175, 300, 42*3+self.detailCellHeight);
     
     self.scrollView.contentSize = CGSizeMake(320, self.detailTable.frame.origin.y+self.detailTable.frame.size.height+10);
+    
+    [self checkEventStatus];
 }
 
 - (void)viewDidUnload
@@ -233,11 +235,6 @@
 - (void)backAction
 {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)editAction
-{
-    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -330,6 +327,24 @@
     button.userInteractionEnabled = NO;
     [button sizeToFit];
     return button;
+}
+
+- (void)checkEventStatus
+{
+    NSDate *now = [NSDate date];
+    NSComparisonResult result1 = [self.event.start_date compare:now];
+    if(!self.event.end_date){
+        if(result1 == NSOrderedAscending){
+            [self.statusView setHighlighted:YES];
+        }
+    }else {
+        NSComparisonResult result2 = [self.event.end_date compare:now];
+        if(result1 == NSOrderedAscending && result2 == NSOrderedDescending){
+            [self.statusView setHighlighted:YES];
+        }else if (result2 == NSOrderedAscending) {
+            [self.statusView setEnabled:NO];
+        }
+    }
 }
 
 @end

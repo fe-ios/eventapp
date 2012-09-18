@@ -14,6 +14,9 @@
 #import "FEDetailViewCell.h"
 #import "FETag.h"
 #import "FEUser.h"
+#import "ASIFormDataRequest.h"
+#import "FEServerAPI.h"
+#import "JSONKit.h"
 
 #define MAX_HEIGHT 2000
 
@@ -31,6 +34,7 @@
 @property (retain, nonatomic) UITableView *detailTable;
 @property (retain, nonatomic) UIButton *statusView;
 @property (assign, nonatomic) CGFloat detailCellHeight;
+@property (retain, nonatomic) UIButton *joinButton;
 
 @property(nonatomic, retain) NSOperationQueue *downloadQueue;
 
@@ -52,6 +56,7 @@
 @synthesize detailTable;
 @synthesize statusView;
 @synthesize detailCellHeight;
+@synthesize joinButton;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -78,6 +83,7 @@
     [detailTable release];
     [statusView release];
     [scrollView release];
+    [joinButton release];
 	[super dealloc];
 }
 
@@ -185,13 +191,13 @@
     self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:backButton] autorelease];
     
     //join button
-    UIButton *joinButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    joinButton.frame = CGRectMake(0, 0, 50, 31);
-    [joinButton setTitle:@"报名" forState:UIControlStateNormal];
-    joinButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
-    [joinButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 10, 15, 10)] forState:UIControlStateNormal];
-    [joinButton addTarget:self action:@selector(joinAction) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:joinButton] autorelease];
+    self.joinButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.joinButton.frame = CGRectMake(0, 0, 50, 31);
+    [self.joinButton setTitle:@"报名" forState:UIControlStateNormal];
+    self.joinButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
+    [self.joinButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 10, 15, 10)] forState:UIControlStateNormal];
+    [self.joinButton addTarget:self action:@selector(joinAction) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:self.joinButton] autorelease];
     
     self.title = self.event.name;
     if(self.event.logoURL && ![self.event.logoURL isEqualToString:@""]){
@@ -214,6 +220,24 @@
     self.detailTable.frame = CGRectMake(10, 175, 300, 42*3+self.detailCellHeight);
     
     self.scrollView.contentSize = CGSizeMake(320, self.detailTable.frame.origin.y+self.detailTable.frame.size.height+10);
+    
+    EventState status = [self checkEventStatus];
+    if(status == EventNotStarted){
+        BOOL requested = NO;
+        int self_id = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userid"] intValue];
+        for (int i = 0; i < self.event.requests.count; i++) {
+            FEUser *user = [self.event.requests objectAtIndex:i];
+            if(user.user_id == self_id){
+                requested = YES;
+                break;
+            }
+        }
+        if(requested){
+            [self setJoinButtonState:EventJoined];
+        }
+    }else {
+        [self setJoinButtonState:EventCanNotJoin];
+    }
 }
 
 - (void)viewDidUnload
@@ -236,11 +260,6 @@
 - (void)backAction
 {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)joinAction
-{
-    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -346,6 +365,74 @@
     button.userInteractionEnabled = NO;
     [button sizeToFit];
     return button;
+}
+
+- (int)checkEventStatus
+{
+    //未开始：0，进行中：1，已结束：-1
+    NSDate *now = [NSDate date];
+    NSComparisonResult result1 = [self.event.start_date compare:now];
+    if(!self.event.end_date){
+        if(result1 == NSOrderedAscending){
+            [self.statusView setHighlighted:YES];
+            return EventStarted;
+        }
+    }else {
+        NSComparisonResult result2 = [self.event.end_date compare:now];
+        if(result1 == NSOrderedAscending && result2 == NSOrderedDescending){
+            [self.statusView setHighlighted:YES];
+            return EventStarted;
+        }else if (result2 == NSOrderedAscending) {
+            [self.statusView setEnabled:NO];
+            return EventFinished;
+        }
+    }
+    return EventNotStarted;
+}
+
+- (void)joinAction
+{
+    int user_id = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userid"] intValue];
+    NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:@"password"];
+    NSString *eventURL = [NSString stringWithFormat:@"%@%@", API_BASE, API_REQUEST_EVENT];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:eventURL]];
+    [request setRequestMethod:@"POST"];
+    [request setPostValue:[NSNumber numberWithInt:user_id] forKey:@"user_id"];
+    [request setPostValue:password forKey:@"password"];
+    [request setPostValue:[NSNumber numberWithInt:self.event.event_id] forKey:@"event_id"];
+    
+    request.delegate = self;
+    [request startAsynchronous];
+    [request release];
+    self.joinButton.userInteractionEnabled = NO;
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    NSLog(@"%d, %@", request.responseStatusCode, request.responseString);
+    
+    self.joinButton.userInteractionEnabled = YES;
+    NSDictionary *result = [request.responseString objectFromJSONString];
+    NSString *status = [result objectForKey:@"status"];
+    
+    if([status isEqualToString:@"success"]){
+        [self setJoinButtonState:EventJoined];
+    }
+}
+
+- (void)setJoinButtonState:(EventState)state
+{
+    if(state == EventCanJoin){
+        self.joinButton.frame = CGRectMake(0, 0, 50, 31);
+        self.joinButton.userInteractionEnabled = YES;
+        [self.joinButton setTitle:@"报名" forState:UIControlStateNormal];
+    }else if (state == EventCanNotJoin) {
+        self.joinButton.hidden = YES;
+    }else if (state == EventJoined) {
+        self.joinButton.frame = CGRectMake(0, 0, 62, 31);
+        self.joinButton.enabled = NO;
+        [self.joinButton setTitle:@"已报名" forState:UIControlStateDisabled];
+    }
 }
 
 @end

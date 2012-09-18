@@ -23,13 +23,25 @@
 
 @implementation FEAddEventTagView
 
-@synthesize tagInput = _tagInput, tagInputBg = _tagInputBg, tags = _tags, tagDelegate = _tagDelegate, searchTagData = _searchTagData, searchList = _searchList, searchResult = _searchResult;
+@synthesize tagInput = _tagInput, tagInputBg = _tagInputBg, tags = _tags, tagDelegate = _tagDelegate, searchTagData = _searchTagData, searchList = _searchList, searchResult = _searchResult, changed = _changed;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         [self setup];
+    }
+    return self;
+}
+
+- (id)initWithEvent:(FEEvent *)event
+{
+    self = [super init];
+    if(self){
+        for (int i = 0; i < event.tags.count; i++) {
+            FETag *tag = (FETag *)[event.tags objectAtIndex:i];
+            [self.tagInput addTokenWithTitle:tag.name representedObject:tag.name];
+        }
     }
     return self;
 }
@@ -86,6 +98,7 @@
 	NSDictionary *aTag = [NSDictionary dictionaryWithObject:obj forKey:title];
 	[self.tags addObject:aTag];
     [self.tagDelegate handleTagDidChange:self.tags];
+    _changed = YES;
 }
 
 - (void)tokenField:(JSTokenField *)tokenField didRemoveToken:(NSString *)title representedObject:(id)obj
@@ -98,6 +111,7 @@
         }
     }
     [self.tagDelegate handleTagDidChange:self.tags];
+    _changed = YES;
 }
 
 - (BOOL)tokenFieldShouldReturn:(JSTokenField *)tokenField

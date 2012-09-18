@@ -219,7 +219,7 @@
 - (void)createEvent
 {
     FECreateEventController *createEventController = [[[FECreateEventController alloc] init] autorelease];
-    //createEventController.listController = self;
+    createEventController.parentController = self;
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:createEventController];
     [[AppDelegate sharedDelegate].navigationController presentModalViewController:navController animated:YES];
     [navController release];
