@@ -14,4 +14,6 @@
 
 @property(nonatomic, retain) FEEvent *event;
 
+-(void)updateView;
+
 @end

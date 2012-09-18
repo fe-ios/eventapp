@@ -8,7 +8,6 @@
 
 #import "BOMenuViewController.h"
 #import "BOMenuTableViewCell.h"
-#import "BOEventQuickAddViewController.h"
 #import "IIViewDeckController.h"
 #import "AppDelegate.h"
 #import "FEEventListController.h"
@@ -220,7 +219,7 @@
 - (void)createEvent
 {
     FECreateEventController *createEventController = [[[FECreateEventController alloc] init] autorelease];
-    //createEventController.listController = self;
+    createEventController.parentController = self;
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:createEventController];
     [[AppDelegate sharedDelegate].navigationController presentModalViewController:navController animated:YES];
     [navController release];

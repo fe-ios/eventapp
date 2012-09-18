@@ -59,7 +59,11 @@
     self.dataRequest.didStartSelector = @selector(didStartDownload:);
     self.dataRequest.didFinishSelector = @selector(didFinishDownload:);
     self.dataRequest.didFailSelector = @selector(didFailDownload:);
-    [queue addOperation:self.dataRequest];
+    if(queue){
+        [queue addOperation:self.dataRequest];
+    }else {
+        [self.dataRequest startAsynchronous];
+    }
 }
 
 - (void)didStartDownload:(ASIHTTPRequest *)request

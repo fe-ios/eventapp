@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "FECreateEventToolbar.h"
+#import "FEEvent.h"
 
 @protocol FEAddEventViewDelegate <NSObject>
 
@@ -22,6 +23,9 @@
 @property(nonatomic, retain) FECreateEventToolbar *toolbar;
 @property(nonatomic, assign) BOOL autoFocusFirstInput;
 @property(nonatomic, assign) NSObject<FEAddEventViewDelegate> *basicDelegate;
+@property(nonatomic, assign) BOOL changed;
+
+- (id)initWithEvent:(FEEvent *)aEvent;
 
 - (void)recoverLastInputAsFirstResponder;
 

@@ -41,7 +41,9 @@
 
 @implementation FECreateEventController
 
-@synthesize listController;
+@synthesize parentController;
+@synthesize type;
+@synthesize event;
 @synthesize currentView, toolbar;
 @synthesize addBasicView, addIconView, addTagView, addDetailView, addMemberView;
 
@@ -66,7 +68,8 @@ static bool isFirstLaunch = YES;
     [addTagView release];
     [addIconView release];
     [addMemberView release];
-    [listController release];
+    [parentController release];
+    [event release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
@@ -74,6 +77,9 @@ static bool isFirstLaunch = YES;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if(!self.type) self.type = EventEditorTypeCreate;
+    if(!self.event) self.event = [[[FEEvent alloc] init] autorelease];
     
     UIImageView *bgView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dotGreyBackground"]] autorelease];
     bgView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
@@ -87,7 +93,7 @@ static bool isFirstLaunch = YES;
     [self.toolbar addTarget:self action:@selector(toolbarActionChanged:) forControlEvents:UIControlEventValueChanged];
     
     //default view
-    self.addBasicView = [[[FEAddEventView alloc] init] autorelease];
+    self.addBasicView = [[[FEAddEventView alloc] initWithEvent:self.event] autorelease];
     self.addBasicView.frame = CGRectMake(0, 0, 320, 156);
     self.addBasicView.clipsToBounds = YES;
     self.addBasicView.basicDelegate = self;
@@ -106,15 +112,16 @@ static bool isFirstLaunch = YES;
     self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:leftButton] autorelease];
     
     //right button
+    NSString *actionLabel = self.type == EventEditorTypeCreate ? @"创建" : @"保存";
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightButton.frame = CGRectMake(0, 0, 75, 31);
-    [rightButton setTitle:@"创建活动" forState:UIControlStateNormal];
+    rightButton.frame = CGRectMake(0, 0, 50, 31);
+    [rightButton setTitle:actionLabel forState:UIControlStateNormal];
     rightButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
     [rightButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
     [rightButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
-    [rightButton addTarget:self action:@selector(createAction) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton addTarget:self action:@selector(editAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:rightButton] autorelease];
-    rightButton.enabled = NO;
+    rightButton.enabled = self.type != EventEditorTypeCreate;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
 }
@@ -150,6 +157,13 @@ static bool isFirstLaunch = YES;
     [UIView setAnimationDuration:animationDuration];
     self.toolbar.frame = toolbarRect;
     [UIView commitAnimations];
+    
+    if(self.type == EventEditorTypeModify){
+        [self.toolbar completeAction:CreateEventBasicAction completed:YES];
+        [self.toolbar completeAction:CreateEventIconAction completed:YES];
+        [self.toolbar completeAction:CreateEventTagAction completed:YES];
+        [self.toolbar completeAction:CreateEventDetailAction completed:YES]; 
+    }
 }
 
 - (void)viewDidUnload
@@ -215,7 +229,7 @@ static bool isFirstLaunch = YES;
             [[self getFirstResponderInView:self.view] resignFirstResponder];
             
             if(!self.addIconView){
-                self.addIconView = [[[FEAddEventIconView alloc] init] autorelease];
+                self.addIconView = [[[FEAddEventIconView alloc] initWithEvent:self.event] autorelease];
                 self.addIconView.frame = CGRectMake(320, 20+44, 320, 156);
                 self.addIconView.clipsToBounds = YES;
                 self.addIconView.pickerDelegate = self;
@@ -233,7 +247,7 @@ static bool isFirstLaunch = YES;
             [[self getFirstResponderInView:self.view] resignFirstResponder];
             
             if(!self.addTagView){
-                self.addTagView = [[[FEAddEventTagView alloc] init] autorelease];
+                self.addTagView = [[[FEAddEventTagView alloc] initWithEvent:self.event] autorelease];
                 self.addTagView.frame = CGRectMake(320, 20+44, 320, 156);
                 self.addTagView.clipsToBounds = YES;
                 self.addTagView.tagDelegate = self;
@@ -253,7 +267,7 @@ static bool isFirstLaunch = YES;
             [[self getFirstResponderInView:self.view] resignFirstResponder];
             
             if(!self.addDetailView){
-                self.addDetailView = [[[FEAddEventDetailView alloc] init] autorelease];
+                self.addDetailView = [[[FEAddEventDetailView alloc] initWithEvent:self.event] autorelease];
                 self.addDetailView.frame = CGRectMake(320, 20+44, 320, 156);
                 self.addDetailView.clipsToBounds = YES;
                 self.addDetailView.detailDelegate = self;
@@ -369,16 +383,26 @@ static bool isFirstLaunch = YES;
     [self.toolbar completeAction:CreateEventDetailAction completed:(detail.length>0)];
 }
 
-- (void)createAction
+- (void)editAction
+{
+    if(self.type == EventEditorTypeCreate){
+        [self createEvent];
+    }else {
+        [self modifyEvent];
+    }
+}
+
+- (void)createEvent
 {
     int user_id = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userid"] intValue];
     NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:@"password"];
-    NSMutableDictionary *eventData = [self.addBasicView getInputData];
+    
     NSString *eventURL = [NSString stringWithFormat:@"%@%@", API_BASE, API_EVENT_CREATE];
-    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:eventURL]];
+    ASIFormDataRequest *request = [[[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:eventURL]] autorelease];
     [request setRequestMethod:@"POST"];
     [request setPostValue:[NSNumber numberWithInt:user_id] forKey:@"user_id"];
     [request setPostValue:password forKey:@"password"];
+    NSMutableDictionary *eventData = [self.addBasicView getInputData];
     [request setPostValue:[eventData objectForKey:@"event_name"]forKey:@"event_name"];
     [request setPostValue:[eventData objectForKey:@"start_date"] forKey:@"start_date"];
     [request setPostValue:[eventData objectForKey:@"end_date"] forKey:@"end_date"];
@@ -413,7 +437,6 @@ static bool isFirstLaunch = YES;
     
     request.delegate = self;
     [request startAsynchronous];
-    [request release];
     
     self.navigationController.navigationBar.userInteractionEnabled = NO;
 }
@@ -428,10 +451,84 @@ static bool isFirstLaunch = YES;
     NSString *status = [result objectForKey:@"status"];
     
     if([status isEqualToString:@"success"]){
-        [self dismissModalViewControllerAnimated:YES];
-        if(self.listController){
-            [self.listController loadEvent];
+        if(self.type == EventEditorTypeCreate){
+            [self dismissModalViewControllerAnimated:YES];
+            if(self.parentController && [self.parentController respondsToSelector:@selector(updateView)]){
+                [self.parentController performSelector:@selector(updateView)];
+            }
+        }else {
+            self.addBasicView.changed = NO;
+            self.addIconView.changed = NO;
+            self.addTagView.changed = NO;
+            self.addDetailView.changed = NO;
+            [self.event translateFromJSONObject:[result objectForKey:@"event"]];
+            [self dismissModalViewControllerAnimated:YES];
+            if(self.parentController && [self.parentController respondsToSelector:@selector(updateView)]){
+                [self.parentController performSelector:@selector(updateView)];
+            }
         }
+    }
+}
+
+- (void)modifyEvent
+{
+    int user_id = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userid"] intValue];
+    NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:@"password"];
+    
+    NSString *eventURL = [NSString stringWithFormat:@"%@%@", API_BASE, API_EVENT_UPDATE];
+    ASIFormDataRequest *request = [[[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:eventURL]] autorelease];
+    [request setRequestMethod:@"POST"];
+    [request setPostValue:[NSNumber numberWithInt:user_id] forKey:@"user_id"];
+    [request setPostValue:password forKey:@"password"];
+    [request setPostValue:[NSNumber numberWithInt:self.event.event_id] forKey:@"event_id"];
+    
+    BOOL changed = NO;
+    if(self.addBasicView.changed || self.addDetailView.changed){
+        NSMutableDictionary *eventData = [self.addBasicView getInputData];
+        [request setPostValue:@"1" forKey:@"has_info"];
+        [request setPostValue:[eventData objectForKey:@"event_name"]forKey:@"event_name"];
+        [request setPostValue:[eventData objectForKey:@"start_date"] forKey:@"start_date"];
+        [request setPostValue:[eventData objectForKey:@"end_date"] forKey:@"end_date"];
+        [request setPostValue:[eventData objectForKey:@"city"] forKey:@"city"];
+        [request setPostValue:[eventData objectForKey:@"venue"] forKey:@"venue"];
+        [request setPostValue:self.addDetailView.detailInput.text forKey:@"detail"];
+        changed = YES;
+    }
+    
+    if(self.addTagView.changed){
+        NSMutableString *tagStr = [NSMutableString string];
+        for (int i = 0; i < self.addTagView.tags.count; i++) {
+            NSDictionary *tag = [self.addTagView.tags objectAtIndex:i];
+            NSString *tagValue = nil;
+            for(NSString *key in tag){
+                tagValue = [tag objectForKey:key];
+                break;
+            }
+            if(i == 0) [tagStr appendString:tagValue];
+            else [tagStr appendFormat:@",%@", tagValue];
+        }
+        NSString *eventTag = [NSString stringWithString:tagStr];
+        [request setPostValue:@"1" forKey:@"has_tag"];
+        [request setPostValue:eventTag forKey:@"tags"];
+        changed = YES;
+    }
+    
+    if(self.addIconView.changed){
+        UIImage *iconImage = [self.addIconView getPreviewImage];
+        if(iconImage){
+            NSData *iconImageData = UIImageJPEGRepresentation(iconImage, 1.0f);
+            [request setPostValue:@"1" forKey:@"has_icon"];
+            [request setData:iconImageData withFileName:@"upload.jpg" andContentType:@"image/jpeg" forKey:@"userfile"];
+        }else {
+            [request setPostValue:@"0" forKey:@"has_icon"];
+        }
+        changed = YES;
+    }
+    
+    if(changed){
+        request.delegate = self;
+        [request startAsynchronous];
+        self.navigationController.navigationBar.userInteractionEnabled = NO;
     }
 }
 

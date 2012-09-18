@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FEEvent.h"
 
 @protocol FEAddEventDetailViewDelegate <NSObject>
 
@@ -20,7 +21,11 @@
 
 @property(nonatomic, retain) UITextView *detailInput;
 @property(nonatomic, assign) NSObject<FEAddEventDetailViewDelegate> *detailDelegate;
+@property(nonatomic, assign) BOOL changed;
 
 - (void)recoverLastInputAsFirstResponder;
+
+- (id)initWithEvent:(FEEvent *)aEvent;
+
 
 @end

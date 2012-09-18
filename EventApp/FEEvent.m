@@ -18,6 +18,7 @@
 @synthesize name = _name;
 @synthesize start_date = _start_date;
 @synthesize end_date = _end_date;
+@synthesize city = _city;
 @synthesize venue = _venue;
 @synthesize address = _address;
 @synthesize desc = _desc;
@@ -27,6 +28,7 @@
 @synthesize isWatched = _isWatched;
 @synthesize tags = _tags;
 @synthesize attendees = _attendees;
+@synthesize requests = _requests;
 
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -38,6 +40,7 @@
         self.name = [aDecoder decodeObjectForKey:@"name"];
         self.start_date = [aDecoder decodeObjectForKey:@"start_date"];
         self.end_date = [aDecoder decodeObjectForKey:@"end_date"];
+        self.city = [aDecoder decodeObjectForKey:@"city"];
         self.venue = [aDecoder decodeObjectForKey:@"venue"];
         self.address = [aDecoder decodeObjectForKey:@"address"];
         self.desc = [aDecoder decodeObjectForKey:@"desc"];
@@ -46,6 +49,7 @@
         self.bannerURL = [aDecoder decodeObjectForKey:@"banner"];
         self.tags = [aDecoder decodeObjectForKey:@"tags"];
         self.attendees = [aDecoder decodeObjectForKey:@"attendees"];
+        self.requests = [aDecoder decodeObjectForKey:@"requests"];
     }
     return self;
 }
@@ -66,6 +70,7 @@
     self.name = [object objectForKey:@"name"];
     self.start_date = [NSDate dateFromString:[object objectForKey:@"start_date"] withFormat:@"YYYY-MM-dd HH:mm:ss"];
     self.end_date = [NSDate dateFromString:[object objectForKey:@"end_date"] withFormat:@"YYYY-MM-dd HH:mm:ss"];
+    self.city = [object objectForKey:@"city"];
     self.venue = [object objectForKey:@"venue"];
     self.address = [object objectForKey:@"address"];
     self.desc = [self getStringValue:object withKey:@"desc"];
@@ -88,6 +93,15 @@
         user.username = [attendeeObj objectForKey:@"username"];
         user.avatarURL = [attendeeObj objectForKey:@"avatar"];
         [self.attendees addObject:user];
+    }
+    
+    self.requests = [NSMutableArray array];
+    for (NSDictionary *requestObj in [object objectForKey:@"requests"]) {
+        FEUser *user = [[[FEUser alloc] init] autorelease];
+        user.user_id = [[requestObj objectForKey:@"user_id"] intValue];
+        user.username = [requestObj objectForKey:@"username"];
+        user.avatarURL = [requestObj objectForKey:@"avatar"];
+        [self.requests addObject:user];
     }
 }
 
@@ -122,6 +136,7 @@
     [aCoder encodeObject:self.name forKey:@"name"];
     [aCoder encodeObject:self.start_date forKey:@"start_date"];
     [aCoder encodeObject:self.end_date forKey:@"end_date"];
+    [aCoder encodeObject:self.city forKey:@"city"];
     [aCoder encodeObject:self.venue forKey:@"venue"];
     [aCoder encodeObject:self.venue forKey:@"address"];
     [aCoder encodeObject:self.desc forKey:@"desc"];
@@ -130,6 +145,7 @@
     [aCoder encodeObject:self.bannerURL forKey:@"banner"];
     [aCoder encodeObject:self.tags forKey:@"tags"];
     [aCoder encodeObject:self.attendees forKey:@"attendees"];
+    [aCoder encodeObject:self.requests forKey:@"requests"];
 }
 
 @end

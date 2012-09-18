@@ -13,6 +13,7 @@
 #import "FEDetailViewCell.h"
 #import "FETag.h"
 #import "FEUser.h"
+#import "FECreateEventController.h"
 
 #define MAX_HEIGHT 2000
 
@@ -210,11 +211,12 @@
     self.detailTable.frame = CGRectMake(10, 175, 300, 42*3+self.detailCellHeight);
     
     self.scrollView.contentSize = CGSizeMake(320, self.detailTable.frame.origin.y+self.detailTable.frame.size.height+10);
+    
+    [self checkEventStatus];
 }
 
 - (void)viewDidUnload
 {
-    [self setEvent:nil];
     [self setEventNameLabel:nil];
     [self setStartDateLabel:nil];
     [self setEndDateLabel:nil];
@@ -236,7 +238,12 @@
 
 - (void)editAction
 {
-    
+    FECreateEventController *editController = [[[FECreateEventController alloc] init] autorelease];
+    editController.type = EventEditorTypeModify;
+    editController.event = self.event;
+    editController.parentController = self;
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:editController];
+    [self presentModalViewController:navController animated:YES];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -329,6 +336,48 @@
     button.userInteractionEnabled = NO;
     [button sizeToFit];
     return button;
+}
+
+- (void)checkEventStatus
+{
+    NSDate *now = [NSDate date];
+    NSComparisonResult result1 = [self.event.start_date compare:now];
+    if(!self.event.end_date){
+        if(result1 == NSOrderedAscending){
+            [self.statusView setHighlighted:YES];
+        }
+    }else {
+        NSComparisonResult result2 = [self.event.end_date compare:now];
+        if(result1 == NSOrderedAscending && result2 == NSOrderedDescending){
+            [self.statusView setHighlighted:YES];
+        }else if (result2 == NSOrderedAscending) {
+            [self.statusView setEnabled:NO];
+        }
+    }
+}
+
+-(void)updateView
+{
+    self.title = self.event.name;
+    
+    if(self.event.logoURL && ![self.event.logoURL isEqualToString:@""]){
+        [self.bannerImage loadImageAsync:self.event.logoURL withQueue:self.downloadQueue];
+    }else {
+        self.bannerImage.image = [UIImage imageNamed:@"pictureGridPlaceholder"];
+    }
+    
+    self.startDateLabel.text = [NSString stringWithFormat:@"%@", [self.event.start_date stringWithFormat:@"YYYY年MM月dd日"]];
+    self.startTimeLabel.text = [NSString stringWithFormat:@"%@", [self.event.start_date stringWithFormat:@"HH:mm"]];
+    if(self.event.end_date){
+        self.endDateLabel.text = [NSString stringWithFormat:@"%@", [self.event.end_date stringWithFormat:@"YYYY年MM月dd日"]];
+        self.endTimeLabel.text = [NSString stringWithFormat:@"%@", [self.event.end_date stringWithFormat:@"HH:mm"]];
+    }else {
+        self.endDateLabel.text = @"";
+        self.endTimeLabel.text = @"------";
+    }
+    
+    [self checkEventStatus];
+    [self.detailTable reloadData];
 }
 
 @end
