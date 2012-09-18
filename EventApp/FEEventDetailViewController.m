@@ -8,6 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "FEEventDetailViewController.h"
+#import "FEEventAttendeeViewController.h"
 #import "NSDate+Helper.h"
 #import "UIAsyncImageView.h"
 #import "FEDetailViewCell.h"
@@ -319,6 +320,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //UITableViewCell *cell = (UITableViewCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
+	FEEventAttendeeViewController *attendeeView = [[FEEventAttendeeViewController alloc] init];
+	switch (indexPath.row) {
+        case 2:
+			[self.navigationController pushViewController:attendeeView animated:YES];
+            break;
+	default:
+            break;
+    }
 }
 
 - (CGFloat)getDetailTextHeight

@@ -8,7 +8,6 @@
 
 #import "BOMenuViewController.h"
 #import "BOMenuTableViewCell.h"
-#import "BOEventQuickAddViewController.h"
 #import "IIViewDeckController.h"
 #import "AppDelegate.h"
 #import "FEEventListController.h"
