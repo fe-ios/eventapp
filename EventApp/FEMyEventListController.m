@@ -65,7 +65,7 @@
     refreshButton.frame = CGRectMake(0, 0, 50, 31);
     [refreshButton setTitle:@"刷新" forState:UIControlStateNormal];
     refreshButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
-    [refreshButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 10, 15, 10)] forState:UIControlStateNormal];
+    [refreshButton setBackgroundImage:[[UIImage imageNamed:@"btn_title_bar"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 6, 15, 6)] forState:UIControlStateNormal];
     [refreshButton addTarget:self action:@selector(refreshAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:refreshButton] autorelease];
     

@@ -14,6 +14,7 @@
 #import "FETag.h"
 #import "FEUser.h"
 #import "FECreateEventController.h"
+#import "FEEventAttendeeViewController.h"
 
 #define MAX_HEIGHT 2000
 
@@ -177,8 +178,9 @@
     [backButton setTitle:@"返回" forState:UIControlStateNormal];
     backButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
     backButton.titleEdgeInsets = UIEdgeInsetsMake(0, 6, 0, 0);
-    [backButton setBackgroundImage:[[UIImage imageNamed:@"navBackButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 10)] forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    [backButton setBackgroundImage:[[UIImage imageNamed:@"btn_title_bar_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 13, 15, 8)] forState:UIControlStateNormal];
+	[backButton setBackgroundImage:[[UIImage imageNamed:@"btn_title_bar_back_pressed"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 13, 15, 8)] forState:UIControlStateHighlighted];
+   [backButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:backButton] autorelease];
     
     //edit button
@@ -186,7 +188,7 @@
     editButton.frame = CGRectMake(0, 0, 50, 31);
     [editButton setTitle:@"编辑" forState:UIControlStateNormal];
     editButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
-    [editButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 10, 15, 10)] forState:UIControlStateNormal];
+    [editButton setBackgroundImage:[[UIImage imageNamed:@"btn_title_bar"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 6, 15, 6)] forState:UIControlStateNormal];
     [editButton addTarget:self action:@selector(editAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:editButton] autorelease];
     
@@ -378,6 +380,18 @@
     
     [self checkEventStatus];
     [self.detailTable reloadData];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	FEEventAttendeeViewController *attendeeView = [[FEEventAttendeeViewController alloc] init];
+	switch (indexPath.row) {
+        case 2:
+			[self.navigationController pushViewController:attendeeView animated:YES];
+            break;
+	default:
+            break;
+    }
 }
 
 @end

@@ -107,7 +107,7 @@ static bool isFirstLaunch = YES;
     leftButton.frame = CGRectMake(0, 0, 50, 31);
     [leftButton setTitle:@"取消" forState:UIControlStateNormal];
     leftButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
-    [leftButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
+    [leftButton setBackgroundImage:[[UIImage imageNamed:@"btn_title_bar"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 6, 15, 6)] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:leftButton] autorelease];
     
@@ -117,7 +117,7 @@ static bool isFirstLaunch = YES;
     rightButton.frame = CGRectMake(0, 0, 50, 31);
     [rightButton setTitle:actionLabel forState:UIControlStateNormal];
     rightButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
-    [rightButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
+    [rightButton setBackgroundImage:[[UIImage imageNamed:@"btn_title_bar"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 6, 15, 6)] forState:UIControlStateNormal];
     [rightButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
     [rightButton addTarget:self action:@selector(editAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:rightButton] autorelease];

@@ -211,7 +211,7 @@
         [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
         cancelBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
         [cancelBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [cancelBtn setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
+        [cancelBtn setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 6, 15, 6)] forState:UIControlStateNormal];
         //[cancelBtn setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
         [cancelBtn addTarget:self action:@selector(cancelDateAction) forControlEvents:UIControlEventTouchUpInside];
         [self.dateSheet addSubview:cancelBtn];
@@ -221,7 +221,7 @@
         [confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
         [confirmBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
-        [confirmBtn setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateNormal];
+        [confirmBtn setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 6, 15, 6)] forState:UIControlStateNormal];
         //[confirmBtn setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 5, 10, 5)] forState:UIControlStateHighlighted];
         [confirmBtn addTarget:self action:@selector(confirmDateAction) forControlEvents:UIControlEventTouchUpInside];
         [self.dateSheet addSubview:confirmBtn];

@@ -8,7 +8,6 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "FEEventDetailViewController.h"
-#import "FEEventAttendeeViewController.h"
 #import "NSDate+Helper.h"
 #import "UIAsyncImageView.h"
 #import "FEDetailViewCell.h"
@@ -186,7 +185,8 @@
     [backButton setTitle:@"返回" forState:UIControlStateNormal];
     backButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
     backButton.titleEdgeInsets = UIEdgeInsetsMake(0, 6, 0, 0);
-    [backButton setBackgroundImage:[[UIImage imageNamed:@"navBackButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 10)] forState:UIControlStateNormal];
+    [backButton setBackgroundImage:[[UIImage imageNamed:@"btn_title_bar_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 13, 15, 8)] forState:UIControlStateNormal];
+    [backButton setBackgroundImage:[[UIImage imageNamed:@"btn_title_bar_back_pressed"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 13, 15, 8)] forState:UIControlStateHighlighted];
     [backButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:backButton] autorelease];
     
@@ -195,7 +195,7 @@
     self.joinButton.frame = CGRectMake(0, 0, 50, 31);
     [self.joinButton setTitle:@"报名" forState:UIControlStateNormal];
     self.joinButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
-    [self.joinButton setBackgroundImage:[[UIImage imageNamed:@"navButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 10, 15, 10)] forState:UIControlStateNormal];
+    [self.joinButton setBackgroundImage:[[UIImage imageNamed:@"btn_title_bar"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 6, 15, 6)] forState:UIControlStateNormal];
     [self.joinButton addTarget:self action:@selector(joinAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:self.joinButton] autorelease];
     
@@ -300,6 +300,7 @@
             for (int i = 0; i < self.event.tags.count; i++) {
                 FETag *tag = [self.event.tags objectAtIndex:i];
                 UIButton *tagView = [self createTagButton:tag.name];
+				[tagView setBackgroundImage:[[UIImage imageNamed:@"detail_tag_background"] resizableImageWithCapInsets:UIEdgeInsetsMake(12, 12, 12, 12)] forState:UIControlStateNormal];
                 tagView.frame = CGRectMake(left, top, tagView.frame.size.width, 24);
                 [cell.contentView addSubview:tagView];
                 left += tagView.frame.size.width + 5;
@@ -336,18 +337,6 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    //UITableViewCell *cell = (UITableViewCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
-	FEEventAttendeeViewController *attendeeView = [[FEEventAttendeeViewController alloc] init];
-	switch (indexPath.row) {
-        case 2:
-			[self.navigationController pushViewController:attendeeView animated:YES];
-            break;
-	default:
-            break;
-    }
-}
 
 - (CGFloat)getDetailTextHeight
 {

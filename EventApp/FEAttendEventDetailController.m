@@ -177,7 +177,8 @@
     [backButton setTitle:@"返回" forState:UIControlStateNormal];
     backButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
     backButton.titleEdgeInsets = UIEdgeInsetsMake(0, 6, 0, 0);
-    [backButton setBackgroundImage:[[UIImage imageNamed:@"navBackButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 10)] forState:UIControlStateNormal];
+    [backButton setBackgroundImage:[[UIImage imageNamed:@"btn_title_bar_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 13, 15, 8)] forState:UIControlStateNormal];
+    [backButton setBackgroundImage:[[UIImage imageNamed:@"btn_title_bar_back_pressed"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 13, 15, 8)] forState:UIControlStateHighlighted];
     [backButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:backButton] autorelease];
     
