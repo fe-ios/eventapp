@@ -485,6 +485,7 @@ static bool isFirstLaunch = YES;
     BOOL changed = NO;
     if(self.addBasicView.changed || self.addDetailView.changed){
         NSMutableDictionary *eventData = [self.addBasicView getInputData];
+        NSLog(@"info: %@", eventData);
         [request setPostValue:@"1" forKey:@"has_info"];
         [request setPostValue:[eventData objectForKey:@"event_name"]forKey:@"event_name"];
         [request setPostValue:[eventData objectForKey:@"start_date"] forKey:@"start_date"];

@@ -438,18 +438,12 @@
 
 - (NSMutableDictionary *)getInputData
 {
-    NSString *name = ((UITextField *)[self viewWithTag:1]).text;
-    NSString *startDate = [[NSDate dateFromString:((UITextField *)[self viewWithTag:2]).text withFormat:@"YY-MM-dd HH:mm"] string];
-    NSString *endDate = [[NSDate dateFromString:((UITextField *)[self viewWithTag:3]).text withFormat:@"YY-MM-dd HH:mm"] string];
-    NSString *city = ((UITextField *)[self viewWithTag:4]).text;
-    NSString *venue = ((UITextField *)[self viewWithTag:5]).text;
-    
     return [NSMutableDictionary dictionaryWithObjectsAndKeys:
-            name, @"event_name",
-            startDate, @"start_date",
-            endDate, @"end_date",
-            city, @"city",
-            venue, @"venue",
+            self.eventName, @"event_name",
+            self.eventStartDateStr, @"start_date",
+            self.eventEndDateStr, @"end_date",
+            self.eventCity, @"city",
+            self.eventVenue, @"venue",
             nil];
 }
 
