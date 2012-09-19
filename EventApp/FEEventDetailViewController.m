@@ -385,6 +385,9 @@
         }else if (result2 == NSOrderedAscending) {
             [self.statusView setEnabled:NO];
             return EventFinished;
+        }else {
+            [self.statusView setHighlighted:NO];
+            [self.statusView setEnabled:YES];
         }
     }
     return EventNotStarted;

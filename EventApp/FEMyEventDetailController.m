@@ -352,6 +352,9 @@
             [self.statusView setHighlighted:YES];
         }else if (result2 == NSOrderedAscending) {
             [self.statusView setEnabled:NO];
+        }else {
+            [self.statusView setHighlighted:NO];
+            [self.statusView setEnabled:YES];
         }
     }
 }
