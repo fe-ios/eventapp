@@ -11,7 +11,8 @@
 @interface FEUser : NSObject <NSCoding>
 
 @property(nonatomic, assign) int user_id;
-@property(nonatomic, retain) NSString *username;
-@property(nonatomic, retain) NSString *avatarURL;
+@property(nonatomic, copy) NSString *username;
+@property(nonatomic, copy) NSString *email;
+@property(nonatomic, copy) NSString *avatarURL;
 
 @end

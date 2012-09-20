@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FEEvent.h"
 
 @interface FEEventAttendeeViewController : UITableViewController
+
+@property(nonatomic, retain) FEEvent *event;
+@property(nonatomic, retain) id delegate;
+
+- (void)confirm:(NSNumber *)index;
+- (void)reject:(NSNumber *)index;
 
 @end

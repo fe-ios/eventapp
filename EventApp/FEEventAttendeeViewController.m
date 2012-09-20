@@ -7,25 +7,49 @@
 //
 #import "FEEventAttendeeViewController.h"
 #import "FEProfileViewController.h"
+#import "FEUser.h"
+#import "FEAttendeeCell.h"
+#import "ASIFormDataRequest.h"
+#import "FEServerAPI.h"
+#import "JSONKit.h"
 
 @interface FEEventAttendeeViewController ()
+
+@property(nonatomic, retain) NSMutableArray *attendUsers;
+@property(nonatomic, retain) NSOperationQueue *downloadQueue;
+@property(nonatomic, assign) int actionType;
+@property(nonatomic, assign) int actionIndex;
 
 @end
 
 @implementation FEEventAttendeeViewController
 
+@synthesize event = _event, delegate;
+@synthesize attendUsers, downloadQueue, actionType, actionIndex;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        self.attendUsers = [NSMutableArray array];
+        self.downloadQueue = [[[NSOperationQueue alloc] init] autorelease];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [_event release];
+    [attendUsers release];
+    [downloadQueue release];
+    [delegate release];
+    [super dealloc];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"参加人员";
 	[self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 	self.view.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0];
 }
@@ -33,8 +57,6 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -42,18 +64,42 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)setEvent:(FEEvent *)aEvent
+{
+    if(_event != aEvent){
+        [_event release];
+        _event = [aEvent retain];
+        [self updateAttendeeList];
+    }
+}
+
+- (void)updateAttendeeList
+{
+    [self.attendUsers removeAllObjects];
+    
+    for (int i = 0; i < _event.requests.count; i++) {
+        NSDictionary *request = [_event.requests objectAtIndex:i];
+        [self.attendUsers addObject:request];
+    }
+    
+    for (int i = 0; i < _event.attendees.count; i++) {
+        FEUser *user = [_event.attendees objectAtIndex:i];
+        NSMutableDictionary *obj = [NSMutableDictionary dictionary];
+        [obj setObject:user forKey:@"user"];
+        [self.attendUsers addObject:obj];
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    return 6;
+    return self.attendUsers.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -63,99 +109,29 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"AttendeeCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"FEAttendeeCellIdentifier";
+    FEAttendeeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+		cell = [[FEAttendeeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.avatarView.cornerRadius = 6.0;
 	}
-	//Cell 分割线
-	UIImageView *separator = [[UIImageView alloc] initWithFrame:CGRectMake(0, 43, 320, 1)];
-	[separator setImage:[UIImage imageNamed:@"attendee_separator"]];
-	[cell.contentView addSubview:separator];
-	//临时头像
-	UIImageView *avatar_tmp = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-	[avatar_tmp setImage:[UIImage imageNamed:@"avatar_tmp"]];
-	[cell.contentView addSubview:avatar_tmp];
-	//checkmark
-	UIImageView *checkmark = [[UIImageView alloc] initWithFrame:CGRectMake(320-24-10, 10, 24, 24)];
-	[checkmark setImage:[UIImage imageNamed:@"checkmark"]];
-	//
-	UIImage *greenBtnImage = [[UIImage imageNamed:@"attendee_btn_approve"] resizableImageWithCapInsets:UIEdgeInsetsMake(14, 16, 14, 16)];
-	UIButton *accept = [[UIButton alloc] initWithFrame:CGRectMake(320-10-56, 8, 56, 28)];
-	[accept setBackgroundImage:greenBtnImage forState:UIControlStateNormal];
-	[accept setTitle:@"确认" forState:UIControlStateNormal];
-
-	UIImage *redBtnImage = [[UIImage imageNamed:@"attendee_btn_reject"] resizableImageWithCapInsets:UIEdgeInsetsMake(14, 16, 14, 16)];
-	UIButton *reject = [[UIButton alloc] initWithFrame:CGRectMake(320-10-56-5-56, 8, 56, 28)];
-	[reject setBackgroundImage:redBtnImage forState:UIControlStateNormal];
-	[reject setTitle:@"拒绝" forState:UIControlStateNormal];
-	
-	UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(54, 14, 160, 20)];
-	[name setBackgroundColor:[UIColor clearColor]];
-	[cell.contentView addSubview:name];
-	
-	switch (indexPath.row) {
-	  case 0:
-		[name setText:@"Jean Albus"];
-		[cell.contentView addSubview:checkmark];
-		break;
-	  case 1:
-		[name setText:@"Marvellous"];
-		[cell.contentView addSubview:accept];
-		[cell.contentView addSubview:reject];
-		break;
-	  case 2:
-		[name setText:@"Gry"];
-		[cell.contentView addSubview:checkmark];
-		break;
-	  case 3:
-		[name setText:@"Mary Hockenbery"];
-		[cell.contentView addSubview:checkmark];
-		break;
-	  default:
-		break;
-	}
+    
+    NSDictionary *obj = [self.attendUsers objectAtIndex:indexPath.row];
+    FEUser *user = [obj objectForKey:@"user"];
+    int request_id = [[obj objectForKey:@"request_id"] intValue];
+    
+    cell.controller = self;
+    cell.index = indexPath.row;
+    cell.type = !request_id ? AttendeeCellTypeApproved : AttendeeCellTypeNeedToApprove;
+    cell.nameLabel.text = user.username;
+    if(user.avatarURL && ![user.avatarURL isEqualToString:@""]){
+        [cell.avatarView loadImageAsync:user.avatarURL withQueue:self.downloadQueue];
+    }else {
+        cell.avatarView.image = [UIImage imageNamed:@"avatar_tmp"];
+    }
+    
 	return cell;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
@@ -163,6 +139,57 @@
 {
 		FEProfileViewController *profileView = [[FEProfileViewController alloc] init];
 		[self.navigationController pushViewController:profileView animated:YES];
+}
+
+- (void)confirm:(NSNumber *)index
+{
+    self.actionType = 1;
+    self.actionIndex = [index intValue];
+    [self sendApproveRequest:self.actionType];
+}
+
+- (void)reject:(NSNumber *)index
+{
+    self.actionType = 0;
+    self.actionIndex = [index intValue];
+    [self sendApproveRequest:self.actionType];
+}
+
+- (void)sendApproveRequest:(int)action
+{
+    NSDictionary *obj = [self.attendUsers objectAtIndex:self.actionIndex];
+    int request_id = [[obj objectForKey:@"request_id"] intValue];
+    if(!request_id) return;
+    
+    int user_id = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userid"] intValue];
+    NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:@"password"];
+    NSString *eventURL = [NSString stringWithFormat:@"%@%@", API_BASE, API_APPROVE_REQUEST];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:eventURL]];
+    [request setRequestMethod:@"POST"];
+    [request setPostValue:[NSNumber numberWithInt:user_id] forKey:@"owner_id"];
+    [request setPostValue:password forKey:@"password"];
+    [request setPostValue:[NSNumber numberWithInt:request_id] forKey:@"request_id"];
+    [request setPostValue:[NSNumber numberWithInt:action] forKey:@"action"];
+    
+    request.delegate = self;
+    [request startAsynchronous];
+    [request release];
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    NSLog(@"%d, %@", request.responseStatusCode, request.responseString);
+    
+    NSDictionary *result = [request.responseString objectFromJSONString];
+    NSString *status = [result objectForKey:@"status"];
+    if([status isEqualToString:@"success"]){
+        [self.event translateFromJSONObject:[result objectForKey:@"event"]];
+        [self updateAttendeeList];
+        [self.tableView reloadData];
+        if([self.delegate respondsToSelector:@selector(updateView)]){
+            [self.delegate performSelector:@selector(updateView)];
+        }
+    }
 }
 
 @end

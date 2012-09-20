@@ -221,23 +221,7 @@
     
     self.scrollView.contentSize = CGSizeMake(320, self.detailTable.frame.origin.y+self.detailTable.frame.size.height+10);
     
-    EventState status = [self checkEventStatus];
-    if(status == EventNotStarted){
-        BOOL requested = NO;
-        int self_id = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userid"] intValue];
-        for (int i = 0; i < self.event.requests.count; i++) {
-            FEUser *user = [self.event.requests objectAtIndex:i];
-            if(user.user_id == self_id){
-                requested = YES;
-                break;
-            }
-        }
-        if(requested){
-            [self setJoinButtonState:EventJoined];
-        }
-    }else {
-        [self setJoinButtonState:EventCanNotJoin];
-    }
+    [self checkEventStatus];
 }
 
 - (void)viewDidUnload
@@ -361,24 +345,61 @@
 - (int)checkEventStatus
 {
     //未开始：0，进行中：1，已结束：-1
+    EventState status = EventNotStarted;
     NSDate *now = [NSDate date];
     NSComparisonResult result1 = [self.event.start_date compare:now];
     if(!self.event.end_date){
         if(result1 == NSOrderedAscending){
             [self.statusView setHighlighted:YES];
-            return EventStarted;
+            status = EventStarted;
         }
     }else {
         NSComparisonResult result2 = [self.event.end_date compare:now];
         if(result1 == NSOrderedAscending && result2 == NSOrderedDescending){
             [self.statusView setHighlighted:YES];
-            return EventStarted;
+            status = EventStarted;
         }else if (result2 == NSOrderedAscending) {
             [self.statusView setEnabled:NO];
-            return EventFinished;
+            status = EventFinished;
+        }else {
+            [self.statusView setHighlighted:NO];
+            [self.statusView setEnabled:YES];
+            status = EventNotStarted;
         }
     }
-    return EventNotStarted;
+    
+    int self_id = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userid"] intValue];
+    BOOL joined = NO;
+    for (int i = 0; i < self.event.attendees.count; i++) {
+        FEUser *attendee = [self.event.attendees objectAtIndex:i];
+        if(attendee.user_id == self_id){
+            joined = YES;
+            break;
+        }
+    }
+    if(joined){
+        [self setJoinButtonState:EventJoined];
+        return status;
+    }
+    
+    if(status == EventNotStarted){
+        BOOL requested = NO;
+        for (int i = 0; i < self.event.requests.count; i++) {
+            NSDictionary *requestObj = [self.event.requests objectAtIndex:i];
+            FEUser *user = [requestObj objectForKey:@"user"];
+            if(user.user_id == self_id){
+                requested = YES;
+                break;
+            }
+        }
+        if(requested){
+            [self setJoinButtonState:EventRequested];
+        }
+    }else {
+        [self setJoinButtonState:EventCanNotJoin];
+    }
+    
+    return status;
 }
 
 - (void)joinAction
@@ -407,7 +428,7 @@
     NSString *status = [result objectForKey:@"status"];
     
     if([status isEqualToString:@"success"]){
-        [self setJoinButtonState:EventJoined];
+        [self setJoinButtonState:EventRequested];
     }
 }
 
@@ -419,10 +440,14 @@
         [self.joinButton setTitle:@"报名" forState:UIControlStateNormal];
     }else if (state == EventCanNotJoin) {
         self.joinButton.hidden = YES;
-    }else if (state == EventJoined) {
+    }else if (state == EventRequested) {
         self.joinButton.frame = CGRectMake(0, 0, 62, 31);
         self.joinButton.enabled = NO;
         [self.joinButton setTitle:@"已报名" forState:UIControlStateDisabled];
+    }else if (state == EventJoined) {
+        self.joinButton.frame = CGRectMake(0, 0, 62, 31);
+        self.joinButton.enabled = NO;
+        [self.joinButton setTitle:@"已参加" forState:UIControlStateDisabled];
     }
 }
 
