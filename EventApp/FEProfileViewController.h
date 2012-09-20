@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface FEProfileViewController : UIViewController
+@property (retain, nonatomic) IBOutlet UIImageView *avatarFrame;
+@property (retain, nonatomic) IBOutlet UILabel *userName;
+@property (retain, nonatomic) IBOutlet UILabel *email;
 @property (retain, nonatomic) IBOutlet UIButton *profileTabAttendButton;
 @property (retain, nonatomic) IBOutlet UIButton *profileTabOrgButton;
 

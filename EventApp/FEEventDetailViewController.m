@@ -309,6 +309,8 @@
             
         case 2:
             cell.imageView.image = [UIImage imageNamed:@"detail_icon_people"];
+			cell.detailTextLabel.text = @"更多";
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             left = 36.0;
             top = 9.0;
             for (int i = 0; i < self.event.attendees.count; i++) {

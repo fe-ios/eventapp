@@ -8,11 +8,15 @@
 
 #import "FEProfileViewController.h"
 
+
 @interface FEProfileViewController ()
 
 @end
 
 @implementation FEProfileViewController
+@synthesize avatarFrame;
+@synthesize userName;
+@synthesize email;
 @synthesize profileTabAttendButton;
 @synthesize profileTabOrgButton;
 
@@ -28,14 +32,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	userName.text = (NSString *) [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+	email.text = (NSString *) [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+	UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 64, 64)];
+	[userAvatar setImage:[UIImage imageNamed:@"temp"]];
+	[self.view insertSubview:userAvatar belowSubview:avatarFrame];
 	[profileTabOrgButton setSelected:YES];
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)viewDidUnload
 {
     [self setProfileTabAttendButton:nil];
     [self setProfileTabOrgButton:nil];
+	[self setUserName:nil];
+	[self setEmail:nil];
+	[self setAvatarFrame:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -58,6 +69,9 @@
 - (void)dealloc {
     [profileTabAttendButton release];
     [profileTabOrgButton release];
+	[userName release];
+	[email release];
+	[avatarFrame release];
     [super dealloc];
 }
 @end

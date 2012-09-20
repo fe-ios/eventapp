@@ -86,6 +86,11 @@
 		81525B461608791800DC312C /* profile_segmentLeft_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 81525B271608791800DC312C /* profile_segmentLeft_pressed@2x.png */; };
 		81525B471608791800DC312C /* profile_photo_frame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 81525B281608791800DC312C /* profile_photo_frame@2x.png */; };
 		81525B4D16097B4200DC312C /* detail_tag_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 81525B4C16097B4200DC312C /* detail_tag_background@2x.png */; };
+		8162D1C21609A12E005459ED /* FESettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8162D1C01609A12E005459ED /* FESettingsViewController.m */; };
+		8162D1C31609A12E005459ED /* FESettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8162D1C11609A12E005459ED /* FESettingsViewController.xib */; };
+		8162D1D01609B5D8005459ED /* temp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8162D1CF1609B5D8005459ED /* temp@2x.png */; };
+		8162D1D41609BBCD005459ED /* FEProfileSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8162D1D21609BBCD005459ED /* FEProfileSettingsViewController.m */; };
+		8162D1D51609BBCD005459ED /* FEProfileSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8162D1D31609BBCD005459ED /* FEProfileSettingsViewController.xib */; };
 		81AA8E6615D4E0D20019748C /* tool_bar_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 81AA8E6415D4E0D20019748C /* tool_bar_gray.png */; };
 		81AA8E6715D4E0D20019748C /* tool_bar_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 81AA8E6515D4E0D20019748C /* tool_bar_gray@2x.png */; };
 		81D756361603110E009D0A8E /* menu_user_addEvent_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 81D7562D1603110D009D0A8E /* menu_user_addEvent_pressed@2x.png */; };
@@ -435,6 +440,13 @@
 		81525B271608791800DC312C /* profile_segmentLeft_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "profile_segmentLeft_pressed@2x.png"; path = "EventApp/Resource/personal/profile_segmentLeft_pressed@2x.png"; sourceTree = "<group>"; };
 		81525B281608791800DC312C /* profile_photo_frame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "profile_photo_frame@2x.png"; path = "EventApp/Resource/personal/profile_photo_frame@2x.png"; sourceTree = "<group>"; };
 		81525B4C16097B4200DC312C /* detail_tag_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "detail_tag_background@2x.png"; path = "EventApp/image_detail/detail_tag_background@2x.png"; sourceTree = "<group>"; };
+		8162D1BF1609A12E005459ED /* FESettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FESettingsViewController.h; sourceTree = "<group>"; };
+		8162D1C01609A12E005459ED /* FESettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FESettingsViewController.m; sourceTree = "<group>"; };
+		8162D1C11609A12E005459ED /* FESettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FESettingsViewController.xib; sourceTree = "<group>"; };
+		8162D1CF1609B5D8005459ED /* temp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "temp@2x.png"; path = "EventApp/Resource/personal/temp@2x.png"; sourceTree = "<group>"; };
+		8162D1D11609BBCC005459ED /* FEProfileSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEProfileSettingsViewController.h; sourceTree = "<group>"; };
+		8162D1D21609BBCD005459ED /* FEProfileSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEProfileSettingsViewController.m; sourceTree = "<group>"; };
+		8162D1D31609BBCD005459ED /* FEProfileSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FEProfileSettingsViewController.xib; sourceTree = "<group>"; };
 		81AA8E6415D4E0D20019748C /* tool_bar_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tool_bar_gray.png; path = EventApp/images_toolbar/tool_bar_gray.png; sourceTree = "<group>"; };
 		81AA8E6515D4E0D20019748C /* tool_bar_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tool_bar_gray@2x.png"; path = "EventApp/images_toolbar/tool_bar_gray@2x.png"; sourceTree = "<group>"; };
 		81D7562D1603110D009D0A8E /* menu_user_addEvent_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu_user_addEvent_pressed@2x.png"; path = "EventApp/images_menu/menu_user_addEvent_pressed@2x.png"; sourceTree = "<group>"; };
@@ -813,14 +825,20 @@
 			name = viewdeck;
 			sourceTree = "<group>";
 		};
-		81F29AFE160841FE0013C0F0 /* personal */ = {
+		81F29AFE160841FE0013C0F0 /* setting */ = {
 			isa = PBXGroup;
 			children = (
 				81F29B2B16084B900013C0F0 /* FEProfileViewController.h */,
 				81F29B2C16084B900013C0F0 /* FEProfileViewController.m */,
 				81F29B2D16084B900013C0F0 /* FEProfileViewController.xib */,
+				8162D1BF1609A12E005459ED /* FESettingsViewController.h */,
+				8162D1C01609A12E005459ED /* FESettingsViewController.m */,
+				8162D1C11609A12E005459ED /* FESettingsViewController.xib */,
+				8162D1D11609BBCC005459ED /* FEProfileSettingsViewController.h */,
+				8162D1D21609BBCD005459ED /* FEProfileSettingsViewController.m */,
+				8162D1D31609BBCD005459ED /* FEProfileSettingsViewController.xib */,
 			);
-			name = personal;
+			name = setting;
 			sourceTree = "<group>";
 		};
 		C712727A160316850083B9DA /* attend_event */ = {
@@ -878,7 +896,7 @@
 				C7DECB5015BD272300E1DCC7 /* images */,
 				C7DF13DD15A2E11000B73A6B /* Libraries */,
 				C7DF13B215A2DB9E00B73A6B /* login */,
-				81F29AFE160841FE0013C0F0 /* personal */,
+				81F29AFE160841FE0013C0F0 /* setting */,
 				C7E3B1411602C5D400891B7D /* my_event */,
 				C7D39E8415B907D2009EE420 /* resources */,
 				C7DCA4E315AEB74F0019DCFB /* start_view */,
@@ -1045,6 +1063,7 @@
 		C7DECB5015BD272300E1DCC7 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				8162D1CF1609B5D8005459ED /* temp@2x.png */,
 				81525B4C16097B4200DC312C /* detail_tag_background@2x.png */,
 				81525B0A1608791800DC312C /* profile_icon_mail_disabled.png */,
 				81525B0B1608791800DC312C /* profile_icon_message.png */,
@@ -1754,6 +1773,9 @@
 				81525B461608791800DC312C /* profile_segmentLeft_pressed@2x.png in Resources */,
 				81525B471608791800DC312C /* profile_photo_frame@2x.png in Resources */,
 				81525B4D16097B4200DC312C /* detail_tag_background@2x.png in Resources */,
+				8162D1C31609A12E005459ED /* FESettingsViewController.xib in Resources */,
+				8162D1D01609B5D8005459ED /* temp@2x.png in Resources */,
+				8162D1D51609BBCD005459ED /* FEProfileSettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1824,6 +1846,8 @@
 				C7127281160317770083B9DA /* FEAttendEventDetailController.m in Sources */,
 				81F29AF2160712960013C0F0 /* FEEventAttendeeViewController.m in Sources */,
 				81F29B2E16084B900013C0F0 /* FEProfileViewController.m in Sources */,
+				8162D1C21609A12E005459ED /* FESettingsViewController.m in Sources */,
+				8162D1D41609BBCD005459ED /* FEProfileSettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

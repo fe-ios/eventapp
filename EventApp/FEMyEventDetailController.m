@@ -264,7 +264,7 @@
     static NSString *cellIdentifier = @"MyEventDetailViewCellIdentifier";
     FEDetailViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if(!cell){
-        cell = [[[FEDetailViewCell alloc] init] autorelease];
+        cell = [[[FEDetailViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier] autorelease];
         cell.backgroundView = [[[UIImageView alloc] init] autorelease];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textLabel.numberOfLines = 0;
@@ -294,6 +294,8 @@
             
         case 2:
             cell.imageView.image = [UIImage imageNamed:@"detail_icon_people"];
+			cell.detailTextLabel.text = @"更多";
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             left = 36.0;
             top = 9.0;
             for (int i = 0; i < self.event.attendees.count; i++) {

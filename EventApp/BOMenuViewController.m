@@ -14,6 +14,7 @@
 #import "FEMyEventListController.h"
 #import "FEAttendEventListController.h"
 #import "FECreateEventController.h"
+#import "FESettingsViewController.h"
 
 @interface BOMenuViewController ()
 
@@ -58,7 +59,7 @@
 	userAvatar = [[UIButton alloc] initWithFrame:CGRectMake(10, 6, 32, 32)];
 	[userAvatar setImage:[UIImage imageNamed:@"menu_user_avatar"] forState:UIControlStateNormal];
 	[tableHeaderView addSubview:userAvatar];
-
+	
 	userName = [[UILabel alloc] initWithFrame:CGRectMake(50, 14, 90, 18)];
 	[userName setText:@"aUserName"];
 	[userName setFont:[UIFont systemFontOfSize:14.0f]];
@@ -145,7 +146,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"MenuCell";
     BOMenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (!cell) {
 		cell = [[BOMenuTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -193,6 +194,11 @@
     
     if(indexPath.row == 4){
         [[AppDelegate sharedDelegate] logout];
+    }else if (indexPath.row == 3) {
+        FESettingsViewController *settingsController = [[[FESettingsViewController alloc] initWithNibName:@"FESettingsViewController" bundle:nil] autorelease];
+        [self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
+            [[AppDelegate sharedDelegate].navigationController pushViewController:settingsController animated:NO];
+        }];
     }else if (indexPath.row == 2) {
         FEMyEventListController *myEventController = [[[FEMyEventListController alloc] init] autorelease];
         [self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
@@ -208,11 +214,6 @@
         [self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
             [[AppDelegate sharedDelegate].navigationController pushViewController:eventController animated:NO];
         }];
-    }else {
-//        BOEventQuickAddViewController *quickAdd = [[BOEventQuickAddViewController alloc] initWithNibName:@"BOEventQuickAddViewController" bundle:nil];
-//        [self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
-//            [self.viewDeckController.centerController presentModalViewController:quickAdd animated:YES];
-//        }];
     }
 }
 
