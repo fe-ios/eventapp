@@ -100,6 +100,7 @@
 	}
 	if (indexPath.section == 1 && indexPath.row == 0) {
 		cell.textLabel.text = @"版本";
+		cell.detailTextLabel.text = @"1.0";
 	}
 	if (indexPath.section == 1 && indexPath.row == 1) {
 		cell.textLabel.text = @"关于";
