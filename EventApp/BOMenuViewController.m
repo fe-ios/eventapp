@@ -46,7 +46,7 @@
 	self.menuTableView.dataSource = self;
 	[self.menuTableView setBackgroundColor:[UIColor clearColor]];
 	
-	//account cell
+	//TableHeaderView cell
 	UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
 	UIImageView *headerViewBg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
 	[headerViewBg setImage:[UIImage imageNamed:@"menu_user_bg"]];
@@ -79,6 +79,7 @@
     [btnAddEvent addTarget:self action:@selector(createEvent) forControlEvents:UIControlEventTouchUpInside];
 
 	[tableHeaderView addSubview:btnAddEvent];
+	self.menuTableView.tableHeaderView = tableHeaderView;
 	
 	//guest
 //	[headerViewSeparator setFrame:CGRectMake(120, 3, 1, 36)];
@@ -105,7 +106,16 @@
 //
 //	[tableHeaderView addSubview:btnLogin];
 
-	self.menuTableView.tableHeaderView = tableHeaderView;
+	
+	//TableFooterView
+//	UIView *tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+//	
+//	UILabel *logoutLabel = [[UILabel alloc] initWithFrame:CGRectMake(72, 13, 100, 24)];
+//	[logoutLabel setText:@"退出登录"];
+//	[tableFooterView addSubview:logoutLabel];
+//	
+//	self.menuTableView.tableFooterView = tableFooterView;
+
 }
 
 - (void)viewDidUnload
@@ -141,7 +151,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return 8;
+	return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -158,9 +168,9 @@
 			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"11-glyphish-clock-blue"]];
 			break;
 		case 1:
-			[cell.menuLabel setText:@"参与活动"];
-			[cell.menuIcon setImage:[UIImage imageNamed:@"7-glyphish-map-marker-gray"]];
-			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"7-glyphish-map-marker-blue"]];
+			[cell.menuLabel setText:@"参加活动"];
+			[cell.menuIcon setImage:[UIImage imageNamed:@"28-glyphish-star-gray"]];
+			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"28-glyphish-star-blue"]];
 			break;
 		case 2:
 			[cell.menuLabel setText:@"我的活动"];

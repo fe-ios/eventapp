@@ -286,6 +286,7 @@
             for (int i = 0; i < self.event.tags.count; i++) {
                 FETag *tag = [self.event.tags objectAtIndex:i];
                 UIButton *tagView = [self createTagButton:tag.name];
+				[tagView setBackgroundImage:[[UIImage imageNamed:@"detail_tag_background"] resizableImageWithCapInsets:UIEdgeInsetsMake(12, 12, 12, 12)] forState:UIControlStateNormal];
                 tagView.frame = CGRectMake(left, top, tagView.frame.size.width, 24);
                 [cell.contentView addSubview:tagView];
                 left += tagView.frame.size.width + 5;

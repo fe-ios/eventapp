@@ -82,7 +82,7 @@
         self.confirmButton = [[UIButton alloc] initWithFrame:CGRectMake(320-10-56, 8, 56, 28)];
         [self.confirmButton setBackgroundImage:[[UIImage imageNamed:@"attendee_btn_approve"] resizableImageWithCapInsets:UIEdgeInsetsMake(14, 16, 14, 16)] forState:UIControlStateNormal];
         self.confirmButton.titleLabel.font = [UIFont systemFontOfSize:16];
-        [self.confirmButton setTitle:@"确认" forState:UIControlStateNormal];
+        [self.confirmButton setTitle:@"通过" forState:UIControlStateNormal];
         [self.contentView addSubview:self.confirmButton];
         [self.confirmButton addTarget:self action:@selector(confirm) forControlEvents:UIControlEventTouchUpInside];
         

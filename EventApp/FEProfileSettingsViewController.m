@@ -13,6 +13,9 @@
 @end
 
 @implementation FEProfileSettingsViewController
+@synthesize userAvatar;
+@synthesize photoActionSheet;
+@synthesize imagePickerController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -41,6 +44,67 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void) changeAvatar
+{
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+		[self photoFromLibrary];
+    } else {
+		photoActionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相机",@"专辑",nil];
+		[photoActionSheet showInView:self.navigationController.view];
+	}
+}
+- (void) photoFromLibrary
+{
+	if (imagePickerController==nil) {
+  		imagePickerController = [[UIImagePickerController alloc] init];
+	}
+	imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+	imagePickerController.delegate = self;
+	[self presentModalViewController:imagePickerController animated:YES];
+}
+
+- (void) photoFromCamera
+{
+	if (imagePickerController==nil) {
+  		imagePickerController = [[UIImagePickerController alloc] init];
+	}
+	imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+	imagePickerController.delegate = self;
+	[self presentModalViewController:imagePickerController animated:YES];
+}
+
+#pragma mark - Image Resize
+
+- (UIImage *)setThumbnailFromImage:(UIImage *)image withSize:(CGSize) size{
+    CGSize origImageSize = [image size];
+
+    CGRect newRect;
+    newRect.origin = CGPointZero;
+    newRect.size = size;
+
+    float ratio = MAX(newRect.size.width/origImageSize.width,
+                      newRect.size.height/origImageSize.height);
+
+    UIGraphicsBeginImageContext(newRect.size);
+
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:newRect
+                                                    cornerRadius:0.0];
+    [path addClip];
+    CGRect projectRect;
+    projectRect.size.width = ratio * origImageSize.width;
+    projectRect.size.height = ratio * origImageSize.height;
+    projectRect.origin.x = (newRect.size.width - projectRect.size.width) / 2.0;
+    projectRect.origin.y = (newRect.size.height - projectRect.size.height) / 2.0;
+
+    [image drawInRect:projectRect];
+
+    UIImage *small = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+	return small;
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -65,7 +129,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-	UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(160-32, 8, 64, 64)];
+	userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(160-32, 8, 64, 64)];
 	[userAvatar setImage:[UIImage imageNamed:@"temp"]];
 	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 80)];
 	[headerView addSubview:userAvatar];
@@ -75,6 +139,7 @@
 	[headerView addSubview:userAvatarFrame];
 	
 	UIButton *editAvatar = [[UIButton alloc] initWithFrame:CGRectMake(160-32, 8, 64, 64)];
+	[editAvatar addTarget:self action:@selector(changeAvatar) forControlEvents:UIControlEventTouchUpInside];
 	[editAvatar setBackgroundColor:[UIColor clearColor]];
 	
 	UILabel *editAvatarLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 44, 64, 20)];
@@ -127,5 +192,28 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 }
+
+#pragma mark - ActionSheet delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if (buttonIndex == 0) {
+	  [self photoFromCamera];
+	} if (buttonIndex == 1) {
+	  [self photoFromLibrary];
+	}
+}
+
+#pragma mark - imagePickerController delegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+	NSData *imageData = UIImageJPEGRepresentation([info objectForKey:@"UIImagePickerControllerOriginalImage"],.8);
+	UIImage *photo = [self setThumbnailFromImage:[UIImage imageWithData:imageData] withSize:CGSizeMake(128, 128)];
+	[userAvatar setImage:photo];
+	
+	[self.imagePickerController dismissModalViewControllerAnimated:YES];
+}
+
 
 @end
