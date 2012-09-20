@@ -24,6 +24,7 @@
 #import "FEAddEventDetailView.h"
 #import "FEAddEventMemberView.h"
 #import "MBProgressHUD.h"
+#import "UIImage+Resize.h"
  
 
 @interface FECreateEventController ()
@@ -359,8 +360,8 @@ static bool isFirstLaunch = YES;
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     if([mediaType isEqualToString:@"public.image"]){
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-        NSLog(@"get image: %@", image);
-        self.addIconView.previewImage = image;
+        UIImage *resizedImage = [image resizedImage:CGSizeMake(200, 200) interpolationQuality:0.8];
+        self.addIconView.previewImage = resizedImage;
         [self.toolbar completeAction:CreateEventIconAction completed:YES];
         [picker dismissModalViewControllerAnimated:YES];
     }

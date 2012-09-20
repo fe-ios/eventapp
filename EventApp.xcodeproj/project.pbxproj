@@ -127,6 +127,9 @@
 		C783E0A115A1518F000B9418 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C783E09F15A1518F000B9418 /* InfoPlist.strings */; };
 		C783E0A315A1518F000B9418 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C783E0A215A1518F000B9418 /* main.m */; };
 		C783E0A715A1518F000B9418 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C783E0A615A1518F000B9418 /* AppDelegate.m */; };
+		C7A54274160AE8DD00ED6F9D /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A54272160AE6F600ED6F9D /* UIImage+Resize.m */; };
+		C7A5427A160AE96100ED6F9D /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A54276160AE93000ED6F9D /* UIImage+Alpha.m */; };
+		C7A5427B160AE96100ED6F9D /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A54278160AE93000ED6F9D /* UIImage+RoundedCorner.m */; };
 		C7CF942115E5CE4C00829376 /* FEAddEventDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CF942015E5CE4C00829376 /* FEAddEventDetailView.m */; };
 		C7D34CD015C8E398003CDD76 /* 7-glyphish-map-marker-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = C7D34BEA15C8E397003CDD76 /* 7-glyphish-map-marker-blue.png */; };
 		C7D34CD115C8E398003CDD76 /* 7-glyphish-map-marker-blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7D34BEB15C8E397003CDD76 /* 7-glyphish-map-marker-blue@2x.png */; };
@@ -290,7 +293,6 @@
 		C7DE9D3615B01B9700859A32 /* FERegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DE9D3515B01B9700859A32 /* FERegisterViewController.m */; };
 		C7DECB3E15BD1F9D00E1DCC7 /* FEEventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7DECB3D15BD1F9D00E1DCC7 /* FEEventTableViewCell.xib */; };
 		C7DECB4115BD211300E1DCC7 /* BOMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DECB4015BD20FC00E1DCC7 /* BOMenuTableViewCell.m */; };
-		C7DECCBF15BD27BC00E1DCC7 /* FELoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E86C5D15B7EE11001960C2 /* FELoginView.m */; };
 		C7DECCC215BD444D00E1DCC7 /* FEUploadController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DECCC115BD444D00E1DCC7 /* FEUploadController.m */; };
 		C7DF13D715A2DF7D00B73A6B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7DF13D615A2DF7D00B73A6B /* CFNetwork.framework */; };
 		C7DF13D915A2DF8200B73A6B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7DF13D815A2DF8200B73A6B /* SystemConfiguration.framework */; };
@@ -340,9 +342,6 @@
 		C7E3B1441602C60F00891B7D /* FEMyEventListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E3B1431602C60F00891B7D /* FEMyEventListController.m */; };
 		C7E61EE415CFB09800ABC112 /* startBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E61EE215CFB09800ABC112 /* startBackground.png */; };
 		C7E61EE515CFB09800ABC112 /* startBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E61EE315CFB09800ABC112 /* startBackground@2x.png */; };
-		C7E6608415A41A4F000FC01A /* FERegisterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7E6608315A41A4F000FC01A /* FERegisterView.xib */; };
-		C7E6608715A41AFC000FC01A /* FERegisterView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E6608615A41AFC000FC01A /* FERegisterView.m */; };
-		C7E6608C15A41FE8000FC01A /* FELoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7E6608B15A41FE8000FC01A /* FELoginView.xib */; };
 		C7E86C6D15B7FE41001960C2 /* FEEventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E86C6C15B7FE41001960C2 /* FEEventTableViewCell.m */; };
 		C7E86C7015B7FE7A001960C2 /* FEEventListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E86C6F15B7FE7A001960C2 /* FEEventListController.m */; };
 		C7E95C7615DE174B00B06580 /* FEAddEventTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E95C7515DE174B00B06580 /* FEAddEventTagView.m */; };
@@ -488,6 +487,12 @@
 		C783E0A415A1518F000B9418 /* EventApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EventApp-Prefix.pch"; sourceTree = "<group>"; };
 		C783E0A515A1518F000B9418 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C783E0A615A1518F000B9418 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C7A54271160AE6F600ED6F9D /* UIImage+Resize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
+		C7A54272160AE6F600ED6F9D /* UIImage+Resize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
+		C7A54275160AE93000ED6F9D /* UIImage+Alpha.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
+		C7A54276160AE93000ED6F9D /* UIImage+Alpha.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
+		C7A54277160AE93000ED6F9D /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
+		C7A54278160AE93000ED6F9D /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		C7CF941F15E5CE4C00829376 /* FEAddEventDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEAddEventDetailView.h; sourceTree = "<group>"; };
 		C7CF942015E5CE4C00829376 /* FEAddEventDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEAddEventDetailView.m; sourceTree = "<group>"; };
 		C7D34BEA15C8E397003CDD76 /* 7-glyphish-map-marker-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "7-glyphish-map-marker-blue.png"; path = "EventApp/images/7-glyphish-map-marker-blue.png"; sourceTree = "<group>"; };
@@ -743,14 +748,8 @@
 		C7E3B1431602C60F00891B7D /* FEMyEventListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEMyEventListController.m; sourceTree = "<group>"; };
 		C7E61EE215CFB09800ABC112 /* startBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = startBackground.png; path = EventApp/images2/startBackground.png; sourceTree = "<group>"; };
 		C7E61EE315CFB09800ABC112 /* startBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "startBackground@2x.png"; path = "EventApp/images2/startBackground@2x.png"; sourceTree = "<group>"; };
-		C7E6608315A41A4F000FC01A /* FERegisterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FERegisterView.xib; sourceTree = "<group>"; };
-		C7E6608515A41AFC000FC01A /* FERegisterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FERegisterView.h; sourceTree = "<group>"; };
-		C7E6608615A41AFC000FC01A /* FERegisterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FERegisterView.m; sourceTree = "<group>"; };
-		C7E6608B15A41FE8000FC01A /* FELoginView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FELoginView.xib; sourceTree = "<group>"; };
 		C7E6609315A431F5000FC01A /* FEServerAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FEServerAPI.h; sourceTree = "<group>"; };
 		C7E6609415A431F5000FC01A /* FEServerAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FEServerAPI.m; sourceTree = "<group>"; };
-		C7E86C5C15B7EE11001960C2 /* FELoginView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FELoginView.h; sourceTree = "<group>"; };
-		C7E86C5D15B7EE11001960C2 /* FELoginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FELoginView.m; sourceTree = "<group>"; };
 		C7E86C6B15B7FE41001960C2 /* FEEventTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEEventTableViewCell.h; sourceTree = "<group>"; };
 		C7E86C6C15B7FE41001960C2 /* FEEventTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEEventTableViewCell.m; sourceTree = "<group>"; };
 		C7E86C6E15B7FE7A001960C2 /* FEEventListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEEventListController.h; sourceTree = "<group>"; };
@@ -900,6 +899,19 @@
 				C783E0A415A1518F000B9418 /* EventApp-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C7A54279160AE93700ED6F9D /* UIImage+extension */ = {
+			isa = PBXGroup;
+			children = (
+				C7A54275160AE93000ED6F9D /* UIImage+Alpha.h */,
+				C7A54276160AE93000ED6F9D /* UIImage+Alpha.m */,
+				C7A54277160AE93000ED6F9D /* UIImage+RoundedCorner.h */,
+				C7A54278160AE93000ED6F9D /* UIImage+RoundedCorner.m */,
+				C7A54271160AE6F600ED6F9D /* UIImage+Resize.h */,
+				C7A54272160AE6F600ED6F9D /* UIImage+Resize.m */,
+			);
+			name = "UIImage+extension";
 			sourceTree = "<group>";
 		};
 		C7D39E8415B907D2009EE420 /* resources */ = {
@@ -1320,14 +1332,8 @@
 				C7DE9D3115B00A5400859A32 /* FELoginTableViewCell.h */,
 				C7DE9D3215B00A5400859A32 /* FELoginTableViewCell.m */,
 				C7DE4D9C15B5068900D9CA77 /* FELoginTableViewCell.xib */,
-				C7E86C5C15B7EE11001960C2 /* FELoginView.h */,
-				C7E86C5D15B7EE11001960C2 /* FELoginView.m */,
-				C7E6608B15A41FE8000FC01A /* FELoginView.xib */,
 				C7DE9D2415AFFF3400859A32 /* FELoginViewController.h */,
 				C7DE9D2515AFFF3500859A32 /* FELoginViewController.m */,
-				C7E6608515A41AFC000FC01A /* FERegisterView.h */,
-				C7E6608615A41AFC000FC01A /* FERegisterView.m */,
-				C7E6608315A41A4F000FC01A /* FERegisterView.xib */,
 				C7DE9D3415B01B9700859A32 /* FERegisterViewController.h */,
 				C7DE9D3515B01B9700859A32 /* FERegisterViewController.m */,
 			);
@@ -1375,6 +1381,7 @@
 		C7DF13DD15A2E11000B73A6B /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				C7A54279160AE93700ED6F9D /* UIImage+extension */,
 				C7DA690715E4E17900E2C3F6 /* JSTokenField */,
 				C7DE4D9B15B5063200D9CA77 /* ActionSheet */,
 				C7DF13D515A2DF3C00B73A6B /* ASIHttpRequest */,
@@ -1490,8 +1497,6 @@
 			files = (
 				C7D39E8515B90B21009EE420 /* Cuprum.otf in Resources */,
 				C783E0A115A1518F000B9418 /* InfoPlist.strings in Resources */,
-				C7E6608415A41A4F000FC01A /* FERegisterView.xib in Resources */,
-				C7E6608C15A41FE8000FC01A /* FELoginView.xib in Resources */,
 				C7DE4D9D15B5068900D9CA77 /* FELoginTableViewCell.xib in Resources */,
 				815222A915B534BB0089895F /* BOMenuViewController.xib in Resources */,
 				C7DECB3E15BD1F9D00E1DCC7 /* FEEventTableViewCell.xib in Resources */,
@@ -1769,13 +1774,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7A5427A160AE96100ED6F9D /* UIImage+Alpha.m in Sources */,
+				C7A5427B160AE96100ED6F9D /* UIImage+RoundedCorner.m in Sources */,
+				C7A54274160AE8DD00ED6F9D /* UIImage+Resize.m in Sources */,
 				C7DA691415E4E34500E2C3F6 /* JSTokenButton.m in Sources */,
 				C7DA691515E4E34500E2C3F6 /* JSTokenField.m in Sources */,
 				C7D81DF415E2309600076DC8 /* UIView+TKCategory.m in Sources */,
 				C7D81DF515E2309600076DC8 /* TKAlertCenter.m in Sources */,
 				C7DC64E515C10E9A00801E91 /* EGORefreshTableHeaderView.m in Sources */,
 				C7E25A0215BE8FBF00496F94 /* NSDate+Helper.m in Sources */,
-				C7DECCBF15BD27BC00E1DCC7 /* FELoginView.m in Sources */,
 				C7DECB4115BD211300E1DCC7 /* BOMenuTableViewCell.m in Sources */,
 				C7DF9BEA15B3F2D5009A35F1 /* MBProgressHUD.m in Sources */,
 				C7DF13E915A2E44100B73A6B /* JSONKit.m in Sources */,
@@ -1790,7 +1797,6 @@
 				C7DF13DE15A2E38C00B73A6B /* ASIHTTPRequest.m in Sources */,
 				C783E0A315A1518F000B9418 /* main.m in Sources */,
 				C783E0A715A1518F000B9418 /* AppDelegate.m in Sources */,
-				C7E6608715A41AFC000FC01A /* FERegisterView.m in Sources */,
 				C7DCA4E815AEB7930019DCFB /* FEStartViewController.m in Sources */,
 				C7DE9D2615AFFF3500859A32 /* FELoginViewController.m in Sources */,
 				C7DE9D3315B00A5400859A32 /* FELoginTableViewCell.m in Sources */,
