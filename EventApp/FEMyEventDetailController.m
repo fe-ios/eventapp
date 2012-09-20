@@ -387,13 +387,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	FEEventAttendeeViewController *attendeeView = [[FEEventAttendeeViewController alloc] init];
-	switch (indexPath.row) {
-        case 2:
-			[self.navigationController pushViewController:attendeeView animated:YES];
-            break;
-	default:
-            break;
+	if (indexPath.row == 2) {
+        FEEventAttendeeViewController *attendeeView = [[FEEventAttendeeViewController alloc] init];
+        attendeeView.event = self.event;
+        attendeeView.delegate = self;
+        [self.navigationController pushViewController:attendeeView animated:YES];
     }
 }
 

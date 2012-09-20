@@ -14,7 +14,8 @@ typedef enum {
     EventFinished = 2,
     EventCanJoin = 3,
     EventCanNotJoin = 4,
-    EventJoined = 5
+    EventRequested = 5,
+    EventJoined = 6
 } EventState;
 
 @interface FEEvent : NSObject <NSCoding>

@@ -101,7 +101,9 @@
         user.user_id = [[requestObj objectForKey:@"user_id"] intValue];
         user.username = [requestObj objectForKey:@"username"];
         user.avatarURL = [requestObj objectForKey:@"avatar"];
-        [self.requests addObject:user];
+        int request_id = [[requestObj objectForKey:@"request_id"] intValue];
+        NSDictionary *obj = [NSDictionary dictionaryWithObjectsAndKeys:user, @"user", [NSNumber numberWithInt:request_id], @"request_id", nil];
+        [self.requests addObject:obj];
     }
 }
 
