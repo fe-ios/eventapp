@@ -10,4 +10,6 @@
 
 @interface FESettingsViewController : UITableViewController
 
+@property (strong, nonatomic) UIImageView *userAvatar;
+
 @end

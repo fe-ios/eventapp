@@ -17,6 +17,8 @@
 
 @implementation FESettingsViewController
 
+@synthesize userAvatar;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -44,11 +46,12 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    UITableViewCell *avatarCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    if(avatarCell != nil){
-        avatarCell.imageView.image = [AppDelegate sharedDelegate].selfUser.avatarImage;
-    }
-    
+	userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 32, 32)];
+	if([AppDelegate sharedDelegate].selfUser.avatarImage != nil){
+		[userAvatar setImage:[AppDelegate sharedDelegate].selfUser.avatarImage];
+	}else {
+		[userAvatar setImage:[UIImage imageNamed:@"avatar_holder_32"]];
+	}    
     [super viewDidAppear:animated];
 }
 
@@ -107,12 +110,8 @@
 	if (indexPath.section == 0 && indexPath.row == 0 ) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		cell.textLabel.text = (NSString *) [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
-		if([AppDelegate sharedDelegate].selfUser.avatarImage != nil){
-			[cell.imageView setImage:[AppDelegate sharedDelegate].selfUser.avatarImage];
-		}else {
-			[cell.imageView setImage:[UIImage imageNamed:@"avatar_holder_32"]];
-		}
-		cell.detailTextLabel.text = (NSString *) [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+		cell.imageView.image = [UIImage imageNamed:@"avatar_holder_32"];
+		[cell.contentView addSubview:userAvatar];
 	}
 	if (indexPath.section == 1 && indexPath.row == 0) {
 		cell.textLabel.text = @"版本";
