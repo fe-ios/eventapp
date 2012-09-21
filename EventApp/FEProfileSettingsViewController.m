@@ -270,6 +270,9 @@
         user.avatarImage = userAvatar.image;
         user.avatarURL = [avatar objectForKey:@"url"];
         
+        [[NSUserDefaults standardUserDefaults] setValue:user.avatarURL forKey:@"avatarURL"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
         if([[AppDelegate sharedDelegate].viewDeckController.leftController respondsToSelector:@selector(updateUserAvatar)]){
             [[AppDelegate sharedDelegate].viewDeckController.leftController performSelector:@selector(updateUserAvatar)];
         }
