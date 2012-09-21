@@ -57,7 +57,7 @@
 	
 	//User
 	userAvatar = [[UIButton alloc] initWithFrame:CGRectMake(10, 6, 32, 32)];
-	[userAvatar setImage:[UIImage imageNamed:@"menu_user_avatar"] forState:UIControlStateNormal];
+	[userAvatar setImage:[UIImage imageNamed:@"avatar_holder_32"] forState:UIControlStateNormal];
 	[tableHeaderView addSubview:userAvatar];
 	
 	userName = [[UILabel alloc] initWithFrame:CGRectMake(50, 14, 90, 18)];

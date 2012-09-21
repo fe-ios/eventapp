@@ -33,7 +33,7 @@
     UIBarButtonItem *leftBarButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuButton"] style:UIBarButtonItemStylePlain target:self.viewDeckController action:@selector(toggleLeftView)] autorelease];
 	self.navigationItem.leftBarButtonItem = leftBarButton;
 
-	[self.tableView setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0]];
+	[self.view setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0]];
 }
 
 - (void)viewDidUnload
@@ -95,12 +95,15 @@
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	if (indexPath.section == 0 && indexPath.row == 0 ) {
 		cell.textLabel.text = (NSString *) [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
-		cell.imageView.image = [UIImage imageNamed:@"menu_user_avatar"];
+		cell.imageView.image = [UIImage imageNamed:@"avatar_holder_32"];
+		cell.imageView.frame = CGRectMake(6, 6, 32, 32);
 		cell.detailTextLabel.text = (NSString *) [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
 	}
 	if (indexPath.section == 1 && indexPath.row == 0) {
 		cell.textLabel.text = @"版本";
 		cell.detailTextLabel.text = @"1.0";
+		cell.accessoryType = UITableViewCellAccessoryNone;
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	}
 	if (indexPath.section == 1 && indexPath.row == 1) {
 		cell.textLabel.text = @"关于";
