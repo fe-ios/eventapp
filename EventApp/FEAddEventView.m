@@ -58,8 +58,8 @@
     self = [super init];
     if(self){
         self.eventName = event.name;
-        self.eventStartDateStr = [event.start_date stringWithFormat:@"YY-MM-dd HH:mm"];
-        self.eventEndDateStr = [event.end_date stringWithFormat:@"YY-MM-dd HH:mm"];
+        self.eventStartDateStr = [event.start_date stringWithFormat:@"yy-MM-dd HH:mm"];
+        self.eventEndDateStr = [event.end_date stringWithFormat:@"yy-MM-dd HH:mm"];
         self.eventCity = event.city;
         self.eventVenue = event.venue;
         self.nameValid = self.startDateValid = self.venueValid = self.cityValid = YES;
@@ -239,7 +239,7 @@
             textField = (UITextField *)[self viewWithTag:3];
             nextTag = 4;
         }
-        textField.text = [datePicker.date stringWithFormat:@"YY-MM-dd HH:mm"];
+        textField.text = [datePicker.date stringWithFormat:@"yy-MM-dd HH:mm"];
         if(nextTag == 3){
             self.eventStartDateStr = textField.text;
             _changed = YES;

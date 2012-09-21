@@ -198,10 +198,10 @@
         self.bannerImage.image = [UIImage imageNamed:@"pictureGridPlaceholder"];
     }
     
-    self.startDateLabel.text = [NSString stringWithFormat:@"%@", [self.event.start_date stringWithFormat:@"YYYY年MM月dd日"]];
+    self.startDateLabel.text = [NSString stringWithFormat:@"%@", [self.event.start_date stringWithFormat:@"yyyy年MM月dd日"]];
     self.startTimeLabel.text = [NSString stringWithFormat:@"%@", [self.event.start_date stringWithFormat:@"HH:mm"]];
     if(self.event.end_date){
-        self.endDateLabel.text = [NSString stringWithFormat:@"%@", [self.event.end_date stringWithFormat:@"YYYY年MM月dd日"]];
+        self.endDateLabel.text = [NSString stringWithFormat:@"%@", [self.event.end_date stringWithFormat:@"yyyy年MM月dd日"]];
         self.endTimeLabel.text = [NSString stringWithFormat:@"%@", [self.event.end_date stringWithFormat:@"HH:mm"]];
     }else {
         self.endDateLabel.text = @"";

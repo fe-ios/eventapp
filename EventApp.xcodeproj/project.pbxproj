@@ -118,6 +118,7 @@
 		C71272701602FE980083B9DA /* FEMyEventDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = C712726F1602FE980083B9DA /* FEMyEventDetailController.m */; };
 		C712727E160317190083B9DA /* FEAttendEventListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C712727D160317190083B9DA /* FEAttendEventListController.m */; };
 		C7127281160317770083B9DA /* FEAttendEventDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7127280160317770083B9DA /* FEAttendEventDetailController.m */; };
+		C71A0314160C145C00A7459E /* FEHostUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C71A0313160C145C00A7459E /* FEHostUser.m */; };
 		C747F94815E5E3170002E086 /* icon_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C747F94715E5E3170002E086 /* icon_bg@2x.png */; };
 		C747F94C15E5FAC20002E086 /* FEAddEventMemberView.m in Sources */ = {isa = PBXBuildFile; fileRef = C747F94B15E5FAC20002E086 /* FEAddEventMemberView.m */; };
 		C75B3AEA1609B1B700340601 /* FEAttendeeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C75B3AE91609B1B700340601 /* FEAttendeeCell.m */; };
@@ -130,6 +131,10 @@
 		C7A54274160AE8DD00ED6F9D /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A54272160AE6F600ED6F9D /* UIImage+Resize.m */; };
 		C7A5427A160AE96100ED6F9D /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A54276160AE93000ED6F9D /* UIImage+Alpha.m */; };
 		C7A5427B160AE96100ED6F9D /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A54278160AE93000ED6F9D /* UIImage+RoundedCorner.m */; };
+		C7A5428B160B132400ED6F9D /* FEProfileSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A54289160B12F400ED6F9D /* FEProfileSettingsViewController.m */; };
+		C7A5428C160B132400ED6F9D /* FESettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A54286160B12D800ED6F9D /* FESettingsViewController.m */; };
+		C7A5428D160B137900ED6F9D /* FEProfileSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7A5428A160B12F400ED6F9D /* FEProfileSettingsViewController.xib */; };
+		C7A5428E160B137900ED6F9D /* FESettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7A54287160B12D800ED6F9D /* FESettingsViewController.xib */; };
 		C7CF942115E5CE4C00829376 /* FEAddEventDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CF942015E5CE4C00829376 /* FEAddEventDetailView.m */; };
 		C7D34CD015C8E398003CDD76 /* 7-glyphish-map-marker-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = C7D34BEA15C8E397003CDD76 /* 7-glyphish-map-marker-blue.png */; };
 		C7D34CD115C8E398003CDD76 /* 7-glyphish-map-marker-blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7D34BEB15C8E397003CDD76 /* 7-glyphish-map-marker-blue@2x.png */; };
@@ -472,6 +477,8 @@
 		C712727D160317190083B9DA /* FEAttendEventListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEAttendEventListController.m; sourceTree = "<group>"; };
 		C712727F160317770083B9DA /* FEAttendEventDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEAttendEventDetailController.h; sourceTree = "<group>"; };
 		C7127280160317770083B9DA /* FEAttendEventDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEAttendEventDetailController.m; sourceTree = "<group>"; };
+		C71A0312160C145C00A7459E /* FEHostUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEHostUser.h; sourceTree = "<group>"; };
+		C71A0313160C145C00A7459E /* FEHostUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEHostUser.m; sourceTree = "<group>"; };
 		C747F94715E5E3170002E086 /* icon_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_bg@2x.png"; path = "EventApp/images_toolbar/icon_bg@2x.png"; sourceTree = "<group>"; };
 		C747F94A15E5FAC20002E086 /* FEAddEventMemberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEAddEventMemberView.h; sourceTree = "<group>"; };
 		C747F94B15E5FAC20002E086 /* FEAddEventMemberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEAddEventMemberView.m; sourceTree = "<group>"; };
@@ -493,6 +500,12 @@
 		C7A54276160AE93000ED6F9D /* UIImage+Alpha.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
 		C7A54277160AE93000ED6F9D /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
 		C7A54278160AE93000ED6F9D /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
+		C7A54285160B12D800ED6F9D /* FESettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FESettingsViewController.h; sourceTree = "<group>"; };
+		C7A54286160B12D800ED6F9D /* FESettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FESettingsViewController.m; sourceTree = "<group>"; };
+		C7A54287160B12D800ED6F9D /* FESettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FESettingsViewController.xib; sourceTree = "<group>"; };
+		C7A54288160B12F400ED6F9D /* FEProfileSettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FEProfileSettingsViewController.h; sourceTree = "<group>"; };
+		C7A54289160B12F400ED6F9D /* FEProfileSettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FEProfileSettingsViewController.m; sourceTree = "<group>"; };
+		C7A5428A160B12F400ED6F9D /* FEProfileSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FEProfileSettingsViewController.xib; sourceTree = "<group>"; };
 		C7CF941F15E5CE4C00829376 /* FEAddEventDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEAddEventDetailView.h; sourceTree = "<group>"; };
 		C7CF942015E5CE4C00829376 /* FEAddEventDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEAddEventDetailView.m; sourceTree = "<group>"; };
 		C7D34BEA15C8E397003CDD76 /* 7-glyphish-map-marker-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "7-glyphish-map-marker-blue.png"; path = "EventApp/images/7-glyphish-map-marker-blue.png"; sourceTree = "<group>"; };
@@ -815,14 +828,20 @@
 			name = viewdeck;
 			sourceTree = "<group>";
 		};
-		81F29AFE160841FE0013C0F0 /* personal */ = {
+		81F29AFE160841FE0013C0F0 /* setting */ = {
 			isa = PBXGroup;
 			children = (
+				C7A54288160B12F400ED6F9D /* FEProfileSettingsViewController.h */,
+				C7A54289160B12F400ED6F9D /* FEProfileSettingsViewController.m */,
+				C7A5428A160B12F400ED6F9D /* FEProfileSettingsViewController.xib */,
 				81F29B2B16084B900013C0F0 /* FEProfileViewController.h */,
 				81F29B2C16084B900013C0F0 /* FEProfileViewController.m */,
 				81F29B2D16084B900013C0F0 /* FEProfileViewController.xib */,
+				C7A54285160B12D800ED6F9D /* FESettingsViewController.h */,
+				C7A54286160B12D800ED6F9D /* FESettingsViewController.m */,
+				C7A54287160B12D800ED6F9D /* FESettingsViewController.xib */,
 			);
-			name = personal;
+			name = setting;
 			sourceTree = "<group>";
 		};
 		C712727A160316850083B9DA /* attend_event */ = {
@@ -880,7 +899,7 @@
 				C7DECB5015BD272300E1DCC7 /* images */,
 				C7DF13DD15A2E11000B73A6B /* Libraries */,
 				C7DF13B215A2DB9E00B73A6B /* login */,
-				81F29AFE160841FE0013C0F0 /* personal */,
+				81F29AFE160841FE0013C0F0 /* setting */,
 				C7E3B1411602C5D400891B7D /* my_event */,
 				C7D39E8415B907D2009EE420 /* resources */,
 				C7DCA4E315AEB74F0019DCFB /* start_view */,
@@ -936,6 +955,8 @@
 			children = (
 				C7D6DFAF15BFDB3600D29E27 /* FEEvent.h */,
 				C7D6DFB015BFDB3600D29E27 /* FEEvent.m */,
+				C71A0312160C145C00A7459E /* FEHostUser.h */,
+				C71A0313160C145C00A7459E /* FEHostUser.m */,
 				C7E6609315A431F5000FC01A /* FEServerAPI.h */,
 				C7E6609415A431F5000FC01A /* FEServerAPI.m */,
 				C7DFF70D15F9A75B00834B83 /* FETag.h */,
@@ -1060,39 +1081,6 @@
 		C7DECB5015BD272300E1DCC7 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				81525B4C16097B4200DC312C /* detail_tag_background@2x.png */,
-				81525B0A1608791800DC312C /* profile_icon_mail_disabled.png */,
-				81525B0B1608791800DC312C /* profile_icon_message.png */,
-				81525B0C1608791800DC312C /* profile_icon_message_disabled.png */,
-				81525B0D1608791800DC312C /* profile_segmentCenter.png */,
-				81525B0E1608791800DC312C /* profile_segmentCenter_disabled.png */,
-				81525B0F1608791800DC312C /* profile_segmentCenter_pressed.png */,
-				81525B101608791800DC312C /* profile_segmentLeft.png */,
-				81525B111608791800DC312C /* profile_segmentLeft_disabled.png */,
-				81525B121608791800DC312C /* profile_segmentLeft_pressed.png */,
-				81525B131608791800DC312C /* profile_segmentRight.png */,
-				81525B141608791800DC312C /* profile_segmentRight_disabled.png */,
-				81525B151608791800DC312C /* profile_segmentRight_pressed.png */,
-				81525B161608791800DC312C /* profile_tab_active.png */,
-				81525B171608791800DC312C /* profile_tab_active@2x.png */,
-				81525B181608791800DC312C /* profile_top_bg@2x.png */,
-				81525B191608791800DC312C /* profile_segmentRight_disabled@2x.png */,
-				81525B1A1608791800DC312C /* profile_segmentCenter_disabled@2x.png */,
-				81525B1B1608791800DC312C /* profile_segmentLeft_disabled@2x.png */,
-				81525B1C1608791800DC312C /* profile_icon_mail_disabled@2x.png */,
-				81525B1D1608791800DC312C /* profile_icon_message_disabled@2x.png */,
-				81525B1E1608791800DC312C /* profile_icon_phone_disabled@2x.png */,
-				81525B1F1608791800DC312C /* profile_icon_phone@2x.png */,
-				81525B201608791800DC312C /* profile_icon_message@2x.png */,
-				81525B211608791800DC312C /* profile_icon_mail@2x.png */,
-				81525B221608791800DC312C /* profile_segmentRight_pressed@2x.png */,
-				81525B231608791800DC312C /* profile_segmentRight@2x.png */,
-				81525B241608791800DC312C /* profile_segmentCenter_pressed@2x.png */,
-				81525B251608791800DC312C /* profile_segmentCenter@2x.png */,
-				81525B261608791800DC312C /* profile_segmentLeft@2x.png */,
-				81525B271608791800DC312C /* profile_segmentLeft_pressed@2x.png */,
-				81525B281608791800DC312C /* profile_photo_frame@2x.png */,
-				81F29AFC16072B8F0013C0F0 /* attendee_separator@2x.png */,
 				C7D34BEE15C8E397003CDD76 /* 11-glyphish-clock-blue.png */,
 				C7D34BEF15C8E397003CDD76 /* 11-glyphish-clock-blue@2x.png */,
 				C7D34BF015C8E397003CDD76 /* 11-glyphish-clock-gray.png */,
@@ -1140,6 +1128,7 @@
 				C7D34C0F15C8E397003CDD76 /* appBackground@2x.png */,
 				81F29AF41607192C0013C0F0 /* attendee_btn_approve@2x.png */,
 				81F29AF51607192C0013C0F0 /* attendee_btn_reject@2x.png */,
+				81F29AFC16072B8F0013C0F0 /* attendee_separator@2x.png */,
 				81F29AF61607192C0013C0F0 /* avatar_tmp@2x.png */,
 				C7D34DD315C926A5003CDD76 /* big-heart-normal@2x.png */,
 				C7D34DD115C9218B003CDD76 /* big-heart-selected@2x.png */,
@@ -1188,6 +1177,7 @@
 				C7E113B715F879BF00E10ABE /* detail_icon_people@2x.png */,
 				C7E113B815F879BF00E10ABE /* detail_icon_tag@2x.png */,
 				C7E113B915F879BF00E10ABE /* detail_lastCellBg@2x.png */,
+				81525B4C16097B4200DC312C /* detail_tag_background@2x.png */,
 				C7E113BA15F879BF00E10ABE /* detail_topBackground@2x.png */,
 				C7E113BB15F879BF00E10ABE /* detail_topShadow@2x.png */,
 				C7D34DB615C8E3A2003CDD76 /* dotGreyBackground@2x.png */,
@@ -1228,6 +1218,37 @@
 				C7D34C6115C8E398003CDD76 /* photoCount@2x.png */,
 				C7D34C6215C8E398003CDD76 /* pictureGridPlaceholder.png */,
 				C7D34C6315C8E398003CDD76 /* pictureGridPlaceholder@2x.png */,
+				81525B211608791800DC312C /* profile_icon_mail@2x.png */,
+				81525B0A1608791800DC312C /* profile_icon_mail_disabled.png */,
+				81525B1C1608791800DC312C /* profile_icon_mail_disabled@2x.png */,
+				81525B0B1608791800DC312C /* profile_icon_message.png */,
+				81525B201608791800DC312C /* profile_icon_message@2x.png */,
+				81525B0C1608791800DC312C /* profile_icon_message_disabled.png */,
+				81525B1D1608791800DC312C /* profile_icon_message_disabled@2x.png */,
+				81525B1F1608791800DC312C /* profile_icon_phone@2x.png */,
+				81525B1E1608791800DC312C /* profile_icon_phone_disabled@2x.png */,
+				81525B281608791800DC312C /* profile_photo_frame@2x.png */,
+				81525B0D1608791800DC312C /* profile_segmentCenter.png */,
+				81525B251608791800DC312C /* profile_segmentCenter@2x.png */,
+				81525B0E1608791800DC312C /* profile_segmentCenter_disabled.png */,
+				81525B1A1608791800DC312C /* profile_segmentCenter_disabled@2x.png */,
+				81525B0F1608791800DC312C /* profile_segmentCenter_pressed.png */,
+				81525B241608791800DC312C /* profile_segmentCenter_pressed@2x.png */,
+				81525B101608791800DC312C /* profile_segmentLeft.png */,
+				81525B261608791800DC312C /* profile_segmentLeft@2x.png */,
+				81525B111608791800DC312C /* profile_segmentLeft_disabled.png */,
+				81525B1B1608791800DC312C /* profile_segmentLeft_disabled@2x.png */,
+				81525B121608791800DC312C /* profile_segmentLeft_pressed.png */,
+				81525B271608791800DC312C /* profile_segmentLeft_pressed@2x.png */,
+				81525B131608791800DC312C /* profile_segmentRight.png */,
+				81525B231608791800DC312C /* profile_segmentRight@2x.png */,
+				81525B141608791800DC312C /* profile_segmentRight_disabled.png */,
+				81525B191608791800DC312C /* profile_segmentRight_disabled@2x.png */,
+				81525B151608791800DC312C /* profile_segmentRight_pressed.png */,
+				81525B221608791800DC312C /* profile_segmentRight_pressed@2x.png */,
+				81525B161608791800DC312C /* profile_tab_active.png */,
+				81525B171608791800DC312C /* profile_tab_active@2x.png */,
+				81525B181608791800DC312C /* profile_top_bg@2x.png */,
 				C7D34C6415C8E398003CDD76 /* pullArrow.png */,
 				C7D34C6515C8E398003CDD76 /* pullArrow@2x.png */,
 				C7D34C6615C8E398003CDD76 /* pullArrowDark.png */,
@@ -1495,6 +1516,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7A5428D160B137900ED6F9D /* FEProfileSettingsViewController.xib in Resources */,
+				C7A5428E160B137900ED6F9D /* FESettingsViewController.xib in Resources */,
 				C7D39E8515B90B21009EE420 /* Cuprum.otf in Resources */,
 				C783E0A115A1518F000B9418 /* InfoPlist.strings in Resources */,
 				C7DE4D9D15B5068900D9CA77 /* FELoginTableViewCell.xib in Resources */,
@@ -1774,6 +1797,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7A5428B160B132400ED6F9D /* FEProfileSettingsViewController.m in Sources */,
+				C7A5428C160B132400ED6F9D /* FESettingsViewController.m in Sources */,
 				C7A5427A160AE96100ED6F9D /* UIImage+Alpha.m in Sources */,
 				C7A5427B160AE96100ED6F9D /* UIImage+RoundedCorner.m in Sources */,
 				C7A54274160AE8DD00ED6F9D /* UIImage+Resize.m in Sources */,
@@ -1836,6 +1861,7 @@
 				81F29AF2160712960013C0F0 /* FEEventAttendeeViewController.m in Sources */,
 				81F29B2E16084B900013C0F0 /* FEProfileViewController.m in Sources */,
 				C75B3AEA1609B1B700340601 /* FEAttendeeCell.m in Sources */,
+				C71A0314160C145C00A7459E /* FEHostUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

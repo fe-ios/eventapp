@@ -23,6 +23,7 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
+@synthesize selfUser;
 @synthesize navigationController = _navigationController;
 @synthesize viewDeckController = _viewDeckController;
 
@@ -80,8 +81,15 @@
     int userid = [[NSUserDefaults standardUserDefaults] integerForKey:@"userid"];
     NSString *username = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
     NSString *password = [[NSUserDefaults standardUserDefaults] stringForKey:@"password"];
+    NSString *avatarURL = [[NSUserDefaults standardUserDefaults] stringForKey:@"avatarURL"];
     NSLog(@"check: %d, %@, %@", userid, username, password);
     if(username != nil && password != nil){
+        self.selfUser = [[[FEHostUser alloc] init] autorelease];
+        self.selfUser.user_id = userid;
+        self.selfUser.username = username;
+        self.selfUser.password = password;
+        self.selfUser.avatarURL = avatarURL;
+        [self.selfUser loadAvatar];
         [self startMainView];
         //[self login:username withPassword:password];
         return YES;
@@ -118,6 +126,8 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userid"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"username"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"email"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"avatarURL"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     FEStartViewController *startController = [[[FEStartViewController alloc] init] autorelease];

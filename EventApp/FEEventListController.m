@@ -150,14 +150,14 @@
         //cell.peopleCountLabel.font = font;
         //cell.pictureCountLabel.font = font;
         
-        UIButton *watchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        watchButton.frame = CGRectMake(self.tableView.contentSize.width-44, (80-44)*0.5, 44, 44);
-        [watchButton setBackgroundImage:[UIImage imageNamed:@"big-heart-normal"] forState:UIControlStateNormal];
-        [watchButton setBackgroundImage:[UIImage imageNamed:@"big-heart-selected"] forState:UIControlStateSelected];
-        [cell.contentView addSubview:watchButton];
-        [watchButton addTarget:self action:@selector(toggleWatchEvent:) forControlEvents:UIControlEventTouchUpInside];
-        watchButton.adjustsImageWhenHighlighted = NO;
-        cell.watchButton = watchButton;
+//        UIButton *watchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//        watchButton.frame = CGRectMake(self.tableView.contentSize.width-44, (80-44)*0.5, 44, 44);
+//        [watchButton setBackgroundImage:[UIImage imageNamed:@"big-heart-normal"] forState:UIControlStateNormal];
+//        [watchButton setBackgroundImage:[UIImage imageNamed:@"big-heart-selected"] forState:UIControlStateSelected];
+//        [cell.contentView addSubview:watchButton];
+//        [watchButton addTarget:self action:@selector(toggleWatchEvent:) forControlEvents:UIControlEventTouchUpInside];
+//        watchButton.adjustsImageWhenHighlighted = NO;
+//        cell.watchButton = watchButton;
     }
     
     FEEvent *event = [self.eventData objectAtIndex:indexPath.row];

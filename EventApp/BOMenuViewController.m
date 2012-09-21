@@ -14,6 +14,7 @@
 #import "FEMyEventListController.h"
 #import "FEAttendEventListController.h"
 #import "FECreateEventController.h"
+#import "FESettingsViewController.h"
 
 @interface BOMenuViewController ()
 
@@ -27,6 +28,7 @@
 @synthesize btnAddEvent;
 @synthesize btnSignup;
 @synthesize selectedMenu;
+@synthesize btnLogout;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,7 +47,7 @@
 	self.menuTableView.dataSource = self;
 	[self.menuTableView setBackgroundColor:[UIColor clearColor]];
 	
-	//account cell
+	//TableHeaderView cell
 	UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
 	UIImageView *headerViewBg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
 	[headerViewBg setImage:[UIImage imageNamed:@"menu_user_bg"]];
@@ -56,9 +58,14 @@
 	
 	//User
 	userAvatar = [[UIButton alloc] initWithFrame:CGRectMake(10, 6, 32, 32)];
-	[userAvatar setImage:[UIImage imageNamed:@"menu_user_avatar"] forState:UIControlStateNormal];
+    if([AppDelegate sharedDelegate].selfUser.avatarImage != nil){
+        [userAvatar setImage:[AppDelegate sharedDelegate].selfUser.avatarImage forState:UIControlStateNormal];
+    }else {
+        [userAvatar setImage:[UIImage imageNamed:@"menu_user_avatar"] forState:UIControlStateNormal];
+    }
+	
 	[tableHeaderView addSubview:userAvatar];
-
+	
 	userName = [[UILabel alloc] initWithFrame:CGRectMake(50, 14, 90, 18)];
 	[userName setText:@"aUserName"];
 	[userName setFont:[UIFont systemFontOfSize:14.0f]];
@@ -78,6 +85,7 @@
     [btnAddEvent addTarget:self action:@selector(createEvent) forControlEvents:UIControlEventTouchUpInside];
 
 	[tableHeaderView addSubview:btnAddEvent];
+	self.menuTableView.tableHeaderView = tableHeaderView;
 	
 	//guest
 //	[headerViewSeparator setFrame:CGRectMake(120, 3, 1, 36)];
@@ -104,7 +112,16 @@
 //
 //	[tableHeaderView addSubview:btnLogin];
 
-	self.menuTableView.tableHeaderView = tableHeaderView;
+	
+	//TableFooterView
+//	UIView *tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+//	
+//	UILabel *logoutLabel = [[UILabel alloc] initWithFrame:CGRectMake(72, 13, 100, 24)];
+//	[logoutLabel setText:@"退出登录"];
+//	[tableFooterView addSubview:logoutLabel];
+//	
+//	self.menuTableView.tableFooterView = tableFooterView;
+
 }
 
 - (void)viewDidUnload
@@ -119,6 +136,10 @@
 {
     BOMenuTableViewCell *selectedCell = (BOMenuTableViewCell *)[menuTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.selectedMenu inSection:0]];
     [selectedCell setHighlighted:YES];
+    
+    if([AppDelegate sharedDelegate].selfUser.avatarImage != nil){
+        [userAvatar setImage:[AppDelegate sharedDelegate].selfUser.avatarImage forState:UIControlStateNormal];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -140,12 +161,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return 8;
+	return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"MenuCell";
     BOMenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (!cell) {
 		cell = [[BOMenuTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -157,9 +178,9 @@
 			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"11-glyphish-clock-blue"]];
 			break;
 		case 1:
-			[cell.menuLabel setText:@"参与活动"];
-			[cell.menuIcon setImage:[UIImage imageNamed:@"7-glyphish-map-marker-gray"]];
-			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"7-glyphish-map-marker-blue"]];
+			[cell.menuLabel setText:@"参加活动"];
+			[cell.menuIcon setImage:[UIImage imageNamed:@"28-glyphish-star-gray"]];
+			[cell.menuIconHighlighted setImage:[UIImage imageNamed:@"28-glyphish-star-blue"]];
 			break;
 		case 2:
 			[cell.menuLabel setText:@"我的活动"];
@@ -193,6 +214,11 @@
     
     if(indexPath.row == 4){
         [[AppDelegate sharedDelegate] logout];
+    }else if (indexPath.row == 3) {
+        FESettingsViewController *settingsController = [[[FESettingsViewController alloc] initWithNibName:@"FESettingsViewController" bundle:nil] autorelease];
+        [self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
+            [[AppDelegate sharedDelegate].navigationController pushViewController:settingsController animated:NO];
+        }];
     }else if (indexPath.row == 2) {
         FEMyEventListController *myEventController = [[[FEMyEventListController alloc] init] autorelease];
         [self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
@@ -208,11 +234,6 @@
         [self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
             [[AppDelegate sharedDelegate].navigationController pushViewController:eventController animated:NO];
         }];
-    }else {
-//        BOEventQuickAddViewController *quickAdd = [[BOEventQuickAddViewController alloc] initWithNibName:@"BOEventQuickAddViewController" bundle:nil];
-//        [self.viewDeckController closeLeftViewBouncing:nil completion:^(IIViewDeckController *controller) {
-//            [self.viewDeckController.centerController presentModalViewController:quickAdd animated:YES];
-//        }];
     }
 }
 

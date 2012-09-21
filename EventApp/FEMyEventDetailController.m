@@ -199,10 +199,10 @@
         self.bannerImage.image = [UIImage imageNamed:@"pictureGridPlaceholder"];
     }
     
-    self.startDateLabel.text = [NSString stringWithFormat:@"%@", [self.event.start_date stringWithFormat:@"YYYY年MM月dd日"]];
+    self.startDateLabel.text = [NSString stringWithFormat:@"%@", [self.event.start_date stringWithFormat:@"yyyy年MM月dd日"]];
     self.startTimeLabel.text = [NSString stringWithFormat:@"%@", [self.event.start_date stringWithFormat:@"HH:mm"]];
     if(self.event.end_date){
-        self.endDateLabel.text = [NSString stringWithFormat:@"%@", [self.event.end_date stringWithFormat:@"YYYY年MM月dd日"]];
+        self.endDateLabel.text = [NSString stringWithFormat:@"%@", [self.event.end_date stringWithFormat:@"yyyy年MM月dd日"]];
         self.endTimeLabel.text = [NSString stringWithFormat:@"%@", [self.event.end_date stringWithFormat:@"HH:mm"]];
     }else {
         self.endDateLabel.text = @"";
@@ -264,7 +264,7 @@
     static NSString *cellIdentifier = @"MyEventDetailViewCellIdentifier";
     FEDetailViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if(!cell){
-        cell = [[[FEDetailViewCell alloc] init] autorelease];
+        cell = [[[FEDetailViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier] autorelease];
         cell.backgroundView = [[[UIImageView alloc] init] autorelease];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textLabel.numberOfLines = 0;
@@ -286,6 +286,7 @@
             for (int i = 0; i < self.event.tags.count; i++) {
                 FETag *tag = [self.event.tags objectAtIndex:i];
                 UIButton *tagView = [self createTagButton:tag.name];
+				[tagView setBackgroundImage:[[UIImage imageNamed:@"detail_tag_background"] resizableImageWithCapInsets:UIEdgeInsetsMake(12, 12, 12, 12)] forState:UIControlStateNormal];
                 tagView.frame = CGRectMake(left, top, tagView.frame.size.width, 24);
                 [cell.contentView addSubview:tagView];
                 left += tagView.frame.size.width + 5;
@@ -294,6 +295,8 @@
             
         case 2:
             cell.imageView.image = [UIImage imageNamed:@"detail_icon_people"];
+			cell.detailTextLabel.text = @"更多";
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             left = 36.0;
             top = 9.0;
             for (int i = 0; i < self.event.attendees.count; i++) {
@@ -371,10 +374,10 @@
         self.bannerImage.image = [UIImage imageNamed:@"pictureGridPlaceholder"];
     }
     
-    self.startDateLabel.text = [NSString stringWithFormat:@"%@", [self.event.start_date stringWithFormat:@"YYYY年MM月dd日"]];
+    self.startDateLabel.text = [NSString stringWithFormat:@"%@", [self.event.start_date stringWithFormat:@"yyyy年MM月dd日"]];
     self.startTimeLabel.text = [NSString stringWithFormat:@"%@", [self.event.start_date stringWithFormat:@"HH:mm"]];
     if(self.event.end_date){
-        self.endDateLabel.text = [NSString stringWithFormat:@"%@", [self.event.end_date stringWithFormat:@"YYYY年MM月dd日"]];
+        self.endDateLabel.text = [NSString stringWithFormat:@"%@", [self.event.end_date stringWithFormat:@"yyyy年MM月dd日"]];
         self.endTimeLabel.text = [NSString stringWithFormat:@"%@", [self.event.end_date stringWithFormat:@"HH:mm"]];
     }else {
         self.endDateLabel.text = @"";

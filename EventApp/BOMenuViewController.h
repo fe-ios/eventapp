@@ -15,6 +15,7 @@
 @property (strong, nonatomic) UIButton *btnAddEvent;
 @property (strong, nonatomic) UIButton *btnSignup;
 @property (strong, nonatomic) UIButton *btnLogin;
+@property (strong, nonatomic) UIButton *btnLogout;
 
 @property (assign, nonatomic) int selectedMenu;
 

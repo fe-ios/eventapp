@@ -13,6 +13,7 @@ static NSString *const API_BASE = @"http://10.0.2.1:8888/eventserver";
 static NSString *const API_LOGIN = @"/user/login";
 static NSString *const API_LOGOUT = @"/user/logout";
 static NSString *const API_REGISTER = @"/user/register";
+static NSString *const API_AVATAR = @"/user/upload_avatar";
 static NSString *const API_UPLOAD = @"/upload";
 static NSString *const API_EVENT_CREATE = @"/event/create_event";
 static NSString *const API_EVENT_UPDATE = @"/event/update_event";
