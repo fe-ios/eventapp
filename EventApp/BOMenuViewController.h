@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIAsyncImageView.h"
 
 @interface BOMenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *menuTableView;
-@property (strong, nonatomic) UIButton *userAvatar;
+@property (strong, nonatomic) UIAsyncImageView *userAvatar;
 @property (strong, nonatomic) UILabel *userName;
 @property (strong, nonatomic) UIButton *btnAddEvent;
 @property (strong, nonatomic) UIButton *btnSignup;
@@ -18,5 +19,7 @@
 @property (strong, nonatomic) UIButton *btnLogout;
 
 @property (assign, nonatomic) int selectedMenu;
+
+- (void)updateUserAvatar;
 
 @end

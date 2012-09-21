@@ -119,6 +119,8 @@
 		C712727E160317190083B9DA /* FEAttendEventListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C712727D160317190083B9DA /* FEAttendEventListController.m */; };
 		C7127281160317770083B9DA /* FEAttendEventDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7127280160317770083B9DA /* FEAttendEventDetailController.m */; };
 		C71A0314160C145C00A7459E /* FEHostUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C71A0313160C145C00A7459E /* FEHostUser.m */; };
+		C71A0318160C431800A7459E /* avatar_holder_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C71A0316160C431800A7459E /* avatar_holder_32@2x.png */; };
+		C71A0319160C431800A7459E /* avatar_holder_64@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C71A0317160C431800A7459E /* avatar_holder_64@2x.png */; };
 		C747F94815E5E3170002E086 /* icon_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C747F94715E5E3170002E086 /* icon_bg@2x.png */; };
 		C747F94C15E5FAC20002E086 /* FEAddEventMemberView.m in Sources */ = {isa = PBXBuildFile; fileRef = C747F94B15E5FAC20002E086 /* FEAddEventMemberView.m */; };
 		C75B3AEA1609B1B700340601 /* FEAttendeeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C75B3AE91609B1B700340601 /* FEAttendeeCell.m */; };
@@ -479,6 +481,8 @@
 		C7127280160317770083B9DA /* FEAttendEventDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEAttendEventDetailController.m; sourceTree = "<group>"; };
 		C71A0312160C145C00A7459E /* FEHostUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEHostUser.h; sourceTree = "<group>"; };
 		C71A0313160C145C00A7459E /* FEHostUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEHostUser.m; sourceTree = "<group>"; };
+		C71A0316160C431800A7459E /* avatar_holder_32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "avatar_holder_32@2x.png"; path = "EventApp/Resource/personal/avatar_holder_32@2x.png"; sourceTree = "<group>"; };
+		C71A0317160C431800A7459E /* avatar_holder_64@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "avatar_holder_64@2x.png"; path = "EventApp/Resource/personal/avatar_holder_64@2x.png"; sourceTree = "<group>"; };
 		C747F94715E5E3170002E086 /* icon_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_bg@2x.png"; path = "EventApp/images_toolbar/icon_bg@2x.png"; sourceTree = "<group>"; };
 		C747F94A15E5FAC20002E086 /* FEAddEventMemberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEAddEventMemberView.h; sourceTree = "<group>"; };
 		C747F94B15E5FAC20002E086 /* FEAddEventMemberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEAddEventMemberView.m; sourceTree = "<group>"; };
@@ -1129,6 +1133,8 @@
 				81F29AF41607192C0013C0F0 /* attendee_btn_approve@2x.png */,
 				81F29AF51607192C0013C0F0 /* attendee_btn_reject@2x.png */,
 				81F29AFC16072B8F0013C0F0 /* attendee_separator@2x.png */,
+				C71A0316160C431800A7459E /* avatar_holder_32@2x.png */,
+				C71A0317160C431800A7459E /* avatar_holder_64@2x.png */,
 				81F29AF61607192C0013C0F0 /* avatar_tmp@2x.png */,
 				C7D34DD315C926A5003CDD76 /* big-heart-normal@2x.png */,
 				C7D34DD115C9218B003CDD76 /* big-heart-selected@2x.png */,
@@ -1787,6 +1793,8 @@
 				81525B461608791800DC312C /* profile_segmentLeft_pressed@2x.png in Resources */,
 				81525B471608791800DC312C /* profile_photo_frame@2x.png in Resources */,
 				81525B4D16097B4200DC312C /* detail_tag_background@2x.png in Resources */,
+				C71A0318160C431800A7459E /* avatar_holder_32@2x.png in Resources */,
+				C71A0319160C431800A7459E /* avatar_holder_64@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
