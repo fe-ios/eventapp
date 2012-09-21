@@ -7,6 +7,13 @@
 //
 
 #import "FEProfileSettingsViewController.h"
+#import "ASIHTTPRequest.h"
+#import "ASIFormDataRequest.h"
+#import <QuartzCore/QuartzCore.h>
+#import "FEServerAPI.h"
+#import "JSONKit.h"
+#import "MBProgressHUD.h"
+#import "AppDelegate.h"
 
 @interface FEProfileSettingsViewController ()
 
@@ -29,8 +36,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	[self.view setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0]];
-	UIBarButtonItem *saveProfile = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:nil];
+    
+    self.title = @"个人信息";
+	[self.tableView setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0]];
+	UIBarButtonItem *saveProfile = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(uploadAvatar)];
 	self.navigationItem.rightBarButtonItem = saveProfile;
 }
 
@@ -130,7 +139,12 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
 	userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(160-32, 8, 64, 64)];
-	[userAvatar setImage:[UIImage imageNamed:@"avatar_holder_64"]];
+	
+    if([AppDelegate sharedDelegate].selfUser.avatarImage != nil){
+        [userAvatar setImage:[AppDelegate sharedDelegate].selfUser.avatarImage];
+    }else {
+        [userAvatar setImage:[UIImage imageNamed:@"avatar_holder_64"]];
+    }
 	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 80)];
 	[headerView addSubview:userAvatar];
 	
@@ -166,20 +180,21 @@
 
 	if (indexPath.section == 0 && indexPath.row == 0 ) {
 		UITextField *userNameField = [[UITextField alloc] initWithFrame:CGRectMake(100, 12, 200, 20)];
-		[userNameField setClearButtonMode:UITextFieldViewModeWhileEditing];
+		//[userNameField setClearButtonMode:UITextFieldViewModeWhileEditing];
 		[userNameField setFont:[UIFont systemFontOfSize:16.0f]];
 		[userNameField setBackgroundColor:[UIColor clearColor]];
 		userNameField.text = (NSString *) [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+        [userNameField setEnabled:NO];
 		[cell.contentView addSubview:userNameField];
 		cell.textLabel.text = @"用户名";
 	}
 	if (indexPath.section == 0 && indexPath.row == 1 ) {
 		UITextField *emailField = [[UITextField alloc] initWithFrame:CGRectMake(100, 12, 200, 20)];
-		emailField.text = @"fancyeverol@gmail.com";
+		emailField.text = (NSString *) [[NSUserDefaults standardUserDefaults] objectForKey:@"email"];
 		[emailField setFont:[UIFont systemFontOfSize:15.0f]];
 		[emailField setBackgroundColor:[UIColor clearColor]];
 		[emailField setEnabled:NO];
-		emailField.textColor = [UIColor lightGrayColor];
+		//emailField.textColor = [UIColor lightGrayColor];
 		[cell.contentView addSubview:emailField];
 		cell.textLabel.text = @"邮箱";
 	}
@@ -213,6 +228,45 @@
 	[userAvatar setImage:photo];
 	
 	[self.imagePickerController dismissModalViewControllerAnimated:YES];
+}
+
+- (void)uploadAvatar
+{
+    int user_id = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userid"] intValue];
+    NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:@"password"];
+    
+    NSString *eventURL = [NSString stringWithFormat:@"%@%@", API_BASE, API_AVATAR];
+    ASIFormDataRequest *request = [[[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:eventURL]] autorelease];
+    [request setRequestMethod:@"POST"];
+    [request setPostValue:[NSNumber numberWithInt:user_id] forKey:@"user_id"];
+    [request setPostValue:password forKey:@"password"];
+    
+    NSData *avatarData = UIImageJPEGRepresentation(userAvatar.image, 1.0f);
+    [request setData:avatarData withFileName:@"upload.jpg" andContentType:@"image/jpeg" forKey:@"userfile"];
+    
+    request.delegate = self;
+    [request startAsynchronous];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view.window animated:YES];
+    hub.dimBackground = YES;
+    hub.mode = MBProgressHUDModeIndeterminate;
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    NSLog(@"%d, %@", request.responseStatusCode, request.responseString);
+    
+    self.navigationController.navigationBar.userInteractionEnabled = YES;
+    
+    NSDictionary *result = [request.responseString objectFromJSONString];
+    NSString *status = [result objectForKey:@"status"];
+    
+    if([status isEqualToString:@"success"]){
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [MBProgressHUD hideAllHUDsForView:self.view.window animated:YES];
+        [AppDelegate sharedDelegate].selfUser.avatarImage = userAvatar.image;
+    }
 }
 
 

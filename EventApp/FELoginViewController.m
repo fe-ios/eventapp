@@ -17,6 +17,7 @@
 #import "MD5+Helper.h"
 #import "FEServerAPI.h"
 #import "FEToolTipView.h"
+#import "FEHostUser.h"
 
 
 @interface FELoginViewController ()
@@ -205,13 +206,20 @@
         [self showFailedAction];
     }else if([status isEqualToString:@"success"]){
         //save user info
-        int userid = [[[result objectForKey:@"user"] objectForKey:@"userid"] intValue];
-        NSString *username = [[result objectForKey:@"user"] objectForKey:@"username"];
-        NSString *password = [[result objectForKey:@"user"] objectForKey:@"password"];
-        [[NSUserDefaults standardUserDefaults] setInteger:userid forKey:@"userid"];
-        [[NSUserDefaults standardUserDefaults] setValue:username forKey:@"username"];
-        [[NSUserDefaults standardUserDefaults] setValue:password forKey:@"password"];
-        [[NSUserDefaults standardUserDefaults] setValue:password forKey:@"email"];
+        FEHostUser *user = [[[FEHostUser alloc] init] autorelease];
+        user.user_id = [[[result objectForKey:@"user"] objectForKey:@"userid"] intValue];
+        user.username = [[result objectForKey:@"user"] objectForKey:@"username"];
+        user.password = [[result objectForKey:@"user"] objectForKey:@"password"];
+        user.email = [[result objectForKey:@"user"] objectForKey:@"email"];
+        user.avatarURL = [[result objectForKey:@"user"] objectForKey:@"avatar"];
+        [user loadAvatar];
+        [AppDelegate sharedDelegate].selfUser = user;
+        
+        [[NSUserDefaults standardUserDefaults] setInteger:user.user_id forKey:@"userid"];
+        [[NSUserDefaults standardUserDefaults] setValue:user.username forKey:@"username"];
+        [[NSUserDefaults standardUserDefaults] setValue:user.password forKey:@"password"];
+        [[NSUserDefaults standardUserDefaults] setValue:user.email forKey:@"email"];
+        [[NSUserDefaults standardUserDefaults] setValue:user.avatarURL forKey:@"avatarURL"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];

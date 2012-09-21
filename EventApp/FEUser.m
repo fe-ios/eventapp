@@ -12,6 +12,14 @@
 
 @synthesize user_id, username, avatarURL, email;
 
+-(void)dealloc
+{
+    [username release];
+    [avatarURL release];
+    [email release];
+    [super dealloc];
+}
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super init];

@@ -28,6 +28,7 @@
 @synthesize btnAddEvent;
 @synthesize btnSignup;
 @synthesize selectedMenu;
+@synthesize btnLogout;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -57,7 +58,12 @@
 	
 	//User
 	userAvatar = [[UIButton alloc] initWithFrame:CGRectMake(10, 6, 32, 32)];
-	[userAvatar setImage:[UIImage imageNamed:@"avatar_holder_32"] forState:UIControlStateNormal];
+    if([AppDelegate sharedDelegate].selfUser.avatarImage != nil){
+        [userAvatar setImage:[AppDelegate sharedDelegate].selfUser.avatarImage forState:UIControlStateNormal];
+    }else {
+        [userAvatar setImage:[UIImage imageNamed:@"avatar_holder_32"] forState:UIControlStateNormal];
+    }
+	
 	[tableHeaderView addSubview:userAvatar];
 	
 	userName = [[UILabel alloc] initWithFrame:CGRectMake(50, 14, 90, 18)];
@@ -130,6 +136,10 @@
 {
     BOMenuTableViewCell *selectedCell = (BOMenuTableViewCell *)[menuTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.selectedMenu inSection:0]];
     [selectedCell setHighlighted:YES];
+    
+    if([AppDelegate sharedDelegate].selfUser.avatarImage != nil){
+        [userAvatar setImage:[AppDelegate sharedDelegate].selfUser.avatarImage forState:UIControlStateNormal];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

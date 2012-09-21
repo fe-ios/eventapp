@@ -10,12 +10,14 @@
 #import "WrapController.h"
 #import "FEStartViewController.h"
 #import "IIViewDeckController.h"
+#import "FEHostUser.h"
 
 @class BOCenterViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) FEHostUser *selfUser;
 
 @property (strong, nonatomic) UINavigationController *navigationController;
 @property (strong, nonatomic) IIViewDeckController *viewDeckController;
