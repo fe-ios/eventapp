@@ -57,13 +57,10 @@
 	[tableHeaderView addSubview:headerViewSeparator];
 	
 	//User
-	userAvatar = [[UIButton alloc] initWithFrame:CGRectMake(10, 6, 32, 32)];
-    if([AppDelegate sharedDelegate].selfUser.avatarImage != nil){
-        [userAvatar setImage:[AppDelegate sharedDelegate].selfUser.avatarImage forState:UIControlStateNormal];
-    }else {
-        [userAvatar setImage:[UIImage imageNamed:@"avatar_holder_32"] forState:UIControlStateNormal];
-    }
-	
+    userAvatar = [[[UIAsyncImageView alloc] init] autorelease];
+	userAvatar.frame = CGRectMake(10, 6, 32, 32);
+    userAvatar.cornerRadius = 3.0;
+    [self updateUserAvatar];
 	[tableHeaderView addSubview:userAvatar];
 	
 	userName = [[UILabel alloc] initWithFrame:CGRectMake(50, 14, 90, 18)];
@@ -136,10 +133,6 @@
 {
     BOMenuTableViewCell *selectedCell = (BOMenuTableViewCell *)[menuTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.selectedMenu inSection:0]];
     [selectedCell setHighlighted:YES];
-    
-    if([AppDelegate sharedDelegate].selfUser.avatarImage != nil){
-        [userAvatar setImage:[AppDelegate sharedDelegate].selfUser.avatarImage forState:UIControlStateNormal];
-    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -149,6 +142,7 @@
 
 - (void)dealloc {
 	[menuTableView release];
+    [userAvatar release];
 	[super dealloc];
 }
 
@@ -244,6 +238,16 @@
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:createEventController];
     [[AppDelegate sharedDelegate].navigationController presentModalViewController:navController animated:YES];
     [navController release];
+}
+
+- (void)updateUserAvatar
+{
+    NSLog(@"updateavatar: %@", [AppDelegate sharedDelegate].selfUser.avatarURL);
+    if([AppDelegate sharedDelegate].selfUser.avatarURL != nil){
+        [userAvatar loadImageAsync:[AppDelegate sharedDelegate].selfUser.avatarURL withQueue:nil];
+    }else {
+        userAvatar.image = [UIImage imageNamed:@"avatar_holder_32"];
+    }
 }
 
 @end

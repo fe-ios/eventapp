@@ -265,7 +265,14 @@
     if([status isEqualToString:@"success"]){
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [MBProgressHUD hideAllHUDsForView:self.view.window animated:YES];
-        [AppDelegate sharedDelegate].selfUser.avatarImage = userAvatar.image;
+        NSDictionary *avatar = [result objectForKey:@"avatar"];
+        FEHostUser *user = [AppDelegate sharedDelegate].selfUser;
+        user.avatarImage = userAvatar.image;
+        user.avatarURL = [avatar objectForKey:@"url"];
+        
+        if([[AppDelegate sharedDelegate].viewDeckController.leftController respondsToSelector:@selector(updateUserAvatar)]){
+            [[AppDelegate sharedDelegate].viewDeckController.leftController performSelector:@selector(updateUserAvatar)];
+        }
     }
 }
 
