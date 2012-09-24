@@ -94,7 +94,7 @@
     if(self.cornerRadius){
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextSaveGState(context);
-        CGPathRef clipPath = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:6.0].CGPath;
+        CGPathRef clipPath = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:self.cornerRadius].CGPath;
         CGContextAddPath(context, clipPath);
         CGContextClip(context);
         
