@@ -298,17 +298,21 @@
 			cell.detailTextLabel.text = @"更多";
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             left = 36.0;
-            top = 9.0;
-            for (int i = 0; i < self.event.attendees.count; i++) {
+            top = 5.0;
+            int maxCount = self.event.attendees.count;
+            if(maxCount > 6) maxCount = 6;
+            for (int i = 0; i < maxCount; i++) {
                 FEUser *user = [self.event.attendees objectAtIndex:i];
-                UILabel *userView = [[[UILabel alloc] init] autorelease];
-                userView.backgroundColor = [UIColor clearColor];
-                userView.textColor = [UIColor darkGrayColor];
-                userView.text = user.username;
-                [userView sizeToFit];
-                userView.frame = CGRectMake(left, top, userView.frame.size.width, 24);
-                [cell.contentView addSubview:userView];
-                left += userView.frame.size.width + 5;
+                UIAsyncImageView *userAvatar = [[[UIAsyncImageView alloc] init] autorelease];
+                userAvatar.frame = CGRectMake(left, top, 32, 32);
+                userAvatar.cornerRadius = 4.0;
+                if(user.avatarURL && ![user.avatarURL isEqualToString:@""]){
+                    [userAvatar loadImageAsync:user.avatarURL withQueue:nil];
+                }else {
+                    userAvatar.image = [UIImage imageNamed:@"avatar_holder_32"];
+                }
+                [cell.contentView addSubview:userAvatar];
+                left += userAvatar.frame.size.width + 5;
             }
             break;
             

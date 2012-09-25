@@ -13,6 +13,7 @@
 
 @property(nonatomic, retain) FEEvent *event;
 @property(nonatomic, retain) id delegate;
+@property(nonatomic, assign) BOOL onlyShowAttendees;
 
 - (void)confirm:(NSNumber *)index;
 - (void)reject:(NSNumber *)index;

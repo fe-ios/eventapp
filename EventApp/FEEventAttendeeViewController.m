@@ -24,7 +24,7 @@
 
 @implementation FEEventAttendeeViewController
 
-@synthesize event = _event, delegate;
+@synthesize event = _event, delegate, onlyShowAttendees;
 @synthesize attendUsers, downloadQueue, actionType, actionIndex;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -77,9 +77,11 @@
 {
     [self.attendUsers removeAllObjects];
     
-    for (int i = 0; i < _event.requests.count; i++) {
-        NSDictionary *request = [_event.requests objectAtIndex:i];
-        [self.attendUsers addObject:request];
+    if(!self.onlyShowAttendees){
+        for (int i = 0; i < _event.requests.count; i++) {
+            NSDictionary *request = [_event.requests objectAtIndex:i];
+            [self.attendUsers addObject:request];
+        }
     }
     
     for (int i = 0; i < _event.attendees.count; i++) {
@@ -113,7 +115,7 @@
     FEAttendeeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
 		cell = [[FEAttendeeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.avatarView.cornerRadius = 6.0;
+        cell.avatarView.cornerRadius = 4.0;
 	}
     
     NSDictionary *obj = [self.attendUsers objectAtIndex:indexPath.row];
@@ -127,7 +129,7 @@
     if(user.avatarURL && ![user.avatarURL isEqualToString:@""]){
         [cell.avatarView loadImageAsync:user.avatarURL withQueue:self.downloadQueue];
     }else {
-        cell.avatarView.image = [UIImage imageNamed:@"avatar_tmp"];
+        cell.avatarView.image = [UIImage imageNamed:@"avatar_holder_64"];
     }
     
 	return cell;
@@ -137,8 +139,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-		FEProfileViewController *profileView = [[FEProfileViewController alloc] init];
-		[self.navigationController pushViewController:profileView animated:YES];
+    //FEProfileViewController *profileView = [[FEProfileViewController alloc] init];
+    //[self.navigationController pushViewController:profileView animated:YES];
 }
 
 - (void)confirm:(NSNumber *)index
