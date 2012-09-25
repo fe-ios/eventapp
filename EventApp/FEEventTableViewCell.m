@@ -41,8 +41,7 @@
 
 - (void)layoutSubviews
 {
-    //self.backgroundView.frame = CGRectMake(10, 10, 320-10*2, 125);
-    self.backgroundView.frame = CGRectMake(0, 0, 320, 80);
+    self.backgroundView.frame = CGRectMake(0, 0, 320, 138);
 }
 
 @end

@@ -90,7 +90,8 @@
     self.updateFooterView.hidden = YES;
     [self.tableView addSubview:self.updateFooterView];
     
-    self.footerView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"eventTableFooter"]] autorelease];
+    //self.footerView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"eventTableFooter"]] autorelease];
+	self.footerView = [[UIImageView alloc] init];
     self.footerView.hidden = YES;
     [self.tableView addSubview:self.footerView];
 	
@@ -132,7 +133,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80;
+    return 138;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -142,10 +143,10 @@
     if(cell == nil){
         NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:@"FEEventTableViewCell" owner:nil options:nil];
         cell = (FEEventTableViewCell *)[nibs objectAtIndex:0];
-        cell.backgroundView = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"eventTabelCellBackground"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 120, 50, 120)]] autorelease];
+        cell.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"eventTableCellBackground3"]] autorelease];
         UIImage *placeholder = [UIImage imageNamed:@"pictureGridPlaceholder"];
         cell.eventIcon.image = placeholder;
-        cell.eventIcon.cornerRadius = 6.0;
+        //cell.eventIcon.cornerRadius = 6.0;
         //UIFont *font = [UIFont fontWithName:@"CuprumFFU" size:13.0f];
         //cell.peopleCountLabel.font = font;
         //cell.pictureCountLabel.font = font;
@@ -299,7 +300,7 @@
 
 - (void)fixFooterViews
 {
-    float contentHeight = 80*self.eventData.count;
+    float contentHeight = 138*self.eventData.count;
     self.updateFooterView.hidden = contentHeight < 300;
     self.updateFooterView.frame = CGRectMake(10, contentHeight, self.tableView.frame.size.width-20, 40);
     self.footerView.hidden = self.eventData.count == 0;

@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		810A0B1215D8E65900559A0A /* FEEventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 810A0B1015D8E65900559A0A /* FEEventDetailViewController.m */; };
-		810A0B1315D8E65900559A0A /* FEEventDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 810A0B1115D8E65900559A0A /* FEEventDetailViewController.xib */; };
 		811387A315B514900033D455 /* DAKeyboardControlScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8113879915B514900033D455 /* DAKeyboardControlScrollView.m */; };
 		811387A415B514900033D455 /* DAKeyboardControlTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8113879B15B514900033D455 /* DAKeyboardControlTableView.m */; };
 		811387A515B514900033D455 /* DAKeyboardControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8113879D15B514900033D455 /* DAKeyboardControlView.m */; };
 		811387A615B514900033D455 /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = 811387A015B514900033D455 /* IIViewDeckController.m */; };
 		811387A715B514900033D455 /* WrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 811387A215B514900033D455 /* WrapController.m */; };
+		812F3BDB1611829F00EA52A1 /* eventTableCellBackground2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 812F3BDA1611829F00EA52A1 /* eventTableCellBackground2@2x.png */; };
+		812F3BDD16118DE400EA52A1 /* eventTableCellBackground3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 812F3BDC16118DE300EA52A1 /* eventTableCellBackground3@2x.png */; };
 		8136573415D3C57000006478 /* actionsheetBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 8136570E15D3C57000006478 /* actionsheetBg.png */; };
 		8136573515D3C57000006478 /* actionsheetBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8136570F15D3C57000006478 /* actionsheetBg@2x.png */; };
 		8136573615D3C57000006478 /* actionsheetMask.png in Resources */ = {isa = PBXBuildFile; fileRef = 8136571015D3C57000006478 /* actionsheetMask.png */; };
@@ -362,7 +363,6 @@
 /* Begin PBXFileReference section */
 		810A0B0F15D8E65900559A0A /* FEEventDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEEventDetailViewController.h; sourceTree = "<group>"; };
 		810A0B1015D8E65900559A0A /* FEEventDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEEventDetailViewController.m; sourceTree = "<group>"; };
-		810A0B1115D8E65900559A0A /* FEEventDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FEEventDetailViewController.xib; sourceTree = "<group>"; };
 		8113879815B514900033D455 /* DAKeyboardControlScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAKeyboardControlScrollView.h; sourceTree = "<group>"; };
 		8113879915B514900033D455 /* DAKeyboardControlScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAKeyboardControlScrollView.m; sourceTree = "<group>"; };
 		8113879A15B514900033D455 /* DAKeyboardControlTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAKeyboardControlTableView.h; sourceTree = "<group>"; };
@@ -373,6 +373,8 @@
 		811387A015B514900033D455 /* IIViewDeckController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IIViewDeckController.m; sourceTree = "<group>"; };
 		811387A115B514900033D455 /* WrapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrapController.h; sourceTree = "<group>"; };
 		811387A215B514900033D455 /* WrapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WrapController.m; sourceTree = "<group>"; };
+		812F3BDA1611829F00EA52A1 /* eventTableCellBackground2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "eventTableCellBackground2@2x.png"; path = "EventApp/images2/eventTableCellBackground2@2x.png"; sourceTree = "<group>"; };
+		812F3BDC16118DE300EA52A1 /* eventTableCellBackground3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "eventTableCellBackground3@2x.png"; path = "EventApp/images2/eventTableCellBackground3@2x.png"; sourceTree = "<group>"; };
 		8136570E15D3C57000006478 /* actionsheetBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = actionsheetBg.png; path = EventApp/images_toolbar/actionsheetBg.png; sourceTree = "<group>"; };
 		8136570F15D3C57000006478 /* actionsheetBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "actionsheetBg@2x.png"; path = "EventApp/images_toolbar/actionsheetBg@2x.png"; sourceTree = "<group>"; };
 		8136571015D3C57000006478 /* actionsheetMask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = actionsheetMask.png; path = EventApp/images_toolbar/actionsheetMask.png; sourceTree = "<group>"; };
@@ -1093,6 +1095,8 @@
 		C7DECB5015BD272300E1DCC7 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				812F3BDC16118DE300EA52A1 /* eventTableCellBackground3@2x.png */,
+				812F3BDA1611829F00EA52A1 /* eventTableCellBackground2@2x.png */,
 				C7D34BEE15C8E397003CDD76 /* 11-glyphish-clock-blue.png */,
 				C7D34BEF15C8E397003CDD76 /* 11-glyphish-clock-blue@2x.png */,
 				C7D34BF015C8E397003CDD76 /* 11-glyphish-clock-gray.png */,
@@ -1470,7 +1474,6 @@
 				C7E113D715F88FCA00E10ABE /* FEDetailViewCell.m */,
 				810A0B0F15D8E65900559A0A /* FEEventDetailViewController.h */,
 				810A0B1015D8E65900559A0A /* FEEventDetailViewController.m */,
-				810A0B1115D8E65900559A0A /* FEEventDetailViewController.xib */,
 				C7E86C6E15B7FE7A001960C2 /* FEEventListController.h */,
 				C7E86C6F15B7FE7A001960C2 /* FEEventListController.m */,
 				C7E86C6B15B7FE41001960C2 /* FEEventTableViewCell.h */,
@@ -1690,7 +1693,6 @@
 				8136575915D3C57000006478 /* topTextFieldBg@2x.png in Resources */,
 				81AA8E6615D4E0D20019748C /* tool_bar_gray.png in Resources */,
 				81AA8E6715D4E0D20019748C /* tool_bar_gray@2x.png in Resources */,
-				810A0B1315D8E65900559A0A /* FEEventDetailViewController.xib in Resources */,
 				C7D9830A15DB715200CC42D8 /* FEStartAndEndDateCell.xib in Resources */,
 				C7D9830F15DB749D00CC42D8 /* WKButtonLightGrey30px.png in Resources */,
 				C7D9831015DB749D00CC42D8 /* WKButtonLightGrey30px@2x.png in Resources */,
@@ -1811,6 +1813,8 @@
 				81CEFC20160C4A9A00C85497 /* menu-separator@2x.png in Resources */,
 				81CEFC23160C4B0E00C85497 /* avatar_holder_32@2x.png in Resources */,
 				81CEFC24160C4B0E00C85497 /* avatar_holder_64@2x.png in Resources */,
+				812F3BDB1611829F00EA52A1 /* eventTableCellBackground2@2x.png in Resources */,
+				812F3BDD16118DE400EA52A1 /* eventTableCellBackground3@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

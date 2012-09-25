@@ -34,9 +34,18 @@
 {
     [super viewDidLoad];
 	userName.text = (NSString *) [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
-	email.text = (NSString *) [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+	email.text = (NSString *) [[NSUserDefaults standardUserDefaults] objectForKey:@"email"];
+	
+	[profileTabAttendButton setTitleColor:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+	[profileTabAttendButton setTitleColor:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0] forState:UIControlStateSelected];
+	[profileTabAttendButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+	
+	[profileTabOrgButton setTitleColor:[UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1.0] forState:UIControlStateSelected];
+	[profileTabOrgButton setTitleColor:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+	[profileTabOrgButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+	
 	UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 64, 64)];
-	[userAvatar setImage:[UIImage imageNamed:@"temp"]];
+	[userAvatar setImage:[AppDelegate sharedDelegate].selfUser.avatarImage];
 	[self.view insertSubview:userAvatar belowSubview:avatarFrame];
 	[profileTabOrgButton setSelected:YES];
 }
